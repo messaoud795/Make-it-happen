@@ -1,0 +1,44 @@
+.Field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 5px;
+  border: solid 3px black;
+  padding: 0.5rem;
+  background-image: linear-gradient(
+    rgba(255, 115, 0, 0.836),
+    rgba(238, 255, 0, 0.808)
+  );
+  transition: all 0.5s;
+}
+.Field :hover {
+  transform: scale(1.1) translateY(-2px);
+}
+.Field__operations {
+  align-self: flex-end;
+}
+.delete {
+  color: gray;
+  transition: all 0.3s;
+}
+.delete:hover {
+  transform: scale(1.1) translateY(-2px) !important;
+  cursor: pointer;
+}
+.edit {
+  color: royalblue;
+  transition: all 0.3s;
+}
+.edit:hover {
+  transform: scale(1.1) translateY(-1px) !important;
+  cursor: pointer;
+}
+.Field__text {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-family: "Times New Roman", Times, serif;
+  margin-top: 2.5rem;
+}

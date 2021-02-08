@@ -1,0 +1,8 @@
+.ModalRegister {
+  width: 40% !important;
+}
+.ModalRegister__social {
+  padding: 2rem 0 !important;
+  display: flex;
+  justify-content: center;
+}

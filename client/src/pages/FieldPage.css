@@ -1,0 +1,30 @@
+.FieldPage {
+  padding: 2rem;
+}
+
+.FieldPage__quote {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: center;
+  margin: 0 auto !important;
+}
+
+.FieldPage__quote-content {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+}
+.FieldPage__quote-author {
+  align-self: flex-end;
+  letter-spacing: 0.2rem;
+}
+.FielPage__fields {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+
+  grid-template-rows: repeat(auto);
+  column-gap: 2rem;
+  row-gap: 3rem;
+}
