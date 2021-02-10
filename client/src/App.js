@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import FieldPage from "./pages/FieldPage";
 import Header from "./components/nav/header/Header";
+import GoalsPage from "./pages/GoalsPage";
 
 function App() {
   function HomeRoute(props) {
@@ -25,13 +26,29 @@ function App() {
       ></Route>
     );
   }
+  function PrivateRoute(props) {
+    let token = localStorage.getItem("token");
+    return (
+      <Route
+        path={props.path}
+        render={() => {
+          if (token) {
+            return <props.component />;
+          } else {
+            return <Redirect to={{ pathname: "/" }} />;
+          }
+        }}
+      ></Route>
+    );
+  }
   return (
     <Router>
       <div className="App">
         <Header />
         <Switch>
           <HomeRoute exact path="/" component={Home} />
-          <Route exact path="/field" component={FieldPage} />
+          <PrivateRoute exact path="/field" component={FieldPage} />
+          <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
         </Switch>
       </div>
     </Router>

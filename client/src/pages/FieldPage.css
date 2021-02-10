@@ -19,12 +19,22 @@
   align-self: flex-end;
   letter-spacing: 0.2rem;
 }
+.FieldPage__sectionFields-header {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.iconAdd {
+  margin: 1rem 0 0 1rem;
+  font-size: 2rem;
+  color: green;
+}
+.iconAdd:hover {
+  cursor: pointer;
+}
 .FielPage__fields {
   width: 50%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-
-  grid-template-rows: repeat(auto);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   column-gap: 2rem;
   row-gap: 3rem;
 }

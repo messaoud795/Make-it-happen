@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
     await newUser.save();
     //create fields
     const defaultFields = fieldsNames.map((el) => {
-      return { name: el, userId: newUser._id };
+      return { name: el.toUpperCase(), userId: newUser._id };
     });
     Field.insertMany(defaultFields, (err, data) => {
       if (err) console.log(error);

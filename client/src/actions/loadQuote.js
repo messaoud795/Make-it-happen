@@ -1,16 +1,15 @@
 import axios from "axios";
-import {
-  asyncActionError,
-  asyncActionFinish,
-  asyncActionStart,
-} from "./async_actions";
 
-import { QUOTE_LOAD } from "./actionsTypes";
+import {
+  QUOTE_LOAD_ERROR,
+  QUOTE_LOAD_START,
+  QUOTE_LOAD_SUCCESS,
+} from "./actionsTypes";
 
 export const loadQuote = () => {
   return async (dispatch) => {
     try {
-      dispatch(asyncActionStart());
+      dispatch({ type: QUOTE_LOAD_START });
       const { data } = await axios.get(
         "https://quotes15.p.rapidapi.com/quotes/random/",
         {
@@ -25,10 +24,9 @@ export const loadQuote = () => {
       let quote = data.content;
       let author = data.originator.name;
 
-      await dispatch({ type: QUOTE_LOAD, payload: { quote, author } });
-      dispatch(asyncActionFinish());
+      await dispatch({ type: QUOTE_LOAD_SUCCESS, payload: { quote, author } });
     } catch (error) {
-      dispatch(asyncActionError());
+      dispatch({ type: QUOTE_LOAD_ERROR });
     }
   };
 };

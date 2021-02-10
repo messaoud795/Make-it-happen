@@ -8,7 +8,7 @@ import ModalRegister from "../auth/ModalRegister";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const { authenticated, firstName } = useSelector((state) => state.auth);
+  const { authenticated } = useSelector((state) => state.auth);
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   return (
@@ -21,7 +21,7 @@ export default function Header() {
         {!authenticated && (
           <Button content="Login" primary onClick={() => setOpenLogin(true)} />
         )}
-        {openLogin && <ModalLogin open={openLogin} setOpen={setOpenLogin} />}
+        <ModalLogin open={openLogin} setOpen={setOpenLogin} />
         {!authenticated && (
           <Button
             content="Register"
@@ -29,9 +29,8 @@ export default function Header() {
             onClick={() => setOpenRegister(true)}
           />
         )}
-        {openRegister && (
-          <ModalRegister open={openRegister} setOpen={setOpenRegister} />
-        )}
+
+        <ModalRegister open={openRegister} setOpen={setOpenRegister} />
       </div>
 
       {authenticated && (
