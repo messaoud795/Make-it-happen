@@ -7,7 +7,7 @@ import {
   FIELD_LOAD_SUCCESS,
 } from "../actions/actionsTypes";
 
-const initialstate = [{ name: [], loadingField: false, error: null }];
+const initialstate = { name: null, loadingField: false, error: null };
 
 export const fieldReducer = (state = initialstate, action) => {
   const { type, payload } = action;

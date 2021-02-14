@@ -1,0 +1,32 @@
+.Goal {
+  height: auto;
+  width: 60%;
+  padding: 1rem 3rem;
+  clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0 100%);
+  background-color: rgba(0, 183, 255, 0.459);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.473);
+  margin-bottom: 2rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.76);
+}
+
+.Goal__operations {
+  display: none;
+}
+.Goal:hover .Goal__operations {
+  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Goal__description {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1px !important;
+}
+.Goal__time {
+  display: flex;
+  justify-content: flex-start;
+}
+.Goal__time * {
+  margin-right: 1rem;
+}

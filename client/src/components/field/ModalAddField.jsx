@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addField } from "..././actions/field_actions";
+import { addField } from "../../actions/field_actions";
 
 export default function ModalAddField({ open, setOpen }) {
   const [input, setInput] = useState("");
@@ -15,7 +15,6 @@ export default function ModalAddField({ open, setOpen }) {
     await dispatch(addField(data));
     if (!error) {
       await setOpen(false);
-      console.log(open);
       setInput("");
     }
   };

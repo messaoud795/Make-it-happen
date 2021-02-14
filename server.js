@@ -18,6 +18,7 @@ app.use(express.json({ extended: false }));
 //routes
 app.use("/api/user", require("./routes/userRoute"));
 app.use("/api/field", require("./routes/fieldRoute"));
+app.use("/api/goal", require("./routes/goalRoute"));
 
 //sever starter
 app.listen(Port, () => console.log(`Server is running on port ${Port}`));

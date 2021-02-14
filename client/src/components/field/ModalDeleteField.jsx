@@ -17,7 +17,7 @@ export default function ModalDeleteField({
     let data = { id: id };
     await dispatch(deleteField(data));
     if (!error) {
-      // setOpen(false);
+      handleModalDelete();
       dispatch(loadFields());
     }
   };

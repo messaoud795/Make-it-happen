@@ -35,7 +35,7 @@ export default function Field({ name, id }) {
           />
         </div>
       </div>
-      <Link to={`field/${id}`} className="Field__text">
+      <Link to={`/field/${id}`} className="Field__text">
         <span>{name}</span>
       </Link>
     </div>

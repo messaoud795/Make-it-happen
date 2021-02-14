@@ -1,0 +1,19 @@
+.GoalsPage {
+  padding: 3rem;
+}
+
+.GoalsPage__quote {
+  width: 70%;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 700;
+}
+.GoalsPage__header {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+}

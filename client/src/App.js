@@ -46,9 +46,9 @@ function App() {
       <div className="App">
         <Header />
         <Switch>
+          <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
           <HomeRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/field" component={FieldPage} />
-          <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
         </Switch>
       </div>
     </Router>
