@@ -1,6 +1,10 @@
-import { REGISTER_SUCCESS } from "../actions/actionsTypes";
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+} from "../actions/actionsTypes";
 
-const initialState = { authenticated: false, firstName: "" };
+const initialState = { authenticated: false };
 if (localStorage.getItem("token")) initialState.authenticated = true;
 
 export const authReducer = (state = initialState, action) => {
@@ -8,10 +12,19 @@ export const authReducer = (state = initialState, action) => {
   switch (type) {
     case REGISTER_SUCCESS:
       localStorage.setItem("token", payload.data.token);
-      localStorage.setItem("firstName", payload.data.firstName);
       return (state = {
         authenticated: true,
-        firstName: payload.data.firstName,
+      });
+    case LOGIN_SUCCESS:
+      localStorage.setItem("token", payload.data.token);
+      return (state = {
+        authenticated: true,
+      });
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem("token");
+      window.location.reload();
+      return (state = {
+        authenticated: false,
       });
     default:
       return state;

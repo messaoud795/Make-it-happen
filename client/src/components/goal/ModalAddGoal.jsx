@@ -3,9 +3,8 @@ import { Button, Form, Modal } from "semantic-ui-react";
 import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
-import "./ModalAddGoal.css";
 import { toastr } from "react-redux-toastr";
-import { addGoal } from "../../actions/goal_actions";
+import { addGoal, loadGoals } from "../../actions/goal_actions";
 
 export default function ModalAddField({ open, setOpen, fieldId }) {
   const [description, setDescription] = useState("");
@@ -25,8 +24,8 @@ export default function ModalAddField({ open, setOpen, fieldId }) {
       const data = {
         description,
         category: "long Term",
-        startDate: startDate.toLocaleString(),
-        endDate: endDate.toLocaleString(),
+        startDate: startDate.toLocaleString().slice(1, 10),
+        endDate: endDate.toLocaleString().slice(1, 10),
         fieldId,
         parentId: fieldId,
       };
@@ -35,6 +34,7 @@ export default function ModalAddField({ open, setOpen, fieldId }) {
       await dispatch(addGoal(data));
       if (!loadingGoal && !error) {
         setOpen();
+        dispatch(loadGoals(data.fieldId));
         setDescription("");
         setStartDate(new Date());
         setEndDate(new Date());

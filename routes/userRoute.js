@@ -51,7 +51,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     let foundUser = await User.findOne({ email: req.body.email });
-    if (!foundUser) return res.send("email doesn't exist");
+    if (!foundUser) return res.status(400).send({ msg: "email doesn't exist" });
     try {
       const match = await bcrypt.compare(req.body.password, foundUser.password);
       if (match) {
@@ -67,7 +67,9 @@ router.post("/login", async (req, res) => {
           token: token,
         });
       } else {
-        res.send("password doesn't match the email account");
+        res
+          .status(400)
+          .send({ msg: "password doesn't match the email account" });
       }
     } catch (err) {
       console.log(err);

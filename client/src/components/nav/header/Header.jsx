@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import logo from "../../../pictures/logo.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Dropdown, Icon, Menu } from "semantic-ui-react";
 import "./Header.css";
 import ModalLogin from "../auth/ModalLogin";
 import ModalRegister from "../auth/ModalRegister";
 import { Link } from "react-router-dom";
+import { logout_action } from "../../../actions/auth_actions";
 
 export default function Header() {
   const { authenticated } = useSelector((state) => state.auth);
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout_action());
+  };
+  const handleModalLogout = () => {
+    setOpenLogin(!openLogin);
+  };
+
   return (
     <div className="Header">
       <Link to="/" className="Header__logo">
@@ -21,7 +30,7 @@ export default function Header() {
         {!authenticated && (
           <Button content="Login" primary onClick={() => setOpenLogin(true)} />
         )}
-        <ModalLogin open={openLogin} setOpen={setOpenLogin} />
+        <ModalLogin open={openLogin} setOpen={handleModalLogout} />
         {!authenticated && (
           <Button
             content="Register"
@@ -40,7 +49,11 @@ export default function Header() {
             <Dropdown.Menu>
               <Dropdown.Item text="My Profile" icon="user" />
               <Dropdown.Item to="/settings" text="Settings" icon="settings" />
-              <Dropdown.Item text="Sign Out" icon="power" />
+              <Dropdown.Item
+                text="Sign Out"
+                icon="power"
+                onClick={handleLogout}
+              />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>

@@ -3,46 +3,52 @@ import { Button, Form, Modal } from "semantic-ui-react";
 import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
-import "./ModalAddGoal.css";
 import { toastr } from "react-redux-toastr";
+import { editGoal, loadGoals } from "../../actions/goal_actions";
 
-export default function ModalEditGoal({ open, setOpen, GoalData }) {
+export default function ModalEditGoal({
+  openModalEdit,
+  handleModalEdit,
+  GoalData,
+}) {
+  const { loadingGoal, error } = useSelector((state) => state.goal);
   const [description, setDescription] = useState(GoalData.description);
-  const [endDate, setEndDate] = useState(GoalData.endDate);
-  const [startDate, setStartDate] = useState(GoalData.startDate);
+  const [endDate, setEndDate] = useState(new Date(GoalData.endDate));
+  const [startDate, setStartDate] = useState(new Date(GoalData.startDate));
+  const { _id, fieldId } = GoalData;
+  const dispatch = useDispatch();
 
   const submitForm = async (e) => {
-    // if (startDate.getFullYear() - endDate.getFullYear() >= 0)
-    //   toastr.error(
-    //     "Error",
-    //     "Please enter an end date superior at the start date"
-    //   );
-    // else {
-    //   const data = {
-    //     description,
-    //     category: "long Term",
-    //     startDate: startDate.toLocaleString(),
-    //     endDate: endDate.toLocaleString(),
-    //     fieldId,
-    //     parentId: fieldId,
-    //   };
-    //   e.preventDefault();
-    //   await dispatch(addGoal(data));
-    //   if (!loadingGoal && !error) {
-    //     setOpen();
-    //     setDescription("");
-    //     setStartDate(new Date());
-    //     setEndDate(new Date());
-    //   }
-    // }
+    if (startDate.getFullYear() - endDate.getFullYear() >= 0)
+      toastr.error(
+        "Error",
+        "Please enter an end date greater than the start date"
+      );
+    else {
+      const data = {
+        id: _id,
+        description,
+        startDate: startDate.toLocaleString().slice(1, 10),
+        endDate: endDate.toLocaleString().slice(1, 10),
+        fieldId,
+        parentId: fieldId,
+      };
+      await dispatch(editGoal(data));
+      e.preventDefault();
+
+      if (!loadingGoal && !error) {
+        handleModalEdit();
+        dispatch(loadGoals(fieldId));
+      }
+    }
   };
 
   return (
     <Modal
       className="ModalRegister"
-      onClose={setOpen}
-      onOpen={setOpen}
-      open={open}
+      onClose={handleModalEdit}
+      onOpen={handleModalEdit}
+      open={openModalEdit}
     >
       <Modal.Header>Update long term goal data</Modal.Header>
       <Modal.Content>
@@ -80,8 +86,9 @@ export default function ModalEditGoal({ open, setOpen, GoalData }) {
             icon="checkmark"
             type="submit"
             positive
+            onClick={submitForm}
           />
-          <Button content="Cancel" onClick={setOpen} negative />
+          <Button content="Cancel" onClick={handleModalEdit} negative />
         </Form>
       </Modal.Content>
     </Modal>

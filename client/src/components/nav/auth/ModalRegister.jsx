@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "./ModalRegister.css";
-import { register_action } from "../../../actions/register_action";
+import { register_action } from "../../../actions/auth_actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 

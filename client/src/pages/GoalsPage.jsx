@@ -3,7 +3,6 @@ import "./Goalspage.css";
 import ModalAddGoal from "../components/goal/ModalAddGoal";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ReactDatePicker from "react-datepicker";
 import Goal from "../components/goal/Goal";
 import { loadGoals } from "../actions/goal_actions";
 import { Loader } from "semantic-ui-react";
@@ -20,7 +19,7 @@ export default function GoalsPage(props) {
     if (field.name)
       setfieldName(field.name.filter((el) => el._id === fieldId)[0].name);
     dispatch(loadGoals(fieldId));
-  }, []);
+  }, [dispatch, field, fieldId]);
 
   const handleModalAdd = () => {
     setOpenModalAddGoal(!openModalAddGoal);
@@ -41,11 +40,11 @@ export default function GoalsPage(props) {
         />
       </div>
       {loadingGoal ? (
-        <Loader inline="centered" />
+        <Loader active inline="centered" />
       ) : (
         <div className="GoalsPage__plan">
           {goals?.map((goal) => (
-            <Goal key={goal._id} data={...goal, fieldId} />
+            <Goal key={goal._id} data={{ ...goal, fieldId }} />
           ))}
         </div>
       )}

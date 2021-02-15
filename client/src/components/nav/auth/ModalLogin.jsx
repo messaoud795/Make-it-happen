@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "./ModalLogin.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login_action } from "../../../actions/auth_actions";
 
 export default function ModalLogin({ open, setOpen }) {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
+  const { authenticated } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.async);
+
+  const dispatch = useDispatch();
   const submitForm = (e) => {
     e.preventDefault();
+    dispatch(login_action(inputs));
+    if (authenticated) {
+      setOpen();
+      setInputs({ email: "", password: "" });
+    }
   };
   return (
     <Modal
@@ -42,12 +53,13 @@ export default function ModalLogin({ open, setOpen }) {
               value={inputs.password}
             />
           </Form.Field>
-
+          <Button content="Cancel" onClick={setOpen} negative />
           <Button
             content="Submit"
             labelPosition="right"
             icon="checkmark"
             type="submit"
+            loading={loading}
             onClick={submitForm}
             positive
           />
