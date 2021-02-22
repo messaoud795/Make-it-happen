@@ -3,12 +3,11 @@ import "./Goalspage.css";
 import ModalAddGoal from "../components/goal/ModalAddGoal";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Goal from "../components/goal/Goal";
+import GoalLT from "../components/goal/GoalLT";
 import { loadGoals } from "../actions/goal_actions";
 import { Loader } from "semantic-ui-react";
 
 export default function GoalsPage(props) {
-  const [openModalAddGoal, setOpenModalAddGoal] = useState(false);
   const [fieldName, setfieldName] = useState("");
   const field = useSelector((state) => state.field);
   const { goals, loadingGoal } = useSelector((state) => state.goal);
@@ -16,14 +15,11 @@ export default function GoalsPage(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (field.name)
+    if (field.name) {
       setfieldName(field.name.filter((el) => el._id === fieldId)[0].name);
+    }
     dispatch(loadGoals(fieldId));
   }, [dispatch, field, fieldId]);
-
-  const handleModalAdd = () => {
-    setOpenModalAddGoal(!openModalAddGoal);
-  };
 
   return (
     <div className="GoalsPage">
@@ -32,20 +28,21 @@ export default function GoalsPage(props) {
       </p>
       <div className="GoalsPage__header">
         <h1> {`Plan in ${fieldName.toLowerCase()} :`}</h1>
-        <button onClick={handleModalAdd}>add a long term goal</button>
         <ModalAddGoal
-          open={openModalAddGoal}
-          setOpen={handleModalAdd}
           fieldId={fieldId}
+          category="long Term"
+          parentId={fieldId}
         />
       </div>
       {loadingGoal ? (
-        <Loader active inline="centered" />
+        <Loader active className="loader" />
       ) : (
         <div className="GoalsPage__plan">
-          {goals?.map((goal) => (
-            <Goal key={goal._id} data={{ ...goal, fieldId }} />
-          ))}
+          {goals
+            ?.filter((goal) => goal.category === "long term")
+            .map((goal) => (
+              <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+            ))}
         </div>
       )}
     </div>

@@ -16,7 +16,7 @@ export default function Header() {
   const handleLogout = () => {
     dispatch(logout_action());
   };
-  const handleModalLogout = () => {
+  const handleModalLogin = () => {
     setOpenLogin(!openLogin);
   };
 
@@ -30,7 +30,7 @@ export default function Header() {
         {!authenticated && (
           <Button content="Login" primary onClick={() => setOpenLogin(true)} />
         )}
-        <ModalLogin open={openLogin} setOpen={handleModalLogout} />
+        <ModalLogin open={openLogin} setOpen={handleModalLogin} />
         {!authenticated && (
           <Button
             content="Register"

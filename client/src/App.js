@@ -15,6 +15,7 @@ function App() {
     let token = localStorage.getItem("token");
     return (
       <Route
+        exact
         path={props.path}
         render={() => {
           if (token) {
@@ -30,6 +31,7 @@ function App() {
     let token = localStorage.getItem("token");
     return (
       <Route
+        exact
         path={props.path}
         render={() => {
           if (token) {
