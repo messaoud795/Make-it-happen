@@ -14,15 +14,15 @@ export default function ModalAddField({ open, setOpen }) {
     let data = { name: input.toUpperCase() };
     await dispatch(addField(data));
     if (!error) {
-      await setOpen(false);
+      await setOpen();
       setInput("");
     }
   };
   return (
     <Modal
       className="ModalRegister"
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={() => setOpen()}
+      onOpen={() => setOpen()}
       open={open}
     >
       <Modal.Header>Enter the name of the field</Modal.Header>
@@ -35,7 +35,7 @@ export default function ModalAddField({ open, setOpen }) {
               value={input}
             />
           </Form.Field>
-
+          <Button content="cancel" onClick={setOpen} secondary />
           <Button
             content="Submit"
             labelPosition="right"

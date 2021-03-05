@@ -1,4 +1,4 @@
 .App {
   background-color: rgba(184, 192, 192, 0.39);
-  height: 100vh;
+  min-height: 100vh;
 }

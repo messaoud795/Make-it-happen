@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
       return { name: el.toUpperCase(), userId: newUser._id };
     });
     Field.insertMany(defaultFields, (err, data) => {
-      if (err) console.log(error);
+      if (err) console.log(err);
     });
 
     const token = await jwt.sign(

@@ -1,0 +1,60 @@
+.GoalST__content {
+  height: auto;
+  width: 53%;
+  padding: 1rem 3rem;
+  background-color: rgba(191, 211, 13, 0.753);
+  margin: 0 2rem 2rem 0;
+}
+.GoalST-add {
+  display: flex;
+  align-items: center;
+}
+
+.Goal__operations {
+  display: none;
+}
+.GoalST__content:hover .Goal__operations {
+  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.GoalST__description {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1px !important;
+}
+.Goal__time {
+  display: flex;
+  justify-content: flex-start;
+}
+.Goal__time * {
+  margin-right: 1rem;
+}
+
+.GoalMT-add {
+  display: flex;
+  align-items: center;
+}
+
+.Goal__operations {
+  display: none;
+}
+.GoalMT__content:hover .Goal__operations {
+  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Goal__description {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1px !important;
+}
+.Goal__time {
+  display: flex;
+  justify-content: flex-start;
+}
+.Goal__time * {
+  margin-right: 1rem;
+}

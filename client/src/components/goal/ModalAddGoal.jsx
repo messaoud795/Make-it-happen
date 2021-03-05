@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "semantic-ui-react";
+import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
 import { addGoal, loadGoals } from "../../actions/goal_actions";
+import "./ModalAddGoal.css";
 
-export default function ModalAddField({ fieldId, category, parentId }) {
+export default function ModalAddGoal({ fieldId, category, parentId }) {
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [endDate, setEndDate] = useState(new Date());
@@ -20,24 +21,25 @@ export default function ModalAddField({ fieldId, category, parentId }) {
       category === "long term" &&
       startDate.getFullYear() - endDate.getFullYear() >= 0
     )
-      toastr.error(
-        "Error",
-        "Please enter an end date superior at the start date"
-      );
+      toastr.error("Error", "Please enter a valid date range");
     else if (
       category === "mid term" &&
-      startDate.getMonth() - endDate.getMonth() >= 0
+      startDate.getMonth() - endDate.getMonth() >= 0 &&
+      endDate.getMonth() - startDate.getMonth() > 13
     )
-      toastr.error(
-        "Error",
-        "Please enter an end date superior at the start date"
-      );
+      toastr.error("Error", "Please enter a valid date range");
+    else if (
+      category === "short term" &&
+      startDate.getDay() - endDate.getDay() >= 0 &&
+      endDate.getDay() - startDate.getDay() > 32
+    )
+      toastr.error("Error", "Please enter a valid date range");
     else {
       const data = {
         description,
         category: category,
-        startDate: startDate.toLocaleString().slice(1, 10),
-        endDate: endDate.toLocaleString().slice(1, 10),
+        startDate: startDate.toLocaleString().slice(0, 10),
+        endDate: endDate.toLocaleString().slice(0, 10),
         fieldId,
         parentId: parentId,
       };
@@ -45,7 +47,7 @@ export default function ModalAddField({ fieldId, category, parentId }) {
       e.preventDefault();
       await dispatch(addGoal(data));
       if (!loadingGoal && !error) {
-        setOpen();
+        setOpen(false);
         dispatch(loadGoals(data.fieldId));
         setDescription("");
         setStartDate(new Date());
@@ -60,7 +62,10 @@ export default function ModalAddField({ fieldId, category, parentId }) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button content={`Enter ${category} goal `} icon="add" positive />
+        <div className="iconAdd">
+          <Icon name="add circle" />
+          <span className="tooltiptext">{`Enter ${category} goal `}</span>
+        </div>
       }
     >
       <Modal.Header content={`Enter ${category} goal data`} />
@@ -83,6 +88,7 @@ export default function ModalAddField({ fieldId, category, parentId }) {
               <DatePicker
                 onChange={(date) => setStartDate(date)}
                 selected={startDate}
+                dateFormat="dd/MM/yyyy "
               />
             </Form.Field>
             <Form.Field>
@@ -90,9 +96,11 @@ export default function ModalAddField({ fieldId, category, parentId }) {
               <DatePicker
                 onChange={(date) => setEndDate(date)}
                 selected={endDate}
+                dateFormat="dd/MM/yyyy"
               />
             </Form.Field>
           </Form.Group>
+          <Button content="Cancel" onClick={() => setOpen(false)} secondary />
           <Button
             content="Submit"
             labelPosition="right"

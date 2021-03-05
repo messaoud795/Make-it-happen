@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const schema = mongoose.Schema;
-
-const goalSchema = new schema({
+const actionSchema = new mongoose.Schema({
   description: { type: String, required: true },
-  category: { type: String, required: true },
+  priority: { type: String, required: true },
+  type: { type: String },
+  completed: { type: Boolean, default: false },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   fieldId: { type: String, required: true },
   parentId: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Goal", goalSchema);
+module.exports = mongoose.model("Action", actionSchema);

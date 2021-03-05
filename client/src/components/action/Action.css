@@ -1,0 +1,38 @@
+.action__content {
+  height: auto;
+  width: 50rem;
+  padding: 1rem 3rem;
+  margin-bottom: 1rem;
+  border: solid 1px rgba(0, 0, 0, 0.678);
+  background-color: white;
+}
+.action__description {
+  display: flex;
+  justify-content: space-between;
+}
+.action__operations {
+  display: none;
+}
+
+.action__content:hover .action__operations {
+  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+.action__priority {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action__description {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1px !important;
+}
+.action__time {
+  display: flex;
+  justify-content: flex-start;
+}
+.action__time * {
+  margin-right: 1rem;
+}

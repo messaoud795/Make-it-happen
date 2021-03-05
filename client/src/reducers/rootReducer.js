@@ -4,6 +4,7 @@ import { reducer as toastrReducer } from "react-redux-toastr";
 import { quoteReducer } from "./quoteReducer";
 import { fieldReducer } from "./fieldReducer";
 import { goalReducer } from "./goalReducer";
+import { ActionReducer } from "./actionReducer";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   quote: quoteReducer,
   field: fieldReducer,
   goal: goalReducer,
+  action: ActionReducer,
 });
 
 export default rootReducer;

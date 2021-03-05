@@ -1,29 +1,26 @@
-.GoalMT__content {
-  height: auto;
-  width: 60%;
-  padding: 1rem 3rem;
-  background-color: rgba(60, 255, 0, 0.459);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.473);
-  margin: 0 2rem 2rem 0;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.76);
-}
 .GoalMT-add {
   display: flex;
   align-items: center;
 }
-
+.GoalMT__content {
+  height: auto;
+  width: 56%;
+  padding: 1rem 3rem;
+  background-color: rgba(60, 255, 0, 0.459);
+  margin: 0 2rem 2rem 0;
+}
 .Goal__operations {
   display: none;
 }
-.Goal__content:hover .Goal__operations {
+.GoalMT__content:hover .Goal__operations {
   display: inline-flex;
   display: flex;
   justify-content: flex-end;
 }
 
-.Goal__description {
+.GoalMT__description {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 1px !important;
 }
 .Goal__time {

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Icon } from "semantic-ui-react";
-import "./GoalLT.css";
 import ModalDeleteGoal from "./ModalDeleteGoal";
 import ModalEditGoal from "./ModalEditGoal";
-import ModalAddGoal from "./ModalAddGoal";
 import { useSelector } from "react-redux";
-import GoalMT from "./GoalMT";
+import "./GoalST.css";
+import ModalAddAction from "../action/ModalAddAction";
+import Action from "../action/Action";
 
-export default function Goal({ data }) {
+export default function GoalST({ data }) {
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const { description, startDate, endDate } = data;
-  const { goals } = useSelector((state) => state.goal);
+  const { actions } = useSelector((state) => state.action);
 
   const handleModalDelete = () => {
     setOpenModalDelete(!openModalDelete);
@@ -22,8 +22,8 @@ export default function Goal({ data }) {
 
   return (
     <div>
-      <div className="GoalLT-add">
-        <div className="Goal__content">
+      <div className="GoalST-add">
+        <div className="GoalST__content">
           <div className="Goal__operations">
             <div onClick={handleModalEdit}>
               <Icon name="edit" className="edit" />
@@ -43,24 +43,18 @@ export default function Goal({ data }) {
             />
           </div>
 
-          <p className="Goal__description">{description}</p>
+          <p className="GoalST__description">{description}</p>
           <div className="Goal__time">
             <span>{startDate}</span>
             <span>{endDate}</span>
           </div>
         </div>
-        <ModalAddGoal
-          fieldId={data.fieldId}
-          category="mid term"
-          parentId={data._id}
-        />
+        <ModalAddAction fieldId={data.fieldId} parentId={data._id} />
       </div>
-      {goals
-        ?.filter(
-          (goal) => goal.category === "mid term" && goal.parentId === data._id
-        )
-        .map((goal) => (
-          <GoalMT key={goal._id} data={goal} />
+      {actions
+        ?.filter((action) => action.parentId === data._id)
+        .map((action) => (
+          <Action key={action._id} data={{ ...action }} />
         ))}
     </div>
   );

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import GoalLT from "../components/goal/GoalLT";
 import { loadGoals } from "../actions/goal_actions";
 import { Loader } from "semantic-ui-react";
+import { loadActions } from "../actions/action_actions";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -15,10 +16,14 @@ export default function GoalsPage(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (field.name) {
-      setfieldName(field.name.filter((el) => el._id === fieldId)[0].name);
+    async function fetchData() {
+      if (field.name) {
+        setfieldName(field.name.filter((el) => el._id === fieldId)[0].name);
+      }
+      await dispatch(loadGoals(fieldId));
+      await dispatch(loadActions(fieldId));
     }
-    dispatch(loadGoals(fieldId));
+    fetchData();
   }, [dispatch, field, fieldId]);
 
   return (
@@ -30,7 +35,7 @@ export default function GoalsPage(props) {
         <h1> {`Plan in ${fieldName.toLowerCase()} :`}</h1>
         <ModalAddGoal
           fieldId={fieldId}
-          category="long Term"
+          category="long term"
           parentId={fieldId}
         />
       </div>
@@ -38,11 +43,15 @@ export default function GoalsPage(props) {
         <Loader active className="loader" />
       ) : (
         <div className="GoalsPage__plan">
-          {goals
-            ?.filter((goal) => goal.category === "long term")
-            .map((goal) => (
-              <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
-            ))}
+          {goals?.length > 0 ? (
+            goals
+              ?.filter((goal) => goal.category === "long term")
+              .map((goal) => (
+                <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+              ))
+          ) : (
+            <h3> No goals are created yet</h3>
+          )}
         </div>
       )}
     </div>
