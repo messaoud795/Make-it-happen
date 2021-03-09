@@ -3,7 +3,7 @@ import { Icon } from "semantic-ui-react";
 import "./Action.css";
 import ModalDeleteAction from "./ModalDeleteAction";
 import ModalEditAction from "./ModalEditAction";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 
 export default function Action({ data }) {
   const { description, startDate, endDate, priority } = data;
@@ -42,12 +42,10 @@ export default function Action({ data }) {
 
       <div className="action__time">
         <span>
-          {format(parseISO(startDate), "EEEE do LLL")} at{" "}
-          {format(parseISO(startDate), "hh:m ")}
+          {format(startDate, "dd/MM/yyyy")} at {format(startDate, "HH:mm ")}
         </span>
         <span>
-          {format(parseISO(endDate), "EEEE do LLL")} at{" "}
-          {format(parseISO(endDate), "hh:m ")}
+          {format(endDate, "dd/MM/yyyy")} at {format(endDate, "HH:mm ")}
         </span>
       </div>
     </div>

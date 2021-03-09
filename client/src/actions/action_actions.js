@@ -1,4 +1,5 @@
 import axios from "axios";
+import parseISO from "date-fns/parseISO";
 import { toastr } from "react-redux-toastr";
 import {
   ACTION_ACTION_ERROR,
@@ -34,6 +35,10 @@ export const loadActions = (fieldId) => {
         `/api/action/${fieldId}`,
         configHeaders()
       );
+      for (var i in data) {
+        data[i].startDate = parseISO(data[i].startDate);
+        data[i].endDate = parseISO(data[i].endDate);
+      }
       dispatch({ type: ACTION_LOAD_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: ACTION_ACTION_ERROR, payload: error });
@@ -77,6 +82,10 @@ export const loadTodayActions = () => {
         "/api/action/all/today",
         configHeaders()
       );
+      for (var i in data) {
+        data[i].startDate = parseISO(data[i].startDate);
+        data[i].endDate = parseISO(data[i].endDate);
+      }
       dispatch({ type: TODAYACTION_LOAD_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: ACTION_ACTION_ERROR, payload: error });

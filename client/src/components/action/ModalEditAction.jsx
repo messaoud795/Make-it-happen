@@ -6,12 +6,6 @@ import DatePicker from "react-datepicker";
 import { editAction, loadActions } from "../../actions/action_actions";
 import "./ModalAddAction.css";
 
-const initDate = (D) => {
-  let d = D.toLocaleString();
-  let y = new Date(d.slice(0, 10)).setHours(d.slice(11, 13), d.slice(14, 16));
-  return y;
-};
-
 export default function ModalEditAction({
   openModalEdit,
   handleModalEdit,
@@ -22,8 +16,8 @@ export default function ModalEditAction({
     priority: data.priority,
     type: data.type,
   });
-  const [endDate, setEndDate] = useState(initDate(data.endDate));
-  const [startDate, setStartDate] = useState(initDate(data.startDate));
+  const [endDate, setEndDate] = useState(data.endDate);
+  const [startDate, setStartDate] = useState(data.startDate);
   const { error, loadingAction } = useSelector((state) => state.action);
   const dispatch = useDispatch();
 
@@ -120,7 +114,7 @@ export default function ModalEditAction({
                 selected={startDate}
                 showTimeInput
                 timeFormat="HH:mm"
-                dateFormat="dd/MM/yyyy,  hh:mm"
+                dateFormat="dd/MM/yyyy,  HH:mm"
               />
             </Form.Field>
             <Form.Field>
@@ -130,7 +124,7 @@ export default function ModalEditAction({
                 selected={endDate}
                 showTimeInput
                 timeFormat="HH:mm"
-                dateFormat="dd/MM/yyyy,  hh:mm"
+                dateFormat="dd/MM/yyyy,  HH:mm"
               />
             </Form.Field>
           </Form.Group>

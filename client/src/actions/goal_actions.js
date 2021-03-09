@@ -1,4 +1,5 @@
 import axios from "axios";
+import { parseISO } from "date-fns";
 import { toastr } from "react-redux-toastr";
 import {
   GOAL_ACTION_ERROR,
@@ -29,6 +30,11 @@ export const loadGoals = (fieldId) => {
     try {
       dispatch({ type: GOAL_ACTION_START });
       const { data } = await axios.get(`/api/goal/${fieldId}`, configHeaders());
+      for (var i in data) {
+        data[i].startDate = parseISO(data[i].startDate);
+        data[i].endDate = parseISO(data[i].endDate);
+      }
+
       dispatch({ type: GOAL_LOAD_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: GOAL_ACTION_ERROR, payload: error });

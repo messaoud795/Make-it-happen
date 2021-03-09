@@ -7,6 +7,7 @@ import GoalLT from "../components/goal/GoalLT";
 import { loadGoals } from "../actions/goal_actions";
 import { Loader } from "semantic-ui-react";
 import { loadActions } from "../actions/action_actions";
+import Promodoro from "../components/tools/Promodoro";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -28,32 +29,35 @@ export default function GoalsPage(props) {
 
   return (
     <div className="GoalsPage">
-      <p className="GoalsPage__quote">
-        Sweat more during peace bleed less during war
-      </p>
-      <div className="GoalsPage__header">
-        <h1> {`Plan in ${fieldName.toLowerCase()} :`}</h1>
-        <ModalAddGoal
-          fieldId={fieldId}
-          category="long term"
-          parentId={fieldId}
-        />
-      </div>
-      {loadingGoal ? (
-        <Loader active className="loader" />
-      ) : (
-        <div className="GoalsPage__plan">
-          {goals?.length > 0 ? (
-            goals
-              ?.filter((goal) => goal.category === "long term")
-              .map((goal) => (
-                <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
-              ))
-          ) : (
-            <h3> No goals are created yet</h3>
-          )}
+      <div className="GoalsPage__plan">
+        <div className="GoalsPage__header">
+          <h1> {`Plan in ${fieldName.toLowerCase()} :`}</h1>
+          <ModalAddGoal
+            fieldId={fieldId}
+            category="long term"
+            parentId={fieldId}
+          />
         </div>
-      )}
+        {loadingGoal ? (
+          <Loader active className="loader" />
+        ) : (
+          <div className="GoalsPage__goals">
+            {goals?.length > 0 ? (
+              goals
+                ?.filter((goal) => goal.category === "long term")
+                .map((goal) => (
+                  <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+                ))
+            ) : (
+              <h3> No goals are created yet</h3>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="GoalsPage__tools">
+        <h2>Tools to finish actions :</h2>
+        <Promodoro />
+      </div>
     </div>
   );
 }

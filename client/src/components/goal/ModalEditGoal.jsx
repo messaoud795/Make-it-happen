@@ -14,8 +14,8 @@ export default function ModalEditGoal({
   const { category } = GoalData;
   const { loadingGoal, error } = useSelector((state) => state.goal);
   const [description, setDescription] = useState(GoalData.description);
-  const [endDate, setEndDate] = useState(new Date(GoalData.endDate));
-  const [startDate, setStartDate] = useState(new Date(GoalData.startDate));
+  const [endDate, setEndDate] = useState(GoalData.endDate);
+  const [startDate, setStartDate] = useState(GoalData.startDate);
   const dispatch = useDispatch();
 
   const submitForm = async (e) => {
@@ -39,8 +39,8 @@ export default function ModalEditGoal({
       const data = {
         id: GoalData._id,
         description,
-        startDate: startDate.toLocaleString().slice(1, 10),
-        endDate: endDate.toLocaleString().slice(1, 10),
+        startDate,
+        endDate,
       };
       await dispatch(editGoal(data));
       e.preventDefault();

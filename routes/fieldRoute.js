@@ -17,7 +17,7 @@ router.post("/add", auth, async (req, res) => {
       name: req.body.name,
     });
     await newField.save();
-    res.status(200).send({ msg: "success " });
+    res.status(200).send({ msg: "success" });
   } catch (error) {
     error.keyPattern.name === 1
       ? res.send({ msg: "name already exists" })

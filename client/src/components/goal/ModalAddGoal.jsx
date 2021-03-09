@@ -37,11 +37,11 @@ export default function ModalAddGoal({ fieldId, category, parentId }) {
     else {
       const data = {
         description,
-        category: category,
-        startDate: startDate.toLocaleString().slice(0, 10),
-        endDate: endDate.toLocaleString().slice(0, 10),
+        category,
+        startDate,
+        endDate,
         fieldId,
-        parentId: parentId,
+        parentId,
       };
 
       e.preventDefault();

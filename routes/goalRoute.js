@@ -6,7 +6,9 @@ const Goal = require("../models/goalModel");
 router.get("/:fieldId", auth, (req, res) => {
   Goal.find({ fieldId: req.params.fieldId }, (err, data) => {
     if (err) res.status(500).send(err);
-    else res.send(data);
+    else {
+      res.send(data);
+    }
   });
 });
 

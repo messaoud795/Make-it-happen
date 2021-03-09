@@ -1,5 +1,6 @@
 .FieldPage {
   padding: 2rem;
+  width: 100% !important;
 }
 
 .FieldPage__quote {
@@ -26,9 +27,12 @@
 }
 
 .FieldPage__sectionFields-header {
-  min-width: 6rem;
   display: flex;
   margin-bottom: 2rem;
+}
+.FieldPage__sectionFields {
+  min-width: 60%;
+  height: max-content;
 }
 .iconAdd {
   margin: 1rem 0 0 1rem;
@@ -48,3 +52,7 @@
 .FieldPage__actions {
   width: 90rem !important;
 }
+/* .FieldLoader {
+  width: 60rem;
+  font-size: 2rem;
+} */

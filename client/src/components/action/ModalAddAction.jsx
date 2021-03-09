@@ -127,7 +127,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
                 selected={startDate}
                 showTimeInput
                 timeFormat="HH:mm"
-                dateFormat="MM/dd/yyyy, hh:mm "
+                dateFormat="dd/MM/yyyy, HH:mm "
               />
             </Form.Field>
             <Form.Field>
@@ -137,7 +137,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
                 selected={endDate}
                 showTimeInput
                 timeFormat="HH:mm"
-                dateFormat="MM/dd/yyyy, hh:mm "
+                dateFormat="dd/MM/yyyy, hh:mm "
               />
             </Form.Field>
           </Form.Group>

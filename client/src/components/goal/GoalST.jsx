@@ -45,8 +45,8 @@ export default function GoalST({ data }) {
 
           <p className="GoalST__description">{description}</p>
           <div className="Goal__time">
-            <span>{startDate}</span>
-            <span>{endDate}</span>
+            <span>{startDate.toLocaleString().slice(0, 10)}</span>
+            <span>{endDate.toLocaleString().slice(0, 10)}</span>
           </div>
         </div>
         <ModalAddAction fieldId={data.fieldId} parentId={data._id} />

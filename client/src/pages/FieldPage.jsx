@@ -26,7 +26,6 @@ export default function FieldPage() {
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
   };
-  console.log(actions);
   return (
     <div className="FieldPage">
       {loadingQuote ? (
@@ -47,7 +46,7 @@ export default function FieldPage() {
             <ModalAddField open={openModalAdd} setOpen={handleAddField} />
           </div>
           {loadingField ? (
-            <Loader />
+            <Loader active inline="centered" className="FieldLoader" />
           ) : (
             <div className="FielPage__fields">
               {name?.map((el) => (
@@ -57,7 +56,7 @@ export default function FieldPage() {
           )}
         </div>
         <div className="FieldPage__actions">
-          <h2>{format(new Date(), "EEEE do LLL")}</h2>
+          <h2>{format(new Date(), "EEEE dd MMMM")}</h2>
           <h3>Today actions :</h3>
           {loadingAction ? (
             <Loader active inline="centered" />

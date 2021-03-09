@@ -1,0 +1,47 @@
+.Promodoro__time {
+  /* text-align: center; */
+  text-align: center;
+  width: 10rem;
+  height: 10rem;
+  font-size: 2rem;
+  color: cornflowerblue;
+  border-radius: 50rem;
+  border: 2px black solid;
+  font-weight: 700;
+  padding: 4.2rem 1rem;
+  margin: 1rem auto;
+  background-color: whitesmoke;
+}
+
+.Promodoro__timer {
+  position: relative;
+}
+.Promodoro__distractions {
+  padding: 10px 10px;
+  position: absolute;
+  top: 4rem;
+  left: 21rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 5rem;
+  border: 1px solid black;
+  background-color: yellow;
+}
+.Promodoro__goal {
+  padding: 10px 8px;
+  position: absolute;
+  top: 4rem;
+  left: 12.5rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 5rem;
+  border: 1px solid black;
+  background-color: blue;
+}
+.Promodoro {
+  position: relative;
+}

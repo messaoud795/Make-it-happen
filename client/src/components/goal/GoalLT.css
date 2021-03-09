@@ -1,6 +1,6 @@
 .Goal__content {
   height: auto;
-  width: 60%;
+  width: 100%;
   padding: 1rem 3rem;
   clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0 100%);
   background-color: rgba(0, 183, 255, 0.459);

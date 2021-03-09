@@ -38,15 +38,15 @@ export const editField = (data) => {
     }
   };
 };
-export const addField = (data) => {
+export const addField = (input) => {
   return async (dispatch) => {
     try {
       dispatch({ type: FIELD_ACTION_START });
-      let res = await axios.post("/api/field/add", data, configHeaders());
+      let { data } = await axios.post("/api/field/add", input, configHeaders());
       dispatch({ type: FIELD_ADD_SUCCESS });
-      if (res.data.msg === "success")
+      if (data.msg === "success") {
         toastr.success("Success!", "New Field has been created");
-      else toastr.error("error!", res.data.msg);
+      } else toastr.error("error!", data.msg);
 
       dispatch(loadFields());
     } catch (error) {
