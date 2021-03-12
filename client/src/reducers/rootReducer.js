@@ -5,6 +5,7 @@ import { quoteReducer } from "./quoteReducer";
 import { fieldReducer } from "./fieldReducer";
 import { goalReducer } from "./goalReducer";
 import { ActionReducer } from "./actionReducer";
+import { promodoroReducer } from "./promodoroReducer";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   field: fieldReducer,
   goal: goalReducer,
   action: ActionReducer,
+  promodoro: promodoroReducer,
 });
 
 export default rootReducer;
