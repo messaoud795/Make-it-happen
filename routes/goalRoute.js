@@ -12,6 +12,19 @@ router.get("/:fieldId", auth, (req, res) => {
   });
 });
 
+router.get("/partners/:fieldId", auth, (req, res) => {
+  let description = Goal.findById(req.params.fieldId, "description");
+  Goal.find(
+    { userId: { $ne: req.userData.userId }, status: "public" },
+    (err, data) => {
+      if (err) res.status(500).send(err);
+      else {
+        console.log(data);
+      }
+    }
+  );
+});
+
 router.post("/add", auth, async (req, res) => {
   try {
     const newGoal = new Goal({
@@ -19,8 +32,10 @@ router.post("/add", auth, async (req, res) => {
       category: req.body.category,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
+      status: req.body.status,
       fieldId: req.body.fieldId,
       parentId: req.body.parentId,
+      userId: req.userData.userId,
     });
     await newGoal.save();
     res.status(200).send({ msg: "success " });

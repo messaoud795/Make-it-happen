@@ -35,7 +35,6 @@ router.get("/", auth, async (req, res) => {
     (err, data) => {
       if (err) res.status(500).send(err);
       else {
-        console.log(data);
         res.send(data);
       }
     }

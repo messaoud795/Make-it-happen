@@ -17,6 +17,7 @@ export default function Promodoro() {
 
   useEffect(() => {
     dispatch(loadPromodoro());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Promodoro() {
       }
       setTimerState("inited");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerState]);
 
   const saveDistractions = () => {

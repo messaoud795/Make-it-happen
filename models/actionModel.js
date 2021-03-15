@@ -8,6 +8,7 @@ const actionSchema = new mongoose.Schema({
   endDate: { type: Date, required: true },
   fieldId: { type: String, required: true },
   parentId: { type: String, required: true },
+  userId: String,
 });
 
 module.exports = mongoose.model("Action", actionSchema);

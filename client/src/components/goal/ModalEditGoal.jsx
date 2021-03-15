@@ -16,6 +16,8 @@ export default function ModalEditGoal({
   const [description, setDescription] = useState(GoalData.description);
   const [endDate, setEndDate] = useState(GoalData.endDate);
   const [startDate, setStartDate] = useState(GoalData.startDate);
+  const [status, setStatus] = useState(GoalData.status);
+
   const dispatch = useDispatch();
 
   const submitForm = async (e) => {
@@ -41,6 +43,7 @@ export default function ModalEditGoal({
         description,
         startDate,
         endDate,
+        status,
       };
       await dispatch(editGoal(data));
       e.preventDefault();
@@ -89,7 +92,27 @@ export default function ModalEditGoal({
                 dateFormat="dd/MM/yyyy"
               />
             </Form.Field>
-          </Form.Group>{" "}
+          </Form.Group>
+          <Form.Field className="Goal__status">
+            <input
+              type="radio"
+              id="private"
+              name="status"
+              value="private"
+              checked={status === "private"}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+            <label htmlFor="private">Private</label>
+            <input
+              type="radio"
+              id="public"
+              name="status"
+              value="public"
+              checked={status === "public"}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+            <label htmlFor="public">Public</label>
+          </Form.Field>
           <Button content="Cancel" onClick={handleModalEdit} secondary />
           <Button
             content="Submit"

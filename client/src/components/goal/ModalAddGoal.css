@@ -24,3 +24,14 @@
 .iconAdd:hover .tooltiptext {
   visibility: visible;
 }
+.Goal__status {
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+}
+.Goal__status > input {
+  margin-right: 5px;
+}
+.Goal__status > label {
+  margin-right: 10px !important;
+}

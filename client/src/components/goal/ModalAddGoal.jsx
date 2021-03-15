@@ -12,6 +12,7 @@ export default function ModalAddGoal({ fieldId, category, parentId }) {
   const [description, setDescription] = useState("");
   const [endDate, setEndDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
+  const [status, setStatus] = useState("private");
 
   const { error, loadingGoal } = useSelector((state) => state.goal);
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function ModalAddGoal({ fieldId, category, parentId }) {
         category,
         startDate,
         endDate,
+        status,
         fieldId,
         parentId,
       };
@@ -100,7 +102,27 @@ export default function ModalAddGoal({ fieldId, category, parentId }) {
               />
             </Form.Field>
           </Form.Group>
-          <Button content="Cancel" onClick={() => setOpen(false)} secondary />
+          <Form.Field className="Goal__status">
+            <input
+              type="radio"
+              id="private"
+              name="status"
+              value="private"
+              checked={status === "private"}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+            <label htmlFor="private">Private</label>
+            <input
+              type="radio"
+              id="public"
+              name="status"
+              value="public"
+              checked={status === "public"}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+            <label htmlFor="public">Public</label>
+          </Form.Field>
+          <Button content="Cancel" onClick={(e) => setOpen(false)} secondary />
           <Button
             content="Submit"
             labelPosition="right"

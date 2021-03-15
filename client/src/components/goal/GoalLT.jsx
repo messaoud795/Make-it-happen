@@ -4,14 +4,20 @@ import "./GoalLT.css";
 import ModalDeleteGoal from "./ModalDeleteGoal";
 import ModalEditGoal from "./ModalEditGoal";
 import ModalAddGoal from "./ModalAddGoal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GoalMT from "./GoalMT";
+import { goalPartners } from "../../actions/goal_actions";
 
 export default function Goal({ data }) {
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const { description, startDate, endDate } = data;
   const { goals } = useSelector((state) => state.goal);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  // const findPartnes=()=>{
+  // }
+  // }, [input])
 
   const handleModalDelete = () => {
     setOpenModalDelete(!openModalDelete);
@@ -48,6 +54,9 @@ export default function Goal({ data }) {
             <span>{startDate.toLocaleString("fr-FR").slice(0, 10)}</span>
             <span>{endDate.toLocaleString("fr-FR").slice(0, 10)}</span>
           </div>
+          <button onClick={() => dispatch(goalPartners(data._id))}>
+            Search for peers
+          </button>
         </div>
         <ModalAddGoal
           fieldId={data.fieldId}

@@ -6,6 +6,7 @@ const goalSchema = new schema({
   category: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
+  status: { type: String, required: true },
   fieldId: { type: String, required: true },
   parentId: { type: String, required: true },
 });

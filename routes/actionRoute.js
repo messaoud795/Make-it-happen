@@ -12,7 +12,7 @@ router.get("/:fieldId", auth, (req, res) => {
 
 router.get("/all/today", auth, async (req, res) => {
   try {
-    let actions = await Action.find({});
+    let actions = await Action.find({ userId: req.userData.userId });
     let todayActions = await actions.filter(
       (el) =>
         el.startDate.toLocaleDateString() == new Date().toLocaleDateString()
@@ -34,6 +34,7 @@ router.post("/add", auth, async (req, res) => {
       endDate: req.body.endDate,
       fieldId: req.body.fieldId,
       parentId: req.body.parentId,
+      userId: req.userData.userId,
     });
     await newAction.save();
     res.status(200).send({ msg: "success " });

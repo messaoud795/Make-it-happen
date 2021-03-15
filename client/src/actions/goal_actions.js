@@ -8,6 +8,7 @@ import {
   GOAL_DELETE_SUCCESS,
   GOAL_EDIT_SUCCESS,
   GOAL_LOAD_SUCCESS,
+  GOAL_PARTNERS_SUCCESS,
 } from "./actionsTypes";
 import { configHeaders } from "./config";
 
@@ -66,6 +67,21 @@ export const deleteGoal = (goalId) => {
     } catch (error) {
       dispatch({ type: GOAL_ACTION_ERROR });
       toastr.error("Error", "Goal is not deleted");
+    }
+  };
+};
+
+export const goalPartners = (goalId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: GOAL_ACTION_START });
+      let { data } = await axios.get(
+        `/api/goal/partners/${goalId}`,
+        configHeaders()
+      );
+      dispatch({ type: GOAL_PARTNERS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: GOAL_ACTION_ERROR });
     }
   };
 };
