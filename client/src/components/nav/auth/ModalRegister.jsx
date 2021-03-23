@@ -4,6 +4,7 @@ import "./ModalRegister.css";
 import { register_action } from "../../../actions/auth_actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import ImageUpload from "./ImageUpload";
 
 export default function ModalRegister({ open, setOpen }) {
   const [inputs, setInputs] = useState({
@@ -11,15 +12,29 @@ export default function ModalRegister({ open, setOpen }) {
     lastName: "",
     email: "",
     password: "",
+    image: null,
   });
   const { loading } = useSelector((state) => state.async);
   const { authenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  //get the image file
+  function getFile(file) {
+    setInputs({ ...inputs, image: file });
+  }
   const submitForm = (e) => {
     e.preventDefault();
-    dispatch(register_action(inputs));
+    console.log(inputs);
+    const formData = new FormData();
+    //include state different from null for the update request
+    formData.append("firstName", inputs.firstName);
+    formData.append("lastName", inputs.lastName);
+    formData.append("email", inputs.email);
+    formData.append("password", inputs.password);
+    formData.append("image", inputs.image);
+    console.log(formData);
+    dispatch(register_action(formData));
   };
   if (authenticated) {
     setOpen(false);
@@ -55,6 +70,11 @@ export default function ModalRegister({ open, setOpen }) {
               value={inputs.lastName}
             />
           </Form.Field>
+          <ImageUpload
+            id="image"
+            className="productForm_picBtn"
+            getFile={getFile}
+          />{" "}
           <Form.Field required>
             <input
               placeholder="Email"
@@ -77,7 +97,6 @@ export default function ModalRegister({ open, setOpen }) {
               value={inputs.password}
             />
           </Form.Field>
-
           <Button
             content="Submit"
             labelPosition="right"

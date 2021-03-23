@@ -4,6 +4,7 @@ const connectDB = require("./config/connectDB");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const cors = require("cors");
+const path = require("path");
 
 //configuration
 const app = express();
@@ -14,6 +15,13 @@ connectDB();
 
 //middlewares
 app.use(express.json({ extended: false }));
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
+// app.get("/uploads/images/:name", function (req, res) {
+//   const fileName = req.params.name;
+//   res.sendFile(fileName, options, function (err) {
+//     console.log(err);
+//   });
+// });
 
 //routes
 app.use("/api/user", require("./routes/userRoute"));

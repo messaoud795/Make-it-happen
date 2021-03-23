@@ -9,10 +9,11 @@ import { Link } from "react-router-dom";
 import { logout_action } from "../../../actions/auth_actions";
 
 export default function Header() {
-  const { authenticated } = useSelector((state) => state.auth);
+  const { authenticated, profile } = useSelector((state) => state.auth);
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const dispatch = useDispatch();
+  console.log(profile?.image);
   const handleLogout = () => {
     dispatch(logout_action());
   };
@@ -26,6 +27,7 @@ export default function Header() {
         <img src={logo} alt="logo" className="Header__img" />
         <span className="Header__span">Make it happen</span>
       </Link>
+
       <div className="Header__auth">
         {!authenticated && (
           <Button content="Login" primary onClick={() => setOpenLogin(true)} />
@@ -44,8 +46,12 @@ export default function Header() {
 
       {authenticated && (
         <Menu.Item position="right" className="Header__menu">
-          <Icon name="user circle" />
-          <Dropdown pointing="top right">
+          <img
+            src={`http://localhost:5000/${profile?.image}`}
+            alt=""
+            className="Header__img"
+          />
+          <Dropdown pointing="top right" className="header__dropdown">
             <Dropdown.Menu>
               <Dropdown.Item text="My Profile" icon="user" />
               <Dropdown.Item to="/settings" text="Settings" icon="settings" />

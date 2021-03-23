@@ -9,6 +9,7 @@ const goalSchema = new schema({
   status: { type: String, required: true },
   fieldId: { type: String, required: true },
   parentId: { type: String, required: true },
+  userId: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Goal", goalSchema);

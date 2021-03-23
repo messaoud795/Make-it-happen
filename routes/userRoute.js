@@ -7,9 +7,10 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
 const jwtKey = process.env.SecretKey;
 const fieldsNames = require("./fieldsNames");
+const fileUpload = require("../middlewares/file-upload");
 
 //Register
-router.post("/register", async (req, res) => {
+router.post("/register", fileUpload.single("image"), async (req, res) => {
   let hashedPassword = bcrypt.hashSync(req.body.password, 12);
   //create a document
   const newUser = new User({
@@ -17,6 +18,7 @@ router.post("/register", async (req, res) => {
     lastName: req.body.lastName,
     email: req.body.email,
     password: hashedPassword,
+    image: req.file.path,
   });
 
   try {
@@ -25,9 +27,15 @@ router.post("/register", async (req, res) => {
     const defaultFields = fieldsNames.map((el) => {
       return { name: el.toUpperCase(), userId: newUser._id };
     });
-    Field.insertMany(defaultFields, (err, data) => {
-      if (err) console.log(err);
-    });
+
+    try {
+      defaultFields.map((field) => {
+        let newField = new Field(field);
+        newField.save();
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     const token = await jwt.sign(
       {
@@ -37,13 +45,19 @@ router.post("/register", async (req, res) => {
       jwtKey
     );
     res.send({
-      firstName: newUser.firstName,
+      userData: { firstName: newUser.firstName, image: newUser.image },
       token: token,
     });
   } catch (error) {
-    error.keyPattern.email === 1
-      ? res.send({ msg: "email already exists" })
-      : res.send({ msg: "Server error" });
+    if (error.keyPattern.email === 1) res.send({ msg: "email already exists" });
+    else {
+      if (req.file) {
+        fs.unlink(req.file.path, (error) => {
+          if (error) console.log(error);
+        });
+      }
+      res.send({ msg: "Server error" });
+    }
   }
 });
 
@@ -63,7 +77,7 @@ router.post("/login", async (req, res) => {
           jwtKey
         );
         res.send({
-          firstName: foundUser.firstName,
+          userData: { firstName: foundUser.firstName, image: foundUser.image },
           token: token,
         });
       } else {

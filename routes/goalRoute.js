@@ -1,7 +1,9 @@
 const express = require("express");
+const { verify } = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
 const router = express.Router();
 const Goal = require("../models/goalModel");
+const User = require("../models/userModel");
 
 router.get("/:fieldId", auth, (req, res) => {
   Goal.find({ fieldId: req.params.fieldId }, (err, data) => {
@@ -12,14 +14,24 @@ router.get("/:fieldId", auth, (req, res) => {
   });
 });
 
-router.get("/partners/:fieldId", auth, (req, res) => {
-  let description = Goal.findById(req.params.fieldId, "description");
+router.get("/partners/:fieldId", auth, async (req, res) => {
+  let { description } = await Goal.findById(req.params.fieldId, "description");
   Goal.find(
     { userId: { $ne: req.userData.userId }, status: "public" },
-    (err, data) => {
+    async (err, data) => {
       if (err) res.status(500).send(err);
       else {
-        console.log(data);
+        let similarGoals = data.filter((el) =>
+          compareGoals(description, el.description)
+        );
+        let goals = await similarGoals.map((el) => el.userId);
+        let users = await User.find({ _id: { $in: goals } });
+        for (const i in similarGoals) {
+          similarGoals[i] = { goal: similarGoals[i], user: users[i] };
+        }
+
+        if (similarGoals.length === 0) res.send({ msg: "No partners found" });
+        res.send(similarGoals);
       }
     }
   );
@@ -65,3 +77,20 @@ router.delete("/delete/:id", auth, (req, res) => {
 });
 
 module.exports = router;
+
+const compareGoals = (G1, G2) => {
+  const goal1 = G1.split(" ");
+  const goal2 = G2.split(" ");
+  const length = Math.min(goal1.length, goal2.length);
+  var c = 0;
+  var test = false;
+
+  for (let i = 0; i < length; i++) {
+    if (goal1[i].includes(goal2[i])) c++;
+    if (c > 1) {
+      test = true;
+      break;
+    }
+  }
+  return test;
+};
