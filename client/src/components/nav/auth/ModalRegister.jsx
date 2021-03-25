@@ -25,7 +25,6 @@ export default function ModalRegister({ open, setOpen }) {
   }
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(inputs);
     const formData = new FormData();
     //include state different from null for the update request
     formData.append("firstName", inputs.firstName);
@@ -33,10 +32,9 @@ export default function ModalRegister({ open, setOpen }) {
     formData.append("email", inputs.email);
     formData.append("password", inputs.password);
     formData.append("image", inputs.image);
-    console.log(formData);
     dispatch(register_action(formData));
   };
-  if (authenticated) {
+  if (authenticated && !loading) {
     setOpen(false);
     history.push("/field");
   }
@@ -74,7 +72,7 @@ export default function ModalRegister({ open, setOpen }) {
             id="image"
             className="productForm_picBtn"
             getFile={getFile}
-          />{" "}
+          />
           <Form.Field required>
             <input
               placeholder="Email"

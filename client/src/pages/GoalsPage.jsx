@@ -8,6 +8,7 @@ import { loadGoals } from "../actions/goal_actions";
 import { Loader } from "semantic-ui-react";
 import { loadActions } from "../actions/action_actions";
 import Promodoro from "../components/tools/Promodoro";
+import Partners from "../components/goal/Partners";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -57,6 +58,9 @@ export default function GoalsPage(props) {
       <div className="GoalsPage__tools">
         <h2>Tools to finish actions :</h2>
         <Promodoro />
+        <div>
+          {loadingGoal ? <Loader active className="loader" /> : <Partners />}
+        </div>
       </div>
     </div>
   );

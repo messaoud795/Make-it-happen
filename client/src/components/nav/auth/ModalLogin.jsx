@@ -20,17 +20,12 @@ export default function ModalLogin({ open, setOpen }) {
   const submitForm = (e) => {
     e.preventDefault();
     dispatch(login_action(inputs));
-    if (authenticated) {
+    if (authenticated && !loading) {
       init();
     }
   };
   return (
-    <Modal
-      className="ModalLogin"
-      onClose={init}
-      onOpen={() => setOpen(true)}
-      open={open}
-    >
+    <Modal className="ModalLogin" onClose={init} onOpen={setOpen} open={open}>
       <Modal.Header>Login</Modal.Header>
       <Modal.Content>
         <Form>

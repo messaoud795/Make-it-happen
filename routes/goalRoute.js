@@ -18,6 +18,7 @@ router.get("/partners/:fieldId", auth, async (req, res) => {
   let { description } = await Goal.findById(req.params.fieldId, "description");
   Goal.find(
     { userId: { $ne: req.userData.userId }, status: "public" },
+    "description startDate endDate userId",
     async (err, data) => {
       if (err) res.status(500).send(err);
       else {
@@ -25,9 +26,12 @@ router.get("/partners/:fieldId", auth, async (req, res) => {
           compareGoals(description, el.description)
         );
         let goals = await similarGoals.map((el) => el.userId);
-        let users = await User.find({ _id: { $in: goals } });
+        let users = await User.find(
+          { _id: { $in: goals } },
+          "firstName lastName image"
+        );
         for (const i in similarGoals) {
-          similarGoals[i] = { goal: similarGoals[i], user: users[i] };
+          similarGoals[i] = { ...users[i]._doc, goal: similarGoals[i] };
         }
 
         if (similarGoals.length === 0) res.send({ msg: "No partners found" });

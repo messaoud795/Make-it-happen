@@ -93,6 +93,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//load a profile
+router.get("/profile", auth, (req, res) => {
+  User.findById(
+    req.userData.userId,
+    "firstName lastName image",
+    (err, user) => {
+      if (err) res.send(err);
+      else res.send(user);
+    }
+  );
+});
+
 //delete an account
 router.delete("/delete", auth, (req, res) => {
   User.findByIdAndRemove(req.userData.userId, (error) => {

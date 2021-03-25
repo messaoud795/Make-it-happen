@@ -10,6 +10,13 @@ import {
   asyncActionFinish,
   asyncActionStart,
 } from "./async_actions";
+import {
+  PROFILE_LOAD_SUCCESS,
+  PROFILE_LOAD_START,
+  PROFILE_LOAD_ERROR,
+} from "./actionsTypes";
+
+import { configHeaders } from "./config";
 
 export const register_action = (inputs) => {
   return async (dispatch) => {
@@ -49,6 +56,18 @@ export const logout_action = () => {
     } catch (error) {
       dispatch(asyncActionError());
       toastr.error("error", error);
+    }
+  };
+};
+
+export const loadProfile = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: PROFILE_LOAD_START });
+      let { data } = await axios.get("/api/user/profile", configHeaders());
+      dispatch({ type: PROFILE_LOAD_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: PROFILE_LOAD_ERROR });
     }
   };
 };

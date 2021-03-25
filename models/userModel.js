@@ -6,7 +6,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
   email: { type: String, required: true, unique: true, lowercase: true },
-  image: { type: String, required: true },
+  image: { type: String },
   password: { type: String, required: true },
   date: { type: Date, default: Date.now },
 });

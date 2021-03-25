@@ -9,10 +9,19 @@ import {
 import FieldPage from "./pages/FieldPage";
 import Header from "./components/nav/header/Header";
 import GoalsPage from "./pages/GoalsPage";
+import Chat from "./chat/Chat";
+import { useDispatch } from "react-redux";
+import { loadProfile } from "./actions/auth_actions";
+import { useEffect } from "react";
 
 function App() {
   function HomeRoute(props) {
     let token = localStorage.getItem("token");
+    const dispatch = useDispatch();
+    // useEffect(() => {
+    //   console.log("hiiiiiii");
+    //   if (token) dispatch(loadProfile());
+    // });
     return (
       <Route
         exact
@@ -51,6 +60,7 @@ function App() {
           <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
           <HomeRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/field" component={FieldPage} />
+          <PrivateRoute exact path="/chat" component={Chat} />
         </Switch>
       </div>
     </Router>

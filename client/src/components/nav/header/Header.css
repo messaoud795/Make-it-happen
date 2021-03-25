@@ -22,7 +22,8 @@
   margin-right: 1rem;
 }
 .header__dropdown {
-  margin-left: -2.5rem;
+  margin-left: -2rem;
+  font-size: 2rem !important;
 }
 
 .Header__span {

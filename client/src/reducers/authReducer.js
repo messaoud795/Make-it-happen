@@ -1,6 +1,7 @@
 import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
+  PROFILE_LOAD_SUCCESS,
   REGISTER_SUCCESS,
 } from "../actions/actionsTypes";
 
@@ -29,7 +30,14 @@ export const authReducer = (state = initialState, action) => {
       window.location.reload();
       return (state = {
         authenticated: false,
+        profile: null,
       });
+    case PROFILE_LOAD_SUCCESS:
+      return (state = {
+        ...state,
+        profile: payload,
+      });
+
     default:
       return state;
   }

@@ -36,6 +36,7 @@ export default function FieldPage() {
           <span className="FieldPage__quote-author">{author}</span>
         </div>
       )}
+
       <div className="FieldPage__content">
         <div className="FieldPage__sectionFields">
           <div className="FieldPage__sectionFields-header">

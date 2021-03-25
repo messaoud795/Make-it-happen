@@ -9,6 +9,7 @@
     "@types/semantic-ui": "^2.2.7",
     "axios": "^0.21.1",
     "date-fns": "^2.19.0",
+    "emoji-mart": "^3.0.1",
     "react": "^17.0.1",
     "react-compound-timer": "^1.2.0",
     "react-countdown": "^2.3.1",
