@@ -40,6 +40,7 @@
   background-color: rgba(255, 251, 0, 0.8);
 }
 .discussion__footer {
+  display: flex;
   padding: 0 1rem;
 }
 .discussion__input {
@@ -49,20 +50,6 @@
   height: 3rem;
   border-radius: 5rem;
 }
-.discussion__input {
-  border: none;
-  padding: 0 1rem;
-  width: 75%;
-  height: 3rem;
-  border-radius: 5rem;
-}
-.discussion__input:focus {
-  outline: none;
-}
-.discussion__emojiPicker {
-  position: relative;
-}
-.smile {
-  margin: 0 8px !important;
-  font-size: 1.5rem !important;
+.react-emoji {
+  width: 85% !important;
 }

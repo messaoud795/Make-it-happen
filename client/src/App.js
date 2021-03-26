@@ -11,17 +11,28 @@ import Header from "./components/nav/header/Header";
 import GoalsPage from "./pages/GoalsPage";
 import Chat from "./chat/Chat";
 import { useDispatch } from "react-redux";
-import { loadProfile } from "./actions/auth_actions";
 import { useEffect } from "react";
+import Pusher from "pusher-js";
 
 function App() {
   function HomeRoute(props) {
     let token = localStorage.getItem("token");
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //   console.log("hiiiiiii");
-    //   if (token) dispatch(loadProfile());
-    // });
+    useEffect(() => {
+      const pusher = new Pusher("22769e8d448bb4cddf2c", {
+        cluster: "eu",
+      });
+
+      const channel = pusher.subscribe("messages");
+      channel.bind("inserted", function (data) {
+        alert(JSON.stringify(data));
+        console.log(JSON.stringify(data));
+      });
+      return () => {
+        channel.unbind_all();
+        channel.unsubscribe();
+      };
+    }, []);
     return (
       <Route
         exact
