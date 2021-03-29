@@ -35,7 +35,7 @@ export default function Partners() {
             </div>{" "}
             <Icon
               name="chat"
-              onClick={() => history.push("/chat")}
+              onClick={() => history.push(`/chat/${partner._id}`)}
               className="partner__chat"
             />
           </div>

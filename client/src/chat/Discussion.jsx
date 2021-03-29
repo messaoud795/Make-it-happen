@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 import "./Discussion.css";
 import InputEmoji from "react-input-emoji";
+import { addMsg, loadMsg } from "../actions/msg_actions";
+import { useDispatch } from "react-redux";
 
-export default function Discussion() {
+export default function Discussion({ partner }) {
   const [text, setText] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [messages, setMessages] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadMsg());
+  }, [dispatch]);
+
+  const sendMsg = () => {
+    let data = { text, partnerId: partner._id, timestamp: Date.now() };
+    dispatch(addMsg(data));
   };
 
   return (
     <div className="discussion">
       <div className="discussion__header">
-        <Icon name="user circle" className="sidebar__discussion-img"></Icon>
+        <img src={`/${partner?.image}`} alt="" className="discussion__img" />
         <div className="discussion__header-info">
-          <p className="discussion__header-user">user Name</p>
+          <p className="discussion__header-user">
+            {partner?.firstName + " " + partner?.lastName}
+          </p>
           <p className="discussion__header-msg">last seen at</p>
         </div>
       </div>
@@ -32,12 +44,12 @@ export default function Discussion() {
         <InputEmoji
           value={text}
           onChange={setText}
-          cleanOnEnter
+          cleanOnEnter={false}
           placeholder="Type a message"
           className="discussion__input"
         />
-        <Button>
-          <Icon onClick={handleSubmit} name="send" />
+        <Button onClick={sendMsg}>
+          <Icon name="send" />
           Send
         </Button>
       </div>
