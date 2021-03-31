@@ -17,23 +17,20 @@ const connectPusher = () => {
     const chatCollection = db.collection("chats");
     const changeStream = chatCollection.watch();
 
-    changeStream.on("change", async function (change) {
-      console.log(change);
+    changeStream.on("change", function (change) {
       if (
         change.operationType === "update" ||
         change.operationType === "insert"
       ) {
         const chatId = change.documentKey;
-        try {
-          let { messages } = await Chat.findById(chatId);
-          console.log(messages);
-          console.log(messages[messages.length - 1]);
-          pusher.trigger("chats", "updated", {
-            msg: messages[messages.length - 1],
+        Chat.findById(chatId)
+          .populate("messages")
+          .exec((err, data) => {
+            pusher.trigger("chats", "updated", {
+              chatId: chatId,
+              msg: data.messages[data.messages.length - 1],
+            });
           });
-        } catch (error) {
-          console.log(error);
-        }
       } else console.log("Error triggering pusher");
     });
   });

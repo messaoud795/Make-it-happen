@@ -17,11 +17,7 @@ export default function Partners() {
       <div className="partners">
         {partners?.map((partner) => (
           <div className="partner" key={partner._id}>
-            <img
-              src={`http://localhost:5000/${partner.image}`}
-              alt=""
-              className="partner__img"
-            />
+            <img src={`/${partner.image}`} alt="" className="partner__img" />
             <div>
               <p className="partner__name">
                 {partner.firstName + " " + partner.lastName}
@@ -31,8 +27,8 @@ export default function Partners() {
                 {format(parseISO(partner.goal.startDate), "dd/MM/yyyy")}
                 &nbsp;&nbsp;
                 {format(parseISO(partner.goal.endDate), "dd/MM/yyyy")}
-              </span>{" "}
-            </div>{" "}
+              </span>
+            </div>
             <Icon
               name="chat"
               onClick={() => history.push(`/chat/${partner._id}`)}

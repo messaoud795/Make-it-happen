@@ -5,7 +5,7 @@ import { Button, Dropdown, Icon, Menu } from "semantic-ui-react";
 import "./Header.css";
 import ModalLogin from "../auth/ModalLogin";
 import ModalRegister from "../auth/ModalRegister";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { loadProfile, logout_action } from "../../../actions/auth_actions";
 
 export default function Header() {
@@ -13,6 +13,7 @@ export default function Header() {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const handleLogout = () => {
     dispatch(logout_action());
   };
@@ -47,29 +48,32 @@ export default function Header() {
       </div>
 
       {authenticated && (
-        <Menu.Item position="right" className="Header__menu">
-          {profile?.image ? (
-            <img
-              src={`http://localhost:5000/${profile?.image}`}
-              alt=""
-              className="Header__img"
-            />
-          ) : (
-            <Icon name="user circle" />
-          )}
+        <div className="header__functions">
+          <Icon
+            name="chat"
+            onClick={() => history.push(`/chat/`)}
+            className="header__chat"
+          />
+          <Menu.Item position="right" className="Header__menu">
+            {profile?.image ? (
+              <img src={`/${profile?.image}`} alt="" className="Header__img" />
+            ) : (
+              <Icon name="user circle" />
+            )}
 
-          <Dropdown pointing="top right" className="header__dropdown ">
-            <Dropdown.Menu>
-              <Dropdown.Item text="My Profile" icon="user" />
-              <Dropdown.Item to="/settings" text="Settings" icon="settings" />
-              <Dropdown.Item
-                text="Sign Out"
-                icon="power"
-                onClick={handleLogout}
-              />
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
+            <Dropdown pointing="top right" className="header__dropdown ">
+              <Dropdown.Menu>
+                <Dropdown.Item text="My Profile" icon="user" />
+                <Dropdown.Item to="/settings" text="Settings" icon="settings" />
+                <Dropdown.Item
+                  text="Sign Out"
+                  icon="power"
+                  onClick={handleLogout}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        </div>
       )}
     </div>
   );

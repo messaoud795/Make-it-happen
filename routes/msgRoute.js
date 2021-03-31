@@ -13,7 +13,7 @@ router.post("/add", auth, async (req, res) => {
     await newMsg.save();
     let chatUsers = [req.body.partnerId, req.userData.userId];
     let chat = await Chat.findOne({
-      chatUsers: chatUsers,
+      chatUsers: { $in: chatUsers },
     });
     if (chat)
       await Chat.findByIdAndUpdate(
@@ -29,14 +29,12 @@ router.post("/add", auth, async (req, res) => {
 });
 
 router.get("/", auth, async (req, res) => {
-  try {
-    Chat.find({ chatUsers: { $in: req.userData.userId } }, (err, data) => {
-      console.log(data);
+  Chat.find({ chatUsers: { $in: [req.userData.userId] } })
+    .populate("messages")
+    .exec((err, data) => {
+      if (err) res.status(500).send({ msg: "Server error" });
       res.status(200).send(data);
     });
-  } catch (error) {
-    res.status(500).send({ msg: "Server error" });
-  }
 });
 
 module.exports = router;

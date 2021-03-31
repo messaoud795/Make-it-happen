@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 import "./Discussion.css";
 import InputEmoji from "react-input-emoji";
-import { addMsg, loadMsg } from "../actions/msg_actions";
-import { useDispatch } from "react-redux";
+import { addMsg } from "../actions/chat_actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Discussion({ partner }) {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState("");
+  const [messages, setMessages] = useState([]);
+  const { chats } = useSelector((state) => state.chats);
+  const textinput = useRef();
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(loadMsg());
-  }, [dispatch]);
+    setMessages(
+      chats?.filter(
+        (chat) =>
+          chat.chatUsers[0] === partner._id || chat.chatUsers[1] === partner._id
+      )[0]?.messages
+    );
+
+    window.scrollBy(0, 80);
+  }, [chats, partner._id]);
 
   const sendMsg = () => {
     let data = { text, partnerId: partner._id, timestamp: Date.now() };
     dispatch(addMsg(data));
+    textinput.current.value = "";
+    textinput.current.focus();
   };
 
   return (
@@ -31,14 +41,19 @@ export default function Discussion({ partner }) {
         </div>
       </div>
       <div className="discussion__body">
-        <div className="discussion__msg">
-          <p className="discussion__msg-text">this a message</p>
-          <p className="discussion__msg-time">{new Date().toLocaleString()}</p>
-        </div>
-        <div className="discussion__msg sent">
-          <p className="discussion__msg-text">this a message</p>
-          <p className="discussion__msg-time">{new Date().toLocaleString()}</p>
-        </div>
+        {messages?.map((msg) => (
+          <div
+            key={msg._id}
+            className={
+              "discussion__msg " + (msg.userId !== partner._id ? "sent" : " ")
+            }
+          >
+            <p className="discussion__msg-text">{msg.text}</p>
+            <p className="discussion__msg-time">
+              {new Date(msg.timeStamp).toLocaleTimeString().slice(0, 5)}
+            </p>
+          </div>
+        ))}
       </div>
       <div className="discussion__footer">
         <InputEmoji
@@ -47,6 +62,7 @@ export default function Discussion({ partner }) {
           cleanOnEnter={false}
           placeholder="Type a message"
           className="discussion__input"
+          ref={textinput}
         />
         <Button onClick={sendMsg}>
           <Icon name="send" />
