@@ -15,12 +15,13 @@ export default function Discussion({ partner }) {
     setMessages(
       chats?.filter(
         (chat) =>
-          chat.chatUsers[0] === partner._id || chat.chatUsers[1] === partner._id
+          chat.chatUsers[0]?._id === partner._id ||
+          chat.chatUsers[1]?._id === partner._id
       )[0]?.messages
     );
 
-    window.scrollBy(0, 80);
-  }, [chats, partner._id]);
+    // window.scrollBy(0, 80);
+  }, [chats, partner?._id]);
 
   const sendMsg = () => {
     let data = { text, partnerId: partner._id, timestamp: Date.now() };

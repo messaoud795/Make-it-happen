@@ -3,6 +3,7 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 const Msg = require("../models/msgModel");
 const Chat = require("../models/chatModel");
+const User = require("../models/userModel");
 
 router.post("/add", auth, async (req, res) => {
   try {
@@ -13,7 +14,7 @@ router.post("/add", auth, async (req, res) => {
     await newMsg.save();
     let chatUsers = [req.body.partnerId, req.userData.userId];
     let chat = await Chat.findOne({
-      chatUsers: { $in: chatUsers },
+      chatUsers: chatUsers,
     });
     if (chat)
       await Chat.findByIdAndUpdate(
@@ -22,6 +23,7 @@ router.post("/add", auth, async (req, res) => {
         { upsert: true }
       );
     else await Chat.create({ chatUsers: chatUsers, messages: newMsg });
+
     res.status(200).send(newMsg);
   } catch (error) {
     res.status(500).send({ msg: "Server error" });
@@ -30,10 +32,13 @@ router.post("/add", auth, async (req, res) => {
 
 router.get("/", auth, async (req, res) => {
   Chat.find({ chatUsers: { $in: [req.userData.userId] } })
+    .populate("chatUsers", "firstName lastName image")
     .populate("messages")
-    .exec((err, data) => {
+    .exec((err, chats) => {
       if (err) res.status(500).send({ msg: "Server error" });
-      res.status(200).send(data);
+      else {
+        res.status(200).send(chats);
+      }
     });
 });
 

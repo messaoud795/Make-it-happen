@@ -23,16 +23,10 @@ export default function Chat() {
     channel.bind("updated", function (data) {
       newMsg = data;
       if (newMsg) {
-        // channel.unbind_all();
-        // channel.unsubscribe();
         dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
         newMsg = null;
       }
     });
-    // return () => {
-    //   channel.unbind_all();
-    //   channel.unsubscribe();
-    // };
   }, [dispatch]);
 
   return (
