@@ -1,6 +1,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+
   border-right: rgba(175, 171, 171, 0.856) 1px solid;
   height: 80vh;
   border-radius: 5px;
@@ -14,6 +15,8 @@
   padding: 1rem;
   background-color: white;
   border-radius: 10px;
+  margin-bottom: 2rem;
+  cursor: pointer;
 }
 .sidebar__discussion-img {
   font-size: 2.5rem !important;

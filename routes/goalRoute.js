@@ -1,9 +1,12 @@
 const express = require("express");
 const { verify } = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
+const actionModel = require("../models/actionModel");
+const { findById } = require("../models/goalModel");
 const router = express.Router();
 const Goal = require("../models/goalModel");
 const User = require("../models/userModel");
+const Action = require("../models/actionModel");
 
 router.get("/:fieldId", auth, (req, res) => {
   Goal.find({ fieldId: req.params.fieldId }, (err, data) => {
@@ -44,13 +47,7 @@ router.get("/partners/:fieldId", auth, async (req, res) => {
 router.post("/add", auth, async (req, res) => {
   try {
     const newGoal = new Goal({
-      description: req.body.description,
-      category: req.body.category,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate,
-      status: req.body.status,
-      fieldId: req.body.fieldId,
-      parentId: req.body.parentId,
+      ...req.body,
       userId: req.userData.userId,
     });
     await newGoal.save();
@@ -73,11 +70,14 @@ router.patch("/edit", auth, (req, res) => {
   );
 });
 
-router.delete("/delete/:id", auth, (req, res) => {
-  Goal.findByIdAndDelete(req.params.id, (err) => {
-    if (err) res.status(500).send({ msg: "error" });
-    else res.status(200).send({ msg: "deleted" });
-  });
+router.delete("/delete/:id", auth, async (req, res) => {
+  try {
+    let { category } = await Goal.findById(req.params.id);
+    deleteGoals(req.params.id, category);
+    res.status(200).send({ msg: "success" });
+  } catch (error) {
+    res.status(500).send({ msg: "error" });
+  }
 });
 
 module.exports = router;
@@ -98,3 +98,29 @@ const compareGoals = (G1, G2) => {
   }
   return test;
 };
+
+async function deleteGoals(id, category) {
+  let goalsToBeDeleted = [id];
+  var finished = false;
+  try {
+    while (category !== "short term" && !finished) {
+      let found = await Goal.find({ parentId: id });
+      console.log(found);
+      if (found.length > 0) {
+        found.map((goal) => goalsToBeDeleted.push(goal._id.toString()));
+        id = found[0]._id;
+        category = found[0].category;
+        found = [];
+      } else finished = true;
+    }
+    console.log(goalsToBeDeleted);
+
+    if (category === "short term")
+      await Action.findOneAndDelete({
+        parentId: goalsToBeDeleted[goalsToBeDeleted.length - 1],
+      });
+    await Goal.deleteMany({ _id: goalsToBeDeleted });
+  } catch (error) {
+    console.log(error);
+  }
+}

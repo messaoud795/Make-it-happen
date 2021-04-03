@@ -14,8 +14,9 @@ export default function ModalDeleteGoal({
   const handleDeleteGoal = async () => {
     await dispatch(deleteGoal(GoalData._id));
     if (!loadingGoal && !error) {
-      handleModalDelete();
       dispatch(loadGoals(GoalData.fieldId));
+
+      handleModalDelete();
     }
   };
   return (

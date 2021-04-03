@@ -10,7 +10,6 @@ export default function Partners() {
   const { partners } = useSelector((state) => state.goal);
   const history = useHistory();
 
-  console.log(partners);
   return (
     <div>
       <h3>Partners</h3>

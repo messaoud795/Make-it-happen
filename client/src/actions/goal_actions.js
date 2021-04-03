@@ -79,7 +79,6 @@ export const goalPartners = (goalId) => {
         `/api/goal/partners/${goalId}`,
         configHeaders()
       );
-      console.log(data);
       dispatch({ type: GOAL_PARTNERS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: GOAL_ACTION_ERROR });

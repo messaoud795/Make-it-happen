@@ -1,16 +1,25 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
+// import { Icon } from "semantic-ui-react";
 import "./Sidebar.css";
+import { useHistory } from "react-router";
 
 export default function Sidebar() {
   const { chats } = useSelector((state) => state.chats);
   const { profile } = useSelector((state) => state.auth);
+  const history = useHistory();
+
   return (
     <div className="sidebar">
       <h2>Discussions</h2>
       {chats.map((chat) => (
-        <div className="sidebar__discussion" key={chat._id}>
+        <div
+          className="sidebar__discussion"
+          key={chat._id}
+          onClick={() =>
+            history.push(`/chat/${partner(chat.chatUsers, profile._id)._id}`)
+          }
+        >
           <img
             src={`/${partner(chat.chatUsers, profile._id)?.image}`}
             alt=""

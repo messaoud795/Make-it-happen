@@ -4,15 +4,16 @@ import "./ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login_action } from "../../../actions/auth_actions";
 
-export default function ModalLogin({ open, setOpen }) {
+export default function ModalLogin() {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
+  const [open, setOpen] = useState(false);
   const { authenticated } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.async);
   const init = () => {
-    setOpen();
+    setOpen(false);
     setInputs({ email: "", password: "" });
   };
 
@@ -25,7 +26,17 @@ export default function ModalLogin({ open, setOpen }) {
     }
   };
   return (
-    <Modal className="ModalLogin" onClose={init} onOpen={setOpen} open={open}>
+    <Modal
+      className="ModalLogin"
+      onClose={init}
+      onOpen={() => setOpen(true)}
+      open={open}
+      trigger={
+        !authenticated && (
+          <Button content="Login" primary onClick={() => setOpen(true)} />
+        )
+      }
+    >
       <Modal.Header>Login</Modal.Header>
       <Modal.Content>
         <Form>
@@ -51,7 +62,7 @@ export default function ModalLogin({ open, setOpen }) {
               value={inputs.password}
             />
           </Form.Field>
-          <Button content="Cancel" onClick={setOpen} negative />
+          <Button content="Cancel" onClick={init} secondary />
           <Button
             content="Submit"
             labelPosition="right"

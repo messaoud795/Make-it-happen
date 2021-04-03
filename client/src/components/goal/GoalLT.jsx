@@ -14,10 +14,6 @@ export default function Goal({ data }) {
   const { description, startDate, endDate } = data;
   const { goals } = useSelector((state) => state.goal);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  // const findPartnes=()=>{
-  // }
-  // }, [input])
 
   const handleModalDelete = () => {
     setOpenModalDelete(!openModalDelete);

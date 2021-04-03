@@ -26,7 +26,7 @@ export const loadQuote = () => {
         );
         quote = data.content;
         author = data.originator.name;
-      } while (quote.length > 150);
+      } while (quote.length > 150 && !quote.include("fuck"));
 
       await dispatch({ type: QUOTE_LOAD_SUCCESS, payload: { quote, author } });
     } catch (error) {

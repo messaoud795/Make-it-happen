@@ -14,7 +14,6 @@ import Chat from "./chat/Chat";
 function App() {
   function HomeRoute(props) {
     let token = localStorage.getItem("token");
-
     return (
       <Route
         exact

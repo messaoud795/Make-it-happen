@@ -4,6 +4,8 @@ import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { addAction, loadActions } from "../../actions/action_actions";
+import { toastr } from "react-redux-toastr";
+
 import "./ModalAddAction.css";
 
 export default function ModalAddAction({ fieldId, parentId }) {
@@ -41,7 +43,12 @@ export default function ModalAddAction({ fieldId, parentId }) {
       parentId,
     };
     e.preventDefault();
-    await dispatch(addAction(data));
+    if (
+      endDate.getTime() - startDate.getTime() <= 0 ||
+      endDate.getTime() - startDate.getTime() > 86400
+    )
+      toastr.error("Error", "Please enter a valid date range of several hours");
+    else await dispatch(addAction(data));
     if (!loadingAction && !error) {
       init();
       dispatch(loadActions(data.fieldId));

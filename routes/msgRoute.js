@@ -13,9 +13,14 @@ router.post("/add", auth, async (req, res) => {
     });
     await newMsg.save();
     let chatUsers = [req.body.partnerId, req.userData.userId];
-    let chat = await Chat.findOne({
-      chatUsers: chatUsers,
-    });
+    let chat =
+      (await Chat.findOne({
+        chatUsers: chatUsers,
+      })) ||
+      (await Chat.findOne({
+        chatUsers: [req.userData.userId, req.body.partnerId],
+      }));
+    console.log(chat);
     if (chat)
       await Chat.findByIdAndUpdate(
         chat._id,

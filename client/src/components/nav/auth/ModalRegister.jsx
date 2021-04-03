@@ -3,10 +3,9 @@ import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "./ModalRegister.css";
 import { register_action } from "../../../actions/auth_actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
 
-export default function ModalRegister({ open, setOpen }) {
+export default function ModalRegister() {
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -14,10 +13,10 @@ export default function ModalRegister({ open, setOpen }) {
     password: "",
     image: null,
   });
+  const [open, setOpen] = useState(false);
   const { loading } = useSelector((state) => state.async);
   const { authenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   //get the image file
   function getFile(file) {
@@ -33,17 +32,18 @@ export default function ModalRegister({ open, setOpen }) {
     formData.append("password", inputs.password);
     formData.append("image", inputs.image);
     dispatch(register_action(formData));
+    if (authenticated && !loading) {
+      setOpen(false);
+    }
   };
-  if (authenticated && !loading) {
-    setOpen(false);
-    history.push("/field");
-  }
+
   return (
     <Modal
       className="ModalRegister"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
+      trigger={!authenticated && <Button content="Register" positive />}
     >
       <Modal.Header>Create your account</Modal.Header>
       <Modal.Content>
@@ -95,6 +95,7 @@ export default function ModalRegister({ open, setOpen }) {
               value={inputs.password}
             />
           </Form.Field>
+          <Button content=" Cancel" onClick={() => setOpen(false)} secondary />
           <Button
             content="Submit"
             labelPosition="right"

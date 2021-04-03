@@ -10,6 +10,7 @@ import "./ModalAddGoal.css";
 export default function ModalAddGoal({ fieldId, category, parentId }) {
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState("");
+
   const [endDate, setEndDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [status, setStatus] = useState("private");
@@ -22,19 +23,19 @@ export default function ModalAddGoal({ fieldId, category, parentId }) {
       category === "long term" &&
       startDate.getFullYear() - endDate.getFullYear() >= 0
     )
-      toastr.error("Error", "Please enter a valid date range");
+      toastr.error("Error", "Please enter a valid date range of several years");
     else if (
       category === "mid term" &&
-      startDate.getMonth() - endDate.getMonth() >= 0 &&
-      endDate.getMonth() - startDate.getMonth() > 13
+      (endDate.getTime() - startDate.getTime() < 2764800000 ||
+        endDate.getTime() - startDate.getTime() > 33177600000)
     )
-      toastr.error("Error", "Please enter a valid date range");
+      toastr.error("Error", "Please enter a date range of several months");
     else if (
       category === "short term" &&
-      startDate.getDay() - endDate.getDay() >= 0 &&
-      endDate.getDay() - startDate.getDay() > 32
+      (endDate.getTime() - startDate.getTime() < 604800000 ||
+        endDate.getTime() - startDate.getTime() > 2764800000)
     )
-      toastr.error("Error", "Please enter a valid date range");
+      toastr.error("Error", "Please enter a valid date range of several weeks");
     else {
       const data = {
         description,

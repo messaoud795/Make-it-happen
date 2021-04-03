@@ -26,7 +26,7 @@ export default function GoalsPage(props) {
       await dispatch(loadActions(fieldId));
     }
     fetchData();
-  }, [dispatch, field, fieldId]);
+  }, [dispatch, field, fieldId, field.name]);
 
   return (
     <div className="GoalsPage">
@@ -39,21 +39,18 @@ export default function GoalsPage(props) {
             parentId={fieldId}
           />
         </div>
-        {loadingGoal ? (
-          <Loader active className="loader" />
-        ) : (
-          <div className="GoalsPage__goals">
-            {goals?.length > 0 ? (
-              goals
-                ?.filter((goal) => goal.category === "long term")
-                .map((goal) => (
-                  <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
-                ))
-            ) : (
-              <h3> No goals are created yet</h3>
-            )}
-          </div>
-        )}
+
+        <div className="GoalsPage__goals">
+          {goals?.length > 0 ? (
+            goals
+              ?.filter((goal) => goal.category === "long term")
+              .map((goal) => (
+                <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+              ))
+          ) : (
+            <h3> No goals are created yet</h3>
+          )}
+        </div>
       </div>
       <div className="GoalsPage__tools">
         <h2>Tools to finish actions :</h2>
