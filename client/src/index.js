@@ -9,6 +9,7 @@ import { configureStore } from "./store/configureStore";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import ReduxToastr from "react-redux-toastr";
 import "react-datepicker/dist/react-datepicker.css";
+
 const store = configureStore();
 
 ReactDOM.render(

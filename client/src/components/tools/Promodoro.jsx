@@ -46,10 +46,10 @@ export default function Promodoro() {
 
   return (
     <div className="Promodoro">
-      <h2>Promodoro</h2>{" "}
+      <h2>Pomodoro</h2>{" "}
       <Timer
         className="Promodoro__timer"
-        initialTime={10000}
+        initialTime={900000}
         startImmediately={false}
         formatValue={(value) => `${value < 10 ? `0${value}` : value}  `}
         direction="backward"

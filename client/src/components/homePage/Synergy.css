@@ -1,0 +1,36 @@
+.synergy {
+  height: 40rem;
+  display: flex;
+  margin-bottom: 14rem;
+}
+.synergy__img {
+  width: 60%;
+  height: 35rem;
+}
+.synergy__description {
+  position: relative;
+  width: 100%;
+  padding-left: 2rem;
+}
+.synergy__video {
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin-left: -4rem;
+}
+.synergy__video-content {
+  height: 20rem;
+  width: 100%;
+  object-fit: cover;
+}
+.synergy__text {
+  background-color: white;
+  color: black;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  padding: 1.5rem;
+  margin-top: -1rem;
+}

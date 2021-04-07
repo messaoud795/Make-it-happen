@@ -105,7 +105,6 @@ async function deleteGoals(id, category) {
   try {
     while (category !== "short term" && !finished) {
       let found = await Goal.find({ parentId: id });
-      console.log(found);
       if (found.length > 0) {
         found.map((goal) => goalsToBeDeleted.push(goal._id.toString()));
         id = found[0]._id;
@@ -113,7 +112,6 @@ async function deleteGoals(id, category) {
         found = [];
       } else finished = true;
     }
-    console.log(goalsToBeDeleted);
 
     if (category === "short term")
       await Action.findOneAndDelete({

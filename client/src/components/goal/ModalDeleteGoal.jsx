@@ -12,10 +12,9 @@ export default function ModalDeleteGoal({
   const { loadingGoal, error } = useSelector((state) => state.goal);
 
   const handleDeleteGoal = async () => {
-    await dispatch(deleteGoal(GoalData._id));
+    await dispatch(deleteGoal(GoalData._id, GoalData.fieldId));
     if (!loadingGoal && !error) {
       dispatch(loadGoals(GoalData.fieldId));
-
       handleModalDelete();
     }
   };

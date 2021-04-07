@@ -12,6 +12,7 @@ import Partners from "../components/goal/Partners";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
+  const [listGoalLT, setListGoalLT] = useState("");
   const field = useSelector((state) => state.field);
   const { goals, loadingGoal } = useSelector((state) => state.goal);
   const fieldId = useParams().fieldId;
@@ -28,6 +29,10 @@ export default function GoalsPage(props) {
     fetchData();
   }, [dispatch, field, fieldId, field.name]);
 
+  useEffect(() => {
+    setListGoalLT(goals?.filter((goal) => goal.category === "long term"));
+  }, [goals]);
+
   return (
     <div className="GoalsPage">
       <div className="GoalsPage__plan">
@@ -41,12 +46,10 @@ export default function GoalsPage(props) {
         </div>
 
         <div className="GoalsPage__goals">
-          {goals?.length > 0 ? (
-            goals
-              ?.filter((goal) => goal.category === "long term")
-              .map((goal) => (
-                <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
-              ))
+          {listGoalLT?.length > 0 ? (
+            listGoalLT?.map((goal) => (
+              <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+            ))
           ) : (
             <h3> No goals are created yet</h3>
           )}

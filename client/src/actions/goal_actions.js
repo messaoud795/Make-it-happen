@@ -57,13 +57,14 @@ export const editGoal = (data) => {
   };
 };
 
-export const deleteGoal = (goalId) => {
+export const deleteGoal = (goalId, fieldId) => {
   return async (dispatch) => {
     try {
       dispatch({ type: GOAL_ACTION_START });
       await axios.delete(`/api/goal/delete/${goalId}`, configHeaders());
       dispatch({ type: GOAL_DELETE_SUCCESS });
       toastr.success("Success", "Goal is deleted");
+      dispatch(loadGoals(fieldId));
     } catch (error) {
       dispatch({ type: GOAL_ACTION_ERROR });
       toastr.error("Error", "Goal is not deleted");

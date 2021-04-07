@@ -1,0 +1,28 @@
+.home__pomodoro {
+  margin: 0rem 8rem 3rem 8rem;
+  padding: 1.5rem 3rem;
+}
+.pomodoro__description {
+  border: gray 2px solid;
+  padding: 3rem 1rem 2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+.pomodoro__description ul {
+  width: 65%;
+}
+.pomodoro__description li {
+  margin-bottom: 2rem;
+  animation-direction: forward;
+}
+.pomodoro__img {
+  flex-grow: 0;
+  height: 15rem;
+  flex: 0 0 0.3;
+}
