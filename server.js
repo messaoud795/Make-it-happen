@@ -9,7 +9,7 @@ const path = require("path");
 
 //configuration
 const app = express();
-const Port = 5000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 app.use(cors());
 //deployment
 if (process.env.NODE_ENV === "production") {
@@ -47,6 +47,6 @@ app.use("/api/promodoro", require("./routes/promodoroRoute"));
 app.use("/api/msg", require("./routes/msgRoute"));
 
 //sever starter
-app.listen(Port, () => console.log(`Server is running on port ${Port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 //C:\Program Files\MongoDB\Server\3.4\bin

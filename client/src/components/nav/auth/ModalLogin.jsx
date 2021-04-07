@@ -13,18 +13,18 @@ export default function ModalLogin() {
   const { authenticated } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.async);
   const init = () => {
-    setOpen(false);
     setInputs({ email: "", password: "" });
+    setOpen(false);
   };
 
   const dispatch = useDispatch();
-  const submitForm = (e) => {
+  async function submitForm(e) {
     e.preventDefault();
-    dispatch(login_action(inputs));
+    await dispatch(login_action(inputs));
     if (authenticated && !loading) {
       init();
     }
-  };
+  }
   return (
     <Modal
       className="ModalLogin"

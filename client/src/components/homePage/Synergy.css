@@ -9,13 +9,14 @@
 .synergy__description {
   position: relative;
   width: 100%;
+  height: 90%;
   padding-left: 2rem;
 }
 .synergy__video {
   position: absolute;
   top: 4rem;
   left: 0;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   overflow: hidden;
   margin-left: -4rem;
