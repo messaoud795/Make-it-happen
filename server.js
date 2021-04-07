@@ -9,7 +9,7 @@ const path = require("path");
 
 //configuration
 const app = express();
-const Port = 5000 || process.env.Port;
+const Port = 5000 || process.env.PORT;
 app.use(cors());
 //deployment
 if (process.env.NODE_ENV === "production") {
