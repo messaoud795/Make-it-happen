@@ -1,17 +1,17 @@
 * {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 *,
 *::after,
 *::before {
-  box-sizing: inherit !important;
+  box-sizing: inherit;
 }
 html {
   /* 1rem is 10 pixel */
-  font-size: 62.5% !important;
-  box-sizing: border-box !important;
+  font-size: 62.5%;
+  box-sizing: border-box;
 }
 
 body {
