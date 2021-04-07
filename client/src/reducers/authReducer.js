@@ -26,7 +26,6 @@ export const authReducer = (state = initialState, action) => {
       });
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
-      window.location.reload();
       return (state = {
         authenticated: false,
         profile: null,

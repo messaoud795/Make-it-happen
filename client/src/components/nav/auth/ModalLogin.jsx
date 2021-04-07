@@ -27,7 +27,6 @@ export default function ModalLogin() {
   useEffect(() => {
     if (authenticated && !loading) {
       init();
-      history.push("/field");
     }
   }, [authenticated, loading, history]);
   return (
