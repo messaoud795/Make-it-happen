@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "./ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { login_action } from "../../../actions/auth_actions";
 
 export default function ModalLogin() {
@@ -12,6 +13,7 @@ export default function ModalLogin() {
   const [open, setOpen] = useState(false);
   const { authenticated } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.async);
+  const history = useHistory();
   const init = () => {
     setInputs({ email: "", password: "" });
     setOpen(false);
@@ -21,10 +23,13 @@ export default function ModalLogin() {
   async function submitForm(e) {
     e.preventDefault();
     await dispatch(login_action(inputs));
+  }
+  useEffect(() => {
     if (authenticated && !loading) {
       init();
+      history.push("/field");
     }
-  }
+  }, [authenticated, loading, history]);
   return (
     <Modal
       className="ModalLogin"
