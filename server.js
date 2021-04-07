@@ -15,18 +15,18 @@ app.use(cors());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   //send the react html if url not for api or images
-  app.get("*", function (req, res, next) {
-    let url = req.originalUrl;
-    if (url.startsWith("/uploads")) {
-      let file = url.slice(16);
-      res.sendFile(path.resolve(__dirname, "uploads", "images", file));
-      return;
-    } else if (!url.startsWith("/api/")) {
-      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-      return;
-    }
-    next();
-  });
+  // app.get("*", function (req, res, next) {
+  //   let url = req.originalUrl;
+  //   if (url.startsWith("/uploads")) {
+  //     let file = url.slice(16);
+  //     res.sendFile(path.resolve(__dirname, "uploads", "images", file));
+  //     return;
+  //   } else if (!url.startsWith("/api/")) {
+  //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  //     return;
+  //   }
+  //   next();
+  // });
 }
 
 //database connection
