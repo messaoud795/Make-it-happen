@@ -10,8 +10,29 @@ import FieldPage from "./pages/FieldPage";
 import Header from "./components/nav/header/Header";
 import GoalsPage from "./pages/GoalsPage";
 import Chat from "./chat/Chat";
+import Pusher from "pusher-js";
+import { CHAT_ADD_SUCCESS } from "./actions/actionsTypes";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const pusher = new Pusher("22769e8d448bb4cddf2c", {
+      cluster: "eu",
+    });
+    const channel = pusher.subscribe("chats");
+    var newMsg = null;
+    channel.bind("updated", function (data) {
+      newMsg = data;
+      if (newMsg) {
+        pusher.unbind_all();
+        pusher.unsubscribe();
+        dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
+        newMsg = null;
+      }
+    });
+  }, [dispatch]);
   function HomeRoute(props) {
     let token = localStorage.getItem("token");
     return (

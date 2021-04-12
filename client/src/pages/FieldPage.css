@@ -2,13 +2,19 @@
   padding: 2rem;
   width: 100% !important;
 }
-
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .FieldPage__quote {
   display: flex;
   flex-direction: column;
   width: 70%;
   align-items: center;
   margin: 0 auto 2rem !important;
+  position: relative;
 }
 
 .FieldPage__quote-content {
@@ -33,10 +39,11 @@
 }
 .FieldPage__sectionFields {
   width: 50%;
-  height: max-content;
+  min-height: 50vh;
+  position: relative;
 }
 .iconAdd {
-  margin: 1rem 0 0 1rem;
+  margin: 0.5rem 0 0 1rem !important;
   font-size: 2rem;
   color: rgba(30, 128, 0, 0.658);
 }
@@ -52,8 +59,6 @@
 }
 .FieldPage__actions {
   width: 30% !important;
+  position: relative;
+  min-height: 50vh;
 }
-/* .FieldLoader {
-  width: 60rem;
-  font-size: 2rem;
-} */

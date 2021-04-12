@@ -48,11 +48,14 @@ export default function Goal({ data }) {
           <p className="Goal__description">{description}</p>
           <div className="Goal__time">
             <span>{startDate.toLocaleString("fr-FR").slice(0, 10)}</span>
-            <span>{endDate.toLocaleString("fr-FR").slice(0, 10)}</span>
+            <span>{endDate.toLocaleString("fr-FR").slice(0, 10)}</span>{" "}
+            <button
+              onClick={() => dispatch(goalPartners(data._id))}
+              className="GoalLT__partners"
+            >
+              Search for peers
+            </button>
           </div>
-          <button onClick={() => dispatch(goalPartners(data._id))}>
-            Search for peers
-          </button>
         </div>
         <ModalAddGoal
           fieldId={data.fieldId}

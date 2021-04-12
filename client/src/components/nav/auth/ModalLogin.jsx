@@ -4,8 +4,10 @@ import "./ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { login_action } from "../../../actions/auth_actions";
+import isEmail from "validator/lib/isEmail";
+import { toastr } from "react-redux-toastr";
 
-export default function ModalLogin() {
+export default function ModalLogin({ props }) {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -17,17 +19,20 @@ export default function ModalLogin() {
   const init = () => {
     setInputs({ email: "", password: "" });
     setOpen(false);
+    history.push(history.location.pathname);
   };
 
   const dispatch = useDispatch();
   async function submitForm(e) {
     e.preventDefault();
-    await dispatch(login_action(inputs));
+    if (isEmail(inputs.email)) await dispatch(login_action(inputs));
+    else toastr.error("error", "your email is not valid");
   }
   useEffect(() => {
     if (authenticated && !loading) {
       init();
     }
+    // eslint-disable-next-line
   }, [authenticated, loading, history]);
   return (
     <Modal
@@ -43,9 +48,19 @@ export default function ModalLogin() {
     >
       <Modal.Header>Login</Modal.Header>
       <Modal.Content>
-        <Form>
-          <Form.Field required>
+        {/* <form>
+          <input
+            type="email"
+            class="txtPost"
+            placeholder="Post a question?"
+            required
+          />
+          <button class="btnPost btnBlue">Post</button>
+        </form> */}
+        <Form onSubmit={submitForm}>
+          <Form.Field>
             <input
+              required
               placeholder="Email"
               type="email"
               name="email"
@@ -55,7 +70,7 @@ export default function ModalLogin() {
               value={inputs.email}
             />
           </Form.Field>
-          <Form.Field required>
+          <Form.Field>
             <input
               placeholder="Password"
               type="password"
@@ -64,6 +79,7 @@ export default function ModalLogin() {
                 setInputs({ ...inputs, [e.target.name]: e.target.value })
               }
               value={inputs.password}
+              required
             />
           </Form.Field>
           <Button content="Cancel" onClick={init} secondary />
@@ -73,7 +89,6 @@ export default function ModalLogin() {
             icon="checkmark"
             type="submit"
             loading={loading}
-            onClick={submitForm}
             positive
           />
         </Form>

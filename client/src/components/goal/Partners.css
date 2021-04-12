@@ -1,7 +1,5 @@
 .partners {
-  /* width: 100%; */
   display: grid;
-  height: 50rem;
   grid-template-rows: repeat(auto-fit, 9rem);
   grid-row-gap: 2rem;
 }
@@ -22,6 +20,7 @@
   padding: 1.5rem;
   border-radius: 1rem;
   align-items: center;
+  background-color: white;
 }
 
 .partner__name {
@@ -38,7 +37,4 @@
   font-size: 1.8rem !important;
   cursor: pointer;
   margin-top: -2rem !important;
-}
-.partner__chat:hover {
-  color: white;
 }

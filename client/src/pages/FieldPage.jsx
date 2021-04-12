@@ -47,7 +47,7 @@ export default function FieldPage() {
             <ModalAddField open={openModalAdd} setOpen={handleAddField} />
           </div>
           {loadingField ? (
-            <Loader active inline="centered" className="FieldLoader" />
+            <Loader active className="spinner" />
           ) : (
             <div className="FielPage__fields">
               {name?.map((el) => (
@@ -60,7 +60,7 @@ export default function FieldPage() {
           <h2>{format(new Date(), "EEEE dd MMMM")}</h2>
           <h3>Today actions :</h3>
           {loadingAction ? (
-            <Loader active inline="centered" />
+            <Loader active className="spinner" />
           ) : (
             <div>
               {actions?.map((action) => (

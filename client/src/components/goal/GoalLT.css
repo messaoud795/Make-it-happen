@@ -34,3 +34,7 @@
 .Goal__time * {
   margin-right: 1rem;
 }
+.GoalLT__partners {
+  padding: 0 5px;
+  margin: auto;
+}

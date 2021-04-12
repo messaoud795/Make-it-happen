@@ -15,18 +15,18 @@ export default function Chat() {
   useEffect(() => {
     dispatch(loadChats());
 
-    const pusher = new Pusher("22769e8d448bb4cddf2c", {
-      cluster: "eu",
-    });
-    const channel = pusher.subscribe("chats");
-    var newMsg = null;
-    channel.bind("updated", function (data) {
-      newMsg = data;
-      if (newMsg) {
-        dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
-        newMsg = null;
-      }
-    });
+    // const pusher = new Pusher("22769e8d448bb4cddf2c", {
+    //   cluster: "eu",
+    // });
+    // const channel = pusher.subscribe("chats");
+    // var newMsg = null;
+    // channel.bind("updated", function (data) {
+    //   newMsg = data;
+    //   if (newMsg) {
+    //     dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
+    //     newMsg = null;
+    //   }
+    // });
   }, [dispatch]);
 
   return (

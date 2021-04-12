@@ -4,24 +4,36 @@ import "./Discussion.css";
 import InputEmoji from "react-input-emoji";
 import { addMsg } from "../actions/chat_actions";
 import { useDispatch, useSelector } from "react-redux";
+import { CHAT_RESET_NOTIF } from "../actions/actionsTypes";
+import { useParams } from "react-router";
 
 export default function Discussion({ partner }) {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const { chats } = useSelector((state) => state.chats);
+  const { partners } = useSelector((state) => state.goal);
   const textinput = useRef();
+  const lastMsg = useRef();
   const dispatch = useDispatch();
+  const partnerId = useParams().partnerId;
+
   useEffect(() => {
+    lastMsg.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
+  useEffect(() => {
+    dispatch({ type: CHAT_RESET_NOTIF });
     setMessages(
       chats?.filter(
         (chat) =>
-          chat.chatUsers[0]?._id === partner._id ||
-          chat.chatUsers[1]?._id === partner._id
+          chat.chatUsers[0]?._id === partnerId ||
+          chat.chatUsers[1]?._id === partnerId
       )[0]?.messages
     );
+  }, [chats, partner?._id, dispatch]);
 
-    // window.scrollBy(0, 80);
-  }, [chats, partner?._id]);
+  useEffect(() => {
+    lastMsg.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMsg = () => {
     let data = { text, partnerId: partner._id, timestamp: Date.now() };
@@ -38,7 +50,7 @@ export default function Discussion({ partner }) {
           <p className="discussion__header-user">
             {partner?.firstName + " " + partner?.lastName}
           </p>
-          <p className="discussion__header-msg">last seen at</p>
+          {/* <p className="discussion__header-msg">last seen at</p> */}
         </div>
       </div>
       <div className="discussion__body">
@@ -55,6 +67,7 @@ export default function Discussion({ partner }) {
             </p>
           </div>
         ))}
+        <div ref={lastMsg}></div>
       </div>
       <div className="discussion__footer">
         <InputEmoji

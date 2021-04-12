@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import "./ModalRegister.css";
 import { register_action } from "../../../actions/auth_actions";
 import { useDispatch, useSelector } from "react-redux";
 import ImageUpload from "./ImageUpload";
+import isEmail from "validator/lib/isEmail";
+import { toastr } from "react-redux-toastr";
 
 export default function ModalRegister() {
   const [inputs, setInputs] = useState({
@@ -22,20 +24,31 @@ export default function ModalRegister() {
   function getFile(file) {
     setInputs({ ...inputs, image: file });
   }
-  const submitForm = (e) => {
+  useEffect(() => {
+    if (authenticated) setOpen(false);
+  }, [authenticated]);
+
+  function submitForm(e) {
     e.preventDefault();
     const formData = new FormData();
     //include state different from null for the update request
     formData.append("firstName", inputs.firstName);
     formData.append("lastName", inputs.lastName);
-    formData.append("email", inputs.email);
-    formData.append("password", inputs.password);
+    if (isEmail(inputs.email)) formData.append("email", inputs.email);
+    else {
+      toastr.error("error", "your email is not valid");
+      return;
+    }
+
+    if (inputs.password.length > 4)
+      formData.append("password", inputs.password);
+    else {
+      toastr.error("error", "your password should be more than 4 caracters");
+      return;
+    }
     formData.append("image", inputs.image);
     dispatch(register_action(formData));
-    if (authenticated && !loading) {
-      setOpen(false);
-    }
-  };
+  }
 
   return (
     <Modal
@@ -48,8 +61,9 @@ export default function ModalRegister() {
       <Modal.Header>Create your account</Modal.Header>
       <Modal.Content>
         <Form onSubmit={submitForm}>
-          <Form.Field required>
+          <Form.Field>
             <input
+              required={true}
               placeholder="First Name"
               name="firstName"
               onChange={(e) =>
@@ -60,6 +74,7 @@ export default function ModalRegister() {
           </Form.Field>
           <Form.Field>
             <input
+              required
               name="lastName"
               placeholder="Last Name"
               onChange={(e) =>
@@ -82,6 +97,7 @@ export default function ModalRegister() {
                 setInputs({ ...inputs, [e.target.name]: e.target.value })
               }
               value={inputs.email}
+              required
             />
           </Form.Field>
           <Form.Field required>
@@ -93,6 +109,7 @@ export default function ModalRegister() {
                 setInputs({ ...inputs, [e.target.name]: e.target.value })
               }
               value={inputs.password}
+              required
             />
           </Form.Field>
           <Button content=" Cancel" onClick={() => setOpen(false)} secondary />
@@ -102,7 +119,6 @@ export default function ModalRegister() {
             icon="checkmark"
             type="submit"
             loading={loading}
-            onClick={submitForm}
             positive
           />
         </Form>

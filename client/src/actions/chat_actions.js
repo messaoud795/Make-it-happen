@@ -22,7 +22,6 @@ export const loadChats = () => {
     try {
       dispatch({ type: CHAT_ACTION_START });
       let { data } = await axios.get("/api/msg/", configHeaders());
-      console.log(data);
       dispatch({ type: CHAT_LOAD_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: CHAT_ACTION_ERROR, payload: error });

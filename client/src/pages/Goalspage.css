@@ -2,6 +2,7 @@
   padding: 3rem;
   display: flex;
   justify-content: space-between;
+  height: 100%;
 }
 
 .GoalsPage__header {
@@ -17,4 +18,8 @@
 }
 .GoalsPage__tools {
   width: 40%;
+}
+.GoalsPage__partners {
+  position: relative;
+  min-height: 30vh;
 }

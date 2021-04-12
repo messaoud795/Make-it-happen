@@ -13,6 +13,7 @@ import Partners from "../components/goal/Partners";
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
   const [listGoalLT, setListGoalLT] = useState("");
+  const [showPomodoro, setShowPomodoro] = useState(false);
   const field = useSelector((state) => state.field);
   const { goals, loadingGoal } = useSelector((state) => state.goal);
   const fieldId = useParams().fieldId;
@@ -56,10 +57,20 @@ export default function GoalsPage(props) {
         </div>
       </div>
       <div className="GoalsPage__tools">
-        <h2>Tools to finish actions :</h2>
-        <Promodoro />
-        <div>
-          {loadingGoal ? <Loader active className="loader" /> : <Partners />}
+        <h2>Get things done</h2>
+        <button onClick={() => setShowPomodoro(true)}>Pomodoro</button>
+        <button onClick={() => setShowPomodoro(false)}>find peers</button>
+        {showPomodoro && <Promodoro />}
+        <div className="GoalsPage__partners">
+          {!showPomodoro && (
+            <div>
+              {loadingGoal ? (
+                <Loader active className="spinner" />
+              ) : (
+                <Partners />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

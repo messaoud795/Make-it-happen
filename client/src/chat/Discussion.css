@@ -12,7 +12,8 @@
 }
 
 .discussion__header-user {
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 .discussion__body {

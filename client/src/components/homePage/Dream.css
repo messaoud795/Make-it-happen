@@ -34,6 +34,7 @@
   animation-name: moveInLeft;
   animation-duration: 2s;
   animation-timing-function: ease-out;
+  animation-delay: 1s;
 }
 .mission__text-quote {
   display: block;
@@ -43,6 +44,7 @@
   animation-name: moveInRight;
   animation-duration: 2s;
   animation-timing-function: ease-out;
+  animation-delay: 1s;
 }
 
 @keyframes moveInLeft {

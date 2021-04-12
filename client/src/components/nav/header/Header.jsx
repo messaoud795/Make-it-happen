@@ -10,15 +10,17 @@ import { loadProfile, logout_action } from "../../../actions/auth_actions";
 
 export default function Header() {
   const { authenticated, profile } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const handleLogout = () => {
-    dispatch(logout_action());
-  };
+  async function handleLogout() {
+    await dispatch(logout_action());
+  }
 
   useEffect(() => {
-    if (localStorage.getItem("token")) dispatch(loadProfile());
-  }, [dispatch]);
+    if (authenticated) dispatch(loadProfile());
+    else history.push(history.location.pathname);
+  }, [dispatch, authenticated, history]);
 
   return (
     <div className="Header">
@@ -34,11 +36,11 @@ export default function Header() {
 
       {authenticated && (
         <div className="header__functions">
-          <Icon
+          {/* <Icon
             name="chat"
             onClick={() => history.push(`/chat/`)}
             className="header__chat"
-          />
+          /> */}
           <Menu.Item position="right" className="Header__menu">
             {profile?.image ? (
               <img src={`/${profile?.image}`} alt="" className="Header__img" />

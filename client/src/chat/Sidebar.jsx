@@ -9,6 +9,12 @@ export default function Sidebar() {
   const { profile } = useSelector((state) => state.auth);
   const history = useHistory();
 
+  const msgSender = (chat) => {
+    let msgUserId = chat?.messages[chat.messages.length - 1].userId;
+    let userId = profile?._id;
+    if (msgUserId === userId) return "You  ";
+  };
+
   return (
     <div className="sidebar">
       <h2>Discussions</h2>
@@ -21,18 +27,21 @@ export default function Sidebar() {
           }
         >
           <img
-            src={`/${partner(chat.chatUsers, profile._id)?.image}`}
+            src={`/${partner(chat.chatUsers, profile?._id)?.image}`}
             alt=""
             className="sidebar__discussion-img"
           />
 
           <div>
-            <p>
-              {partner(chat.chatUsers, profile._id).firstName +
+            <p className="sidebar__name">
+              {partner(chat?.chatUsers, profile._id).firstName +
                 "  " +
-                partner(chat.chatUsers, profile.id).lastName}
+                partner(chat?.chatUsers, profile._id).lastName}
             </p>
-            <p>{chat.messages[chat.messages.length - 1].text}</p>
+            <p>
+              {msgSender(chat)}
+              {chat?.messages[chat.messages.length - 1].text}
+            </p>
           </div>
         </div>
       ))}
