@@ -46,6 +46,10 @@
   margin: 0.5rem 0 0 1rem !important;
   font-size: 2rem;
   color: rgba(30, 128, 0, 0.658);
+  opacity: 0.5;
+}
+.iconAdd:hover {
+  opacity: 1;
 }
 .iconAdd:hover {
   cursor: pointer;

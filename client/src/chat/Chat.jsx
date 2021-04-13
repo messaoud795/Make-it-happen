@@ -5,8 +5,8 @@ import { loadChats } from "../actions/chat_actions";
 import "./Chat.css";
 import Discussion from "./Discussion";
 import Sidebar from "./Sidebar";
-import Pusher from "pusher-js";
-import { CHAT_ADD_SUCCESS } from "../actions/actionsTypes";
+// import Pusher from "pusher-js";
+// import { CHAT_ADD_SUCCESS } from "../actions/actionsTypes";
 
 export default function Chat() {
   const { partners } = useSelector((state) => state.goal);

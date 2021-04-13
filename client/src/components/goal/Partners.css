@@ -2,6 +2,8 @@
   display: grid;
   grid-template-rows: repeat(auto-fit, 9rem);
   grid-row-gap: 2rem;
+  margin-top: 2rem;
+  height: fit-content;
 }
 
 .partner__img {

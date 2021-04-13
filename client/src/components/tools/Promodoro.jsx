@@ -46,7 +46,6 @@ export default function Promodoro() {
 
   return (
     <div className="Promodoro">
-      <h2>Pomodoro</h2>{" "}
       <Timer
         className="Promodoro__timer"
         initialTime={900000}
@@ -106,6 +105,11 @@ export default function Promodoro() {
           </div>
         )}
       </Timer>
+      <p className="promodoro__description">
+        Focus on a task during 15mn, each time you notice that you are
+        distracted click on the counter. On the left, you have the goal to aim
+        for, on the right you have the number of distractions.
+      </p>
     </div>
   );
 }

@@ -1,22 +1,20 @@
 .Promodoro__time {
-  /* text-align: center; */
   text-align: center;
   width: 10rem;
-  height: 10rem;
   font-size: 2rem;
   color: cornflowerblue;
   border-radius: 50rem;
   border: 2px black solid;
   font-weight: 700;
   padding: 4.2rem 1rem;
-  margin: 1rem auto;
+  margin: 4rem 0 1rem 5rem;
   background-color: whitesmoke;
 }
 
 .Promodoro__distractions {
   position: absolute;
   top: 0rem;
-  left: 56%;
+  left: 33%;
   font-weight: 700;
   height: 3rem;
   width: 3rem;
@@ -28,7 +26,7 @@
   padding: 10px 8px;
   position: absolute;
   top: 0rem;
-  left: 35%;
+  left: 14%;
   font-weight: 700;
   height: 3rem;
   width: 3rem;
@@ -43,9 +41,10 @@
 
 .Promodoro__control {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-grow: 0;
+  margin-left: 6rem;
 }
 .single-digit {
   font-size: 1.5rem;
@@ -64,4 +63,10 @@
 }
 .ofcourse {
   background-color: rgb(255, 60, 0);
+}
+
+.promodoro__description {
+  padding: 2rem 5rem 0 2rem;
+  line-height: 1.5;
+  font-size: 1.1rem;
 }

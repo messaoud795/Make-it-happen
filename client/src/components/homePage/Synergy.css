@@ -34,3 +34,25 @@
   padding: 1.5rem;
   margin-top: -1rem;
 }
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .synergy__img {
+    width: 55%;
+    height: 30rem;
+  }
+  .synergy__video {
+    width: 28rem;
+    margin-left: -7rem;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .synergy__img {
+    display: none;
+  }
+  .synergy__video {
+    width: 90%;
+    margin: 0 2rem;
+  }
+}

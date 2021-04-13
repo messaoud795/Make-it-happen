@@ -18,8 +18,24 @@
 }
 .GoalsPage__tools {
   width: 40%;
+  height: 100%;
 }
 .GoalsPage__partners {
   position: relative;
-  min-height: 30vh;
+}
+
+.toolsBtn {
+  padding: 5px 10px;
+  margin-right: 1.5rem;
+  font-size: 1.1rem;
+  font-family: "Roboto";
+  letter-spacing: 1px;
+  background-color: white;
+  border-radius: 8px;
+}
+.activeBtn {
+  background-color: #7daf3f;
+  outline: none;
+  color: white;
+  font-weight: 500;
 }

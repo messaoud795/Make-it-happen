@@ -55,3 +55,18 @@
   color: white !important;
   cursor: pointer;
 }
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Header {
+    padding: 1.5rem 2rem;
+  }
+}
+
+/* phone screen 400px */
+@media (max-width: 25em) {
+  .Header__span {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+}

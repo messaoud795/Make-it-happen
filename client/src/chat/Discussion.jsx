@@ -4,14 +4,13 @@ import "./Discussion.css";
 import InputEmoji from "react-input-emoji";
 import { addMsg } from "../actions/chat_actions";
 import { useDispatch, useSelector } from "react-redux";
-import { CHAT_RESET_NOTIF } from "../actions/actionsTypes";
 import { useParams } from "react-router";
 
 export default function Discussion({ partner }) {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const { chats } = useSelector((state) => state.chats);
-  const { partners } = useSelector((state) => state.goal);
+  // const { partners } = useSelector((state) => state.goal);
   const textinput = useRef();
   const lastMsg = useRef();
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export default function Discussion({ partner }) {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });
   }, []);
   useEffect(() => {
-    dispatch({ type: CHAT_RESET_NOTIF });
     setMessages(
       chats?.filter(
         (chat) =>
@@ -29,7 +27,7 @@ export default function Discussion({ partner }) {
           chat.chatUsers[1]?._id === partnerId
       )[0]?.messages
     );
-  }, [chats, partner?._id, dispatch]);
+  }, [chats, partner?._id, dispatch, partnerId]);
 
   useEffect(() => {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });

@@ -9,9 +9,37 @@
   box-sizing: inherit;
 }
 html {
-  /* 1rem is 10 pixel */
-  font-size: 62.5%;
+  /* 1rem is 16 pixel */
   box-sizing: border-box;
+}
+
+/* 75em=1200px */
+@media (max-width: 75em) {
+  /* 1rem is 16 pixel */
+  html {
+    font-size: 90% !important;
+  }
+}
+/* 65.25em=900px */
+@media (max-width: 56.25em) {
+  /* 1rem is 16 pixel */
+
+  html {
+    font-size: 80% !important;
+  }
+}
+/* 65.25em=600px */
+@media (max-width: 37.5em) {
+  html {
+    font-size: 70% !important;
+  }
+}
+
+/* 112.5em=1800px */
+@media (min-width: 112.5em) {
+  html {
+    font-size: 110% !important;
+  }
 }
 
 body {
@@ -20,6 +48,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body h1 h2 {
+  font-family: "Roboto", sans-serif !important;
 }
 
 code {

@@ -9,26 +9,32 @@ import { Loader } from "semantic-ui-react";
 import { loadActions } from "../actions/action_actions";
 import Promodoro from "../components/tools/Promodoro";
 import Partners from "../components/goal/Partners";
+import { loadFields } from "../actions/field_actions";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
   const [listGoalLT, setListGoalLT] = useState("");
-  const [showPomodoro, setShowPomodoro] = useState(false);
+  const [showPomodoro, setShowPomodoro] = useState(true);
   const field = useSelector((state) => state.field);
   const { goals, loadingGoal } = useSelector((state) => state.goal);
   const fieldId = useParams().fieldId;
   const dispatch = useDispatch();
 
   useEffect(() => {
+    async function fetchFields() {
+      await dispatch(loadFields());
+    }
+    fetchFields();
+  }, [dispatch]);
+
+  useEffect(() => {
     async function fetchData() {
-      if (field.name) {
-        setfieldName(field.name.filter((el) => el._id === fieldId)[0].name);
-      }
+      setfieldName(field.name?.filter((el) => el._id === fieldId)[0].name);
       await dispatch(loadGoals(fieldId));
       await dispatch(loadActions(fieldId));
     }
     fetchData();
-  }, [dispatch, field, fieldId, field.name]);
+  }, [dispatch, fieldId, field.name]);
 
   useEffect(() => {
     setListGoalLT(goals?.filter((goal) => goal.category === "long term"));
@@ -38,7 +44,7 @@ export default function GoalsPage(props) {
     <div className="GoalsPage">
       <div className="GoalsPage__plan">
         <div className="GoalsPage__header">
-          <h1> {`Plan in ${fieldName.toLowerCase()} :`}</h1>
+          <h1> {`Plan in ${fieldName?.toLowerCase()} :`}</h1>
           <ModalAddGoal
             fieldId={fieldId}
             category="long term"
@@ -58,14 +64,28 @@ export default function GoalsPage(props) {
       </div>
       <div className="GoalsPage__tools">
         <h2>Get things done</h2>
-        <button onClick={() => setShowPomodoro(true)}>Pomodoro</button>
-        <button onClick={() => setShowPomodoro(false)}>find peers</button>
+        <button
+          onClick={() => setShowPomodoro(true)}
+          className={"toolsBtn " + (showPomodoro ? " activeBtn" : " ")}
+        >
+          Pomodoro
+        </button>
+        <button
+          onClick={() => setShowPomodoro(false)}
+          className={"toolsBtn " + (showPomodoro ? "" : "activeBtn")}
+        >
+          find peers
+        </button>
         {showPomodoro && <Promodoro />}
         <div className="GoalsPage__partners">
           {!showPomodoro && (
             <div>
               {loadingGoal ? (
-                <Loader active className="spinner" />
+                <Loader
+                  active
+                  className="spinner "
+                  style={{ marginTop: "10rem" }}
+                />
               ) : (
                 <Partners />
               )}

@@ -12,7 +12,6 @@ export default function Partners() {
 
   return (
     <div>
-      <h3>Partners</h3>
       <div className="partners">
         {partners?.map((partner) => (
           <div className="partner" key={partner._id}>
