@@ -7,14 +7,14 @@
   border: 2px black solid;
   font-weight: 700;
   padding: 4.2rem 1rem;
-  margin: 4rem 0 1rem 5rem;
+  margin: 4rem auto 1rem;
   background-color: whitesmoke;
 }
 
 .Promodoro__distractions {
   position: absolute;
   top: 0rem;
-  left: 33%;
+  left: 56%;
   font-weight: 700;
   height: 3rem;
   width: 3rem;
@@ -26,7 +26,7 @@
   padding: 10px 8px;
   position: absolute;
   top: 0rem;
-  left: 14%;
+  left: 36%;
   font-weight: 700;
   height: 3rem;
   width: 3rem;
@@ -34,6 +34,7 @@
   border: 1px solid black;
   background-color: blue;
   font-weight: 700;
+  text-align: center;
 }
 .Promodoro {
   position: relative;
@@ -41,10 +42,7 @@
 
 .Promodoro__control {
   display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  flex-grow: 0;
-  margin-left: 6rem;
+  justify-content: center;
 }
 .single-digit {
   font-size: 1.5rem;
@@ -56,6 +54,7 @@
 }
 .Promodoro__content {
   position: relative;
+  width: 100%;
 }
 
 .oncourse {
@@ -69,4 +68,30 @@
   padding: 2rem 5rem 0 2rem;
   line-height: 1.5;
   font-size: 1.1rem;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .Promodoro__distractions {
+    left: 54%;
+  }
+  .Promodoro__goal {
+    left: 38%;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Promodoro__distractions {
+    left: 56%;
+  }
+  .Promodoro__goal {
+    left: 36%;
+  }
+  .single-digit {
+    padding: 6px 7px;
+  }
+  .double-digit {
+    padding: 6px 10px;
+  }
 }

@@ -32,7 +32,7 @@ export default function Sidebar() {
             className="sidebar__discussion-img"
           />
 
-          <div>
+          <div className="sidebar__msg">
             <p className="sidebar__name">
               {partner(chat?.chatUsers, profile._id).firstName +
                 "  " +

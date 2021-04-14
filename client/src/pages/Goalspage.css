@@ -39,3 +39,20 @@
   color: white;
   font-weight: 500;
 }
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .GoalsPage {
+    flex-direction: column;
+  }
+  .GoalsPage__plan {
+    width: 90%;
+  }
+  .GoalsPage__tools {
+    width: 90%;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+}

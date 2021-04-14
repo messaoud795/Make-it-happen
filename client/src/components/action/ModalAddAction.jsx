@@ -45,7 +45,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
     e.preventDefault();
     if (
       endDate.getTime() - startDate.getTime() <= 0 ||
-      endDate.getTime() - startDate.getTime() > 86400
+      endDate.getTime() - startDate.getTime() > 36000000
     )
       toastr.error("Error", "Please enter a valid date range of several hours");
     else await dispatch(addAction(data));
@@ -144,7 +144,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
                 selected={endDate}
                 showTimeInput
                 timeFormat="HH:mm"
-                dateFormat="dd/MM/yyyy, hh:mm "
+                dateFormat="dd/MM/yyyy, HH:mm "
               />
             </Form.Field>
           </Form.Group>

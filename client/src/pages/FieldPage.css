@@ -1,5 +1,5 @@
 .FieldPage {
-  padding: 2rem;
+  padding: 3rem;
   width: 100% !important;
 }
 .spinner {
@@ -30,7 +30,6 @@
 .FieldPage__content {
   display: flex;
   justify-content: space-between;
-  padding: 0 2rem 0 1rem;
 }
 
 .FieldPage__sectionFields-header {
@@ -55,14 +54,36 @@
   cursor: pointer;
 }
 .FielPage__fields {
-  width: 50rem;
+  /* width: 50rem; */
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   column-gap: 1rem;
   row-gap: 3rem;
 }
 .FieldPage__actions {
-  width: 30% !important;
+  width: 40% !important;
   position: relative;
   min-height: 50vh;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .FieldPage__content {
+    flex-direction: column;
+  }
+  .FieldPage__sectionFields {
+    width: 100% !important;
+  }
+  .FieldPage__actions {
+    width: 80% !important;
+    margin-top: 3rem;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .FieldPage__quote {
+    width: 85%;
+    margin: 0 auto 2rem !important;
+  }
 }

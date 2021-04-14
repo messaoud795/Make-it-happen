@@ -2,5 +2,17 @@
   display: grid;
   padding: 2rem;
   grid-template-columns: 30% 70%;
-  /* grid-column-gap: 2rem; */
+}
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .chat {
+    padding: 1rem;
+    grid-template-columns: 35% 65%;
+  }
+}
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .chat {
+    grid-template-columns: 25% 75% !important;
+  }
 }

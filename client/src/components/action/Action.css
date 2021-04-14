@@ -9,6 +9,7 @@
 .action__description {
   display: flex;
   justify-content: space-between;
+  font-weight: 800;
 }
 .action__operations {
   display: none;
@@ -35,4 +36,7 @@
 }
 .action__time * {
   margin-right: 1rem;
+}
+.action__priority {
+  font-size: 1rem;
 }
