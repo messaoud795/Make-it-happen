@@ -37,6 +37,7 @@ app.use("/api/goal", require("./routes/goalRoute"));
 app.use("/api/action", require("./routes/actionRoute"));
 app.use("/api/promodoro", require("./routes/promodoroRoute"));
 app.use("/api/msg", require("./routes/msgRoute"));
+app.use("/api/payment", require("./routes/paymentRoute"));
 
 //sever starter
 app.listen(port, () => console.log(`Server is running on port ${port}`));

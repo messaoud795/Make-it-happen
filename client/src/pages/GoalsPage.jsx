@@ -10,6 +10,7 @@ import { loadActions } from "../actions/action_actions";
 import Promodoro from "../components/tools/Promodoro";
 import Partners from "../components/goal/Partners";
 import { loadFields } from "../actions/field_actions";
+import { payment } from "../actions/payment_actions";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -39,6 +40,11 @@ export default function GoalsPage(props) {
   useEffect(() => {
     setListGoalLT(goals?.filter((goal) => goal.category === "long term"));
   }, [goals]);
+
+  const handlePayment = () => {
+    setShowPomodoro(false);
+    dispatch(payment());
+  };
 
   return (
     <div className="GoalsPage">
@@ -71,7 +77,7 @@ export default function GoalsPage(props) {
           Pomodoro
         </button>
         <button
-          onClick={() => setShowPomodoro(false)}
+          onClick={handlePayment}
           className={"toolsBtn " + (showPomodoro ? "" : "activeBtn")}
         >
           find peers

@@ -1,6 +1,6 @@
 export const configHeaders = () => {
   const token = localStorage.getItem("token");
   if (token) {
-    return { headers: { Authorization: `Bearer ${token}` } };
+    return { headers: { authorization: `Bearer ${token}` } };
   }
 };

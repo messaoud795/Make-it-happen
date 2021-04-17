@@ -4,6 +4,7 @@ import Plan from "../components/homePage/Plan";
 import Tool from "../components/homePage/Tool";
 import Synergy from "../components/homePage/Synergy";
 import "./Home.css";
+import Footer from "../components/homePage/Footer";
 
 export const Home = () => {
   return (
@@ -12,6 +13,7 @@ export const Home = () => {
       <Plan />
       <Tool />
       <Synergy />
+      <Footer />
     </div>
   );
 };
