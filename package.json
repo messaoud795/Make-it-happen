@@ -8,9 +8,10 @@
     "build": "cd ./client && npm run build",
     "install-client": "cd ./client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "start": " nodemon server.js",
-    "client": "cd ./client && npm start",
-    "dev": "concurrently \"nodemon server.js\" \"npm run client\""
+    "back": " node server.js",
+    "client": "cd ./client && npm back",
+    "dev": "concurrently \"nodemon server.js\" \"npm run client\"",
+    "start": " nodemon server.js"
   },
   "author": "Nabil Messaoud",
   "license": "ISC",
