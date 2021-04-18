@@ -4,7 +4,7 @@ const auth = require("../middlewares/auth");
 const stripe = require("stripe")(process.env.stripeSecretKey);
 const User = require("../models/userModel");
 
-router.get("/checkout-session", auth, async (req, res) => {
+router.get("api/payment/checkout-session", auth, async (req, res) => {
   try {
     //   1)  get a product and user data
     let { email } = await User.findById(req.userData.userId, "email");
@@ -35,15 +35,11 @@ router.get("/checkout-session", auth, async (req, res) => {
     res.status(500).send({ status: "error" });
   }
 });
-// router.post("/webhook", (req, res) => {
-//   const payload = req.body;
-//   console.log("Got payload: " + payload);
+router.post("/webhook-checkout", (req, res) => {
+  const payload = req.body;
+  console.log("Got payload: " + payload);
 
-//   res.status(200);
-// });
-
-router.get("/", auth, (req, res) => {
-  console.log(object);
+  res.status(200);
 });
 
 module.exports = router;
