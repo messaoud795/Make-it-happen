@@ -16,8 +16,12 @@ app.use(cors());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   //send the react html if url not for api or images
-  app.get("*", function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  // app.get("*", function (req, res, next) {
+  //   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  //   next();
+  // });
+  app.get("*", (req, res, next) => {
+    res.sendFile(path.join(__dirname + "/client/build/index.html"));
     next();
   });
 }
@@ -27,7 +31,9 @@ connectDB();
 //change stream configuration
 connectPusher();
 //handle chechkout completed
-app.post("/webhook-checkout", (req, res) => {});
+app.post("/webhook-checkout", (req, res, next) => {
+  next();
+});
 
 //middlewares
 app.use(express.json({ extended: false }));
