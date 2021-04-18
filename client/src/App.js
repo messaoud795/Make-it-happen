@@ -14,6 +14,8 @@ import Pusher from "pusher-js";
 import { CHAT_ADD_SUCCESS } from "./actions/actionsTypes";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutFail from "./pages/CheckoutFail";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +76,12 @@ function App() {
           <HomeRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/field" component={FieldPage} />
           <PrivateRoute exact path="/chat/:partnerId" component={Chat} />
+          <PrivateRoute
+            exact
+            path="/checkout/success"
+            component={CheckoutSuccess}
+          />
+          <PrivateRoute exact path="/checkout/fail" component={CheckoutFail} />
         </Switch>
       </div>
     </Router>

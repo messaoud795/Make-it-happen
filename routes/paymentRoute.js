@@ -12,8 +12,8 @@ router.get("/checkout-session", auth, async (req, res) => {
     //2) create a checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      success_url: `${req.protocol}://${req.get("host")}/`,
-      cancel_url: `${req.protocol}://${req.get("host")}/`,
+      success_url: `${req.protocol}://${req.get("host")}/checkout/success/`,
+      cancel_url: `${req.protocol}://${req.get("host")}/checkout/fail/`,
       customer_email: email,
       line_items: [
         {
@@ -41,5 +41,9 @@ router.get("/checkout-session", auth, async (req, res) => {
 
 //   res.status(200);
 // });
+
+router.get("/", auth, (req, res) => {
+  console.log(object);
+});
 
 module.exports = router;
