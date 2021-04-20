@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const cors = require("cors");
 const path = require("path");
-const deployment = require("./middlewares/deployment");
 const chechoutCompleted = require("./middlewares/chechoutCompleted");
 
 //configuration

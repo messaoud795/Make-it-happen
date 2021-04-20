@@ -5,7 +5,6 @@ const User = require("../models/userModel");
 
 module.exports = (req, res, next) => {
   let event;
-  console.log("hiii");
   try {
     const signature = req.headers["stripe-signature"];
     event = stripe.webhooks.constructEvent(
@@ -17,9 +16,9 @@ module.exports = (req, res, next) => {
     return res.status(400).send(`Webhook error: ${error.message}`);
   }
   if (event.type === "checkout.session.completed") {
-    console.log(event.data.object.customer_email);
     User.findOneAndUpdate(
       { email: event.data.object.customer_email },
+      { paid: true },
       { new: true, upsert: true },
       (err, data) => {
         if (err) console.log(error);
