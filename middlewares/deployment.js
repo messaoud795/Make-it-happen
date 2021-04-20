@@ -1,4 +1,3 @@
-const express = require("express");
 const path = require("path");
 
 //send the react html if url not for api or images
