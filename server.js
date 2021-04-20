@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const cors = require("cors");
 const path = require("path");
+const deployment = require("./middlewares/deployment");
+const chechoutCompleted = require("./middlewares/chechoutCompleted");
 
 //configuration
 const app = express();
@@ -15,19 +17,7 @@ app.use(cors());
 //deployment
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  //send the react html if url not for api or images
-  app.get("*", function (req, res, next) {
-    let url = req.originalUrl;
-    if (url.startsWith("/uploads")) {
-      let file = url.slice(16);
-      res.sendFile(path.resolve(__dirname, "uploads", "images", file));
-      return;
-    } else if (!url.startsWith("/api/")) {
-      res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-      return;
-    }
-    next();
-  });
+  app.get("*", deployment);
 }
 
 //database connection
@@ -35,9 +25,11 @@ connectDB();
 //change stream configuration
 connectPusher();
 //handle chechkout completed
-app.post("/webhook-checkout", (req, res, next) => {
-  next();
-});
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  chechoutCompleted
+);
 
 //middlewares
 app.use(express.json({ extended: false }));

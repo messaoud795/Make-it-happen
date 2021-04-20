@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
 router.get("/profile", auth, (req, res) => {
   User.findById(
     req.userData.userId,
-    "firstName lastName image",
+    "firstName lastName image paid",
     (err, user) => {
       if (err) res.send(err);
       else res.send(user);
