@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
     console.log(event.data.object.customer_email);
     User.findOneAndUpdate(
       { email: event.data.object.customer_email },
-      { new: true, runValidators: true },
+      { new: true, upsert: true },
       (err, data) => {
         if (err) console.log(error);
       }
