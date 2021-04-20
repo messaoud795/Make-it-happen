@@ -18,6 +18,7 @@ export default function GoalsPage(props) {
   const [showPomodoro, setShowPomodoro] = useState(true);
   const field = useSelector((state) => state.field);
   const { goals, loadingGoal } = useSelector((state) => state.goal);
+  const { profile } = useSelector((state) => state.auth);
   const fieldId = useParams().fieldId;
   const dispatch = useDispatch();
 
@@ -42,8 +43,8 @@ export default function GoalsPage(props) {
   }, [goals]);
 
   const handlePayment = () => {
-    setShowPomodoro(false);
-    dispatch(payment());
+    if (profile.paid) setShowPomodoro(false);
+    else dispatch(payment());
   };
 
   return (
@@ -80,7 +81,7 @@ export default function GoalsPage(props) {
           onClick={handlePayment}
           className={"toolsBtn " + (showPomodoro ? "" : "activeBtn")}
         >
-          find peers
+          find peers Payable
         </button>
         {showPomodoro && <Promodoro />}
         <div className="GoalsPage__partners">
