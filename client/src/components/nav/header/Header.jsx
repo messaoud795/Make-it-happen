@@ -10,7 +10,6 @@ import { loadProfile, logout_action } from "../../../actions/auth_actions";
 
 export default function Header() {
   const { authenticated, profile } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const history = useHistory();
   async function handleLogout() {
@@ -36,14 +35,17 @@ export default function Header() {
 
       {authenticated && (
         <div className="header__functions">
-          {/* <Icon
-            name="chat"
-            onClick={() => history.push(`/chat/`)}
-            className="header__chat"
-          /> */}
           <Menu.Item position="right" className="Header__menu">
             {profile?.image ? (
-              <img src={`/${profile?.image}`} alt="" className="Header__img" />
+              <img
+                src={
+                  profile?.image.startsWith("http")
+                    ? `${profile?.image}`
+                    : `/${profile?.image}`
+                }
+                alt=""
+                className="Header__img"
+              />
             ) : (
               <Icon name="user circle" />
             )}

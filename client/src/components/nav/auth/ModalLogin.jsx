@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Modal } from "semantic-ui-react";
 import "./ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { login_action } from "../../../actions/auth_actions";
+import {
+  facebook_login,
+  google_login,
+  login_action,
+} from "../../../actions/auth_actions";
 import isEmail from "validator/lib/isEmail";
 import { toastr } from "react-redux-toastr";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 export default function ModalLogin({ props }) {
   const [inputs, setInputs] = useState({
@@ -34,6 +40,19 @@ export default function ModalLogin({ props }) {
     }
     // eslint-disable-next-line
   }, [authenticated, loading, history]);
+  //request google login
+  const responseSuccesGoogle = (response) => {
+    dispatch(google_login({ tokenId: response.tokenId }));
+  };
+  //request facebook login
+  const responseFacebook = (response) => {
+    dispatch(
+      facebook_login({
+        accessToken: response.accessToken,
+        userID: response.userID,
+      })
+    );
+  };
   return (
     <Modal
       className="ModalLogin"
@@ -48,15 +67,6 @@ export default function ModalLogin({ props }) {
     >
       <Modal.Header>Login</Modal.Header>
       <Modal.Content>
-        {/* <form>
-          <input
-            type="email"
-            class="txtPost"
-            placeholder="Post a question?"
-            required
-          />
-          <button class="btnPost btnBlue">Post</button>
-        </form> */}
         <Form onSubmit={submitForm}>
           <Form.Field>
             <input
@@ -94,13 +104,22 @@ export default function ModalLogin({ props }) {
         </Form>
       </Modal.Content>
       <Modal.Actions className="ModalLogin__social">
-        <Button color="facebook">
-          <Icon name="facebook" /> Facebook
-        </Button>
-
-        <Button color="google plus">
-          <Icon name="google plus" /> Google Plus
-        </Button>
+        <GoogleLogin
+          clientId="888276232633-e56suk9n75ci04dfcj7mrcolb318f1sv.apps.googleusercontent.com"
+          buttonText="Google"
+          onSuccess={responseSuccesGoogle}
+          onFailure={() => {}}
+          cookiePolicy={"single_host_origin"}
+          className="googleBtn"
+        />
+        <FacebookLogin
+          appId="748676669142105"
+          autoLoad={false}
+          textButton="    Facebook"
+          callback={responseFacebook}
+          icon="fa-facebook"
+          cssClass="facebookBtn"
+        />
       </Modal.Actions>
     </Modal>
   );

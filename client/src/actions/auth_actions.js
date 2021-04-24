@@ -42,11 +42,39 @@ export const login_action = (inputs) => {
       dispatch(asyncActionFinish());
     } catch (error) {
       dispatch(asyncActionError());
-      console.log(error);
       toastr.error("error", error);
     }
   };
 };
+
+export const google_login = (tokenId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(asyncActionStart());
+      const data = await axios.post("/api/user/google_login", tokenId);
+      await dispatch({ type: LOGIN_SUCCESS, payload: data });
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      dispatch(asyncActionError());
+      toastr.error("error", error);
+    }
+  };
+};
+
+export const facebook_login = (inputs) => {
+  return async (dispatch) => {
+    try {
+      dispatch(asyncActionStart());
+      const data = await axios.post("/api/user/facebook_login", inputs);
+      await dispatch({ type: LOGIN_SUCCESS, payload: data });
+      dispatch(asyncActionFinish());
+    } catch (error) {
+      dispatch(asyncActionError());
+      toastr.error("error", error);
+    }
+  };
+};
+
 export const logout_action = () => {
   return async (dispatch) => {
     try {

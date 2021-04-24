@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Modal } from "semantic-ui-react";
 import "./ModalRegister.css";
 import { register_action } from "../../../actions/auth_actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -123,15 +123,6 @@ export default function ModalRegister() {
           />
         </Form>
       </Modal.Content>
-      <Modal.Actions className="ModalRegister__social">
-        <Button color="facebook">
-          <Icon name="facebook" /> Facebook
-        </Button>
-
-        <Button color="google plus">
-          <Icon name="google plus" /> Google Plus
-        </Button>
-      </Modal.Actions>
     </Modal>
   );
 }
