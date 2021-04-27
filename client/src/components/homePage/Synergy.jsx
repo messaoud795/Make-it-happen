@@ -25,7 +25,7 @@ export default function Synergy() {
             </p>
             <p>
               <Icon name="check" className="synergy__icon" />
-              Pay with credit car in a secure way.
+              Pay with credit card in a secure way.
             </p>
           </div>
         </div>
