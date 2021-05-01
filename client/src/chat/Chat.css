@@ -1,7 +1,7 @@
 .chat {
   display: grid;
   padding: 2rem;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 25% 75%;
 }
 /* tab screen 900px */
 @media (max-width: 56.25em) {

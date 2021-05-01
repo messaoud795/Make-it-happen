@@ -15,7 +15,15 @@ export default function Partners() {
       <div className="partners">
         {partners?.map((partner) => (
           <div className="partner" key={partner._id}>
-            <img src={`/${partner.image}`} alt="" className="partner__img" />
+            <img
+              src={
+                partner.image.startsWith("http")
+                  ? `${partner.image}`
+                  : `/${partner.image}`
+              }
+              alt=""
+              className="partner__img"
+            />
             <div>
               <p className="partner__name">
                 {partner.firstName + " " + partner.lastName}

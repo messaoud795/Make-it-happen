@@ -43,7 +43,15 @@ export default function Discussion({ partner }) {
   return (
     <div className="discussion">
       <div className="discussion__header">
-        <img src={`/${partner?.image}`} alt="" className="discussion__img" />
+        <img
+          src={
+            partner?.image.startsWith("http")
+              ? `${partner?.image}`
+              : `/${partner?.image}`
+          }
+          alt=""
+          className="discussion__img"
+        />
         <div className="discussion__header-info">
           <p className="discussion__header-user">
             {partner?.firstName + " " + partner?.lastName}

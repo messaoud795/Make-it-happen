@@ -58,7 +58,6 @@ router.post("/add", auth, async (req, res) => {
 });
 
 router.patch("/edit", auth, (req, res) => {
-  console.log(req.body);
   Goal.findByIdAndUpdate(
     req.body.id,
     { ...req.body },

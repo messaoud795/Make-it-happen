@@ -14,7 +14,6 @@ export default function Sidebar() {
     let userId = profile?._id;
     if (msgUserId === userId) return "You  ";
   };
-
   return (
     <div className="sidebar">
       <h2>Discussions</h2>
@@ -27,11 +26,14 @@ export default function Sidebar() {
           }
         >
           <img
-            src={`/${partner(chat.chatUsers, profile?._id)?.image}`}
+            src={
+              partner(chat.chatUsers, profile?._id)?.image.startsWith("http")
+                ? `${partner(chat.chatUsers, profile?._id)?.image}`
+                : `/${partner(chat.chatUsers, profile?._id)?.image}`
+            }
             alt=""
             className="sidebar__discussion-img"
           />
-
           <div className="sidebar__msg">
             <p className="sidebar__name">
               {partner(chat?.chatUsers, profile._id).firstName +
