@@ -17,9 +17,9 @@ export default function Partners() {
           <div className="partner" key={partner._id}>
             <img
               src={
-                partner.image.startsWith("http")
-                  ? `${partner.image}`
-                  : `/${partner.image}`
+                partner?.image.startsWith("http")
+                  ? `${partner?.image}`
+                  : `/${partner?.image}`
               }
               alt=""
               className="partner__img"
