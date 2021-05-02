@@ -27,7 +27,6 @@ export const chatReducer = (state = initialstate, action) => {
       )[0];
       if (updatedChat)
         updatedChat.messages = [...updatedChat.messages, payload.msg];
-      console.log(updatedChat);
       return (state = {
         chats: [
           ...state.chats.filter((chat) => chat._id !== payload.chatId._id),

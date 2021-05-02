@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Chat = require("../models/chatModel");
 const Pusher = require("pusher");
-const { findById } = require("../models/chatModel");
 
 const connectPusher = () => {
   const pusher = new Pusher({

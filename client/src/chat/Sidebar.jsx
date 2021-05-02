@@ -12,7 +12,7 @@ export default function Sidebar() {
   const msgSender = (chat) => {
     let msgUserId = chat?.messages[chat.messages.length - 1].userId;
     let userId = profile?._id;
-    if (msgUserId === userId) return "You  ";
+    if (msgUserId === userId) return "You : ";
   };
   return (
     <div className="sidebar">

@@ -1,18 +1,5 @@
 .chat {
   display: grid;
-  padding: 2rem;
+  padding: 1rem 2rem 0.8rem;
   grid-template-columns: 25% 75%;
-}
-/* tab screen 900px */
-@media (max-width: 56.25em) {
-  .chat {
-    padding: 1rem;
-    grid-template-columns: 35% 65%;
-  }
-}
-/* phone screen 600px */
-@media (max-width: 37.5em) {
-  .chat {
-    grid-template-columns: 25% 75% !important;
-  }
 }
