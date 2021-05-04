@@ -25,20 +25,24 @@ router.get("/partners/:fieldId", auth, async (req, res) => {
     async (err, data) => {
       if (err) res.status(500).send(err);
       else {
-        let similarGoals = data.filter((el) =>
-          compareGoals(description, el.description)
-        );
-        let goals = await similarGoals.map((el) => el.userId);
-        let users = await User.find(
-          { _id: { $in: goals } },
-          "firstName lastName image"
-        );
-        for (const i in similarGoals) {
-          similarGoals[i] = { ...users[i]._doc, goal: similarGoals[i] };
-        }
+        try {
+          let similarGoals = data.filter((el) =>
+            compareGoals(description, el.description)
+          );
+          let goals = await similarGoals.map((el) => el.userId);
+          let users = await User.find(
+            { _id: { $in: goals } },
+            "firstName lastName image"
+          );
+          for (const i in similarGoals) {
+            similarGoals[i] = { ...users[i]._doc, goal: similarGoals[i] };
+          }
 
-        if (similarGoals.length === 0) res.send({ msg: "No partners found" });
-        res.send(similarGoals);
+          if (similarGoals.length === 0) res.send({ msg: "No partners found" });
+          res.send(similarGoals);
+        } catch (error) {
+          res.status(500).send({msg:"Server error"});
+        }
       }
     }
   );
