@@ -84,7 +84,7 @@ export default function Promodoro() {
                 onClick={() => {
                   start();
                   setTimerState("playing");
-                  setTimeout(saveDistractions, 10000);
+                  setTimeout(saveDistractions, 900000);
                 }}
               >
                 <Icon name="play circle" />
