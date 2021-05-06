@@ -20,7 +20,6 @@ router.post("/add", auth, async (req, res) => {
       (await Chat.findOne({
         chatUsers: [req.userData.userId, req.body.partnerId],
       }));
-    console.log(chat);
     if (chat)
       await Chat.findByIdAndUpdate(
         chat._id,
