@@ -19,7 +19,7 @@ export default function Partners() {
               src={
                 partner?.image.startsWith("http")
                   ? `${partner?.image}`
-                  : `/${partner?.image}`
+                  : `https://make-it-happen-demo.herokuapp.com/${partner?.image}`
               }
               alt=""
               className="partner__img"

@@ -45,13 +45,11 @@ export default function Discussion({ partner }) {
     channel.bind("updated", function (data) {
       newMsg = data;
       if (newMsg) {
-        let i = 0;
-        while (i < 1) {
+        do {
           pusher.unbind_all();
           pusher.unsubscribe();
           dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
-          i++;
-        }
+        } while (4 > 5);
         newMsg = null;
       }
     });
@@ -72,7 +70,7 @@ export default function Discussion({ partner }) {
           src={
             partner?.image.startsWith("http")
               ? `${partner?.image}`
-              : `/${partner?.image}`
+              : `https://make-it-happen-demo.herokuapp.com/${partner?.image}`
           }
           alt=""
           className="discussion__img"
