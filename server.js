@@ -1,11 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./config/connectDB");
-const connectPusher = require("./config/pusher");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const cors = require("cors");
 const path = require("path");
+const socketio = require("socket.io");
+const newMsg = require("./routes/msgRoute");
 const chechoutCompleted = require("./middlewares/chechoutCompleted");
 
 //configuration
@@ -32,8 +33,7 @@ if (process.env.NODE_ENV === "production") {
 
 //database connection
 connectDB();
-//change stream configuration
-connectPusher();
+
 //handle chechkout completed
 app.post(
   "/webhook-checkout",
@@ -55,6 +55,28 @@ app.use("/api/msg", require("./routes/msgRoute"));
 app.use("/api/payment", require("./routes/paymentRoute"));
 
 //sever starter
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+const expressServer = app.listen(port, () =>
+  console.log(`Server is running on port ${port}`)
+);
 
-//C:\Program Files\MongoDB\Server\3.4\bin
+// creation of socket.io server
+let io = socketio(expressServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+//join a discussion and send msgs to all users in it
+io.sockets.on("connection", (socket) => {
+  socket.emit("messageFromServer", { data: "Welcome to the socketio server" });
+  socket.on("dataToServer", (dataFromClient) => {
+    console.log(dataFromClient);
+  });
+
+  socket.on("join-room", (chatId) => {
+    socket.join(chatId);
+    module.exports = socket;
+  });
+});

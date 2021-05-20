@@ -6,7 +6,7 @@ import {
   CHAT_RESET_NOTIF,
 } from "../actions/actionsTypes";
 
-const initialstate = { chats: [], loadingMsgs: false, error: null, notif: 0 };
+const initialstate = { chats: [], loadingMsgs: false, error: null };
 
 export const chatReducer = (state = initialstate, action) => {
   const { type, payload } = action;
@@ -18,23 +18,26 @@ export const chatReducer = (state = initialstate, action) => {
         error: null,
         chats: payload,
         loadingMsgs: false,
-        notif: 0,
       });
 
     case CHAT_ADD_SUCCESS:
       let updatedChat = state.chats.filter(
-        (chat) => chat._id === payload.chatId._id
+        (chat) => chat._id === payload.chatId
       )[0];
-      if (updatedChat)
+
+      if (
+        updatedChat &&
+        updatedChat.messages[updatedChat.messages.length - 1]._id !==
+          payload.msg._id
+      )
         updatedChat.messages = [...updatedChat.messages, payload.msg];
       return (state = {
         chats: [
-          ...state.chats.filter((chat) => chat._id !== payload.chatId._id),
+          ...state.chats.filter((chat) => chat._id !== payload.chatId),
           updatedChat,
         ],
         loadingMsgs: false,
         error: null,
-        notif: state.notif + 1,
       });
     case CHAT_RESET_NOTIF:
       return (state = { ...state, notif: 0 });

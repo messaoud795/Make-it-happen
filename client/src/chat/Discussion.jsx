@@ -5,30 +5,39 @@ import { addMsg } from "../actions/chat_actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { CHAT_ADD_SUCCESS } from "../actions/actionsTypes";
-import Pusher from "pusher-js";
 import { parseISO, format } from "date-fns";
+import { io } from "socket.io-client";
 
 export default function Discussion({ partner }) {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [chatId, setChatId] = useState(null);
   const { chats } = useSelector((state) => state.chats);
   const textinput = useRef();
   const lastMsg = useRef();
   const dispatch = useDispatch();
   const partnerId = useParams().partnerId;
+  const socket = io("http://localhost:5000");
+
   //scroll to the end of the conversation when the page is loaded
   useEffect(() => {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });
+    socket.on("messageFromServer", (dataFromServer) => {
+      console.log(dataFromServer);
+      socket.emit("dataToServer", { data: "Data from the Client!" });
+    });
+    // eslint-disable-next-line
   }, []);
+
   //load the chat messages
   useEffect(() => {
-    setMessages(
-      chats?.filter(
-        (chat) =>
-          chat.chatUsers[0]?._id === partnerId ||
-          chat.chatUsers[1]?._id === partnerId
-      )[0]?.messages
-    );
+    let activeChat = chats?.filter(
+      (chat) =>
+        chat.chatUsers[0]?._id === partnerId ||
+        chat.chatUsers[1]?._id === partnerId
+    )[0];
+    setChatId(activeChat?._id);
+    setMessages(activeChat?.messages);
   }, [chats, partner?._id, dispatch, partnerId]);
 
   //scroll down in each update of messages
@@ -36,29 +45,26 @@ export default function Discussion({ partner }) {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Connected, let's sign-up for to receive messages for this room
   useEffect(() => {
-    const pusher = new Pusher("22769e8d448bb4cddf2c", {
-      cluster: "eu",
+    if (chatId) {
+      socket.on("connect", function () {
+        socket.emit("join-room", chatId);
+      });
+    }
+
+    socket.on("sendMsg", (newMsg) => {
+      dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
     });
-    const channel = pusher.subscribe("chats");
-    var newMsg = null;
-    channel.bind("updated", function (data) {
-      newMsg = data;
-      if (newMsg) {
-        do {
-          pusher.unbind_all();
-          pusher.unsubscribe();
-          dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
-        } while (4 > 5);
-        newMsg = null;
-      }
-    });
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, [chatId]);
+
   //save the msg with request to the database
   const sendMsg = (e) => {
     e.preventDefault();
     let data = { text, partnerId: partner._id, timestamp: Date.now() };
     dispatch(addMsg(data));
+    socket.emit("add-msg", data);
     setText("");
     textinput.current.focus();
   };

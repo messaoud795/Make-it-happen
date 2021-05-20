@@ -27,8 +27,8 @@ export default function Sidebar() {
         >
           <img
             src={
-              partner(chat.chatUsers, profile?._id)?.image.startsWith("http")
-                ? `${partner(chat.chatUsers, profile?._id)?.image}`
+              partner(chat?.chatUsers, profile?._id)?.image.startsWith("http")
+                ? `${partner(chat?.chatUsers, profile?._id)?.image}`
                 : `https://make-it-happen-demo.herokuapp.com/${
                     partner(chat.chatUsers, profile?._id)?.image
                   }`

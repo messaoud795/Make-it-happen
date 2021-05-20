@@ -6,6 +6,7 @@ const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 
 router.post("/add", auth, async (req, res) => {
+  const socket = require("../server");
   try {
     const newMsg = new Msg({
       text: req.body.text,
@@ -27,10 +28,16 @@ router.post("/add", auth, async (req, res) => {
         { upsert: true }
       );
     else await Chat.create({ chatUsers: chatUsers, messages: newMsg });
-
     res.status(200).send(newMsg);
+
+    //emitt the msg to all clients that are joined the same room
+    socket
+      .to(chat._id.toString())
+      .emit("sendMsg", { chatId: chat._id, msg: newMsg });
+    console.log("msg event emeted");
   } catch (error) {
     res.status(500).send({ msg: "Server error" });
+    console.log(error);
   }
 });
 
