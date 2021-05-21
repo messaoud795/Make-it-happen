@@ -62,7 +62,7 @@ const expressServer = app.listen(port, () =>
 // creation of socket.io server
 let io = socketio(expressServer, {
   cors: {
-    origin: "https://make-it-happen-demo.herokuapp.com/",
+    origin: "https://make-it-happen-demo.herokuapp.com",
     methods: ["GET", "POST"],
     credentials: true,
   },

@@ -17,7 +17,7 @@ export default function Discussion({ partner }) {
   const lastMsg = useRef();
   const dispatch = useDispatch();
   const partnerId = useParams().partnerId;
-  const socket = io("http://localhost:5000");
+  const socket = io("https://make-it-happen-demo.herokuapp.com");
 
   //scroll to the end of the conversation when the page is loaded
   useEffect(() => {
