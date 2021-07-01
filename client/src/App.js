@@ -1,17 +1,19 @@
 import "./App.css";
-import { Home } from "./pages/Home";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
 } from "react-router-dom";
-import FieldPage from "./pages/FieldPage";
 import Header from "./components/nav/header/Header";
-import GoalsPage from "./pages/GoalsPage";
-import Chat from "./chat/Chat";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import CheckoutFail from "./pages/CheckoutFail";
+import { Loader } from "semantic-ui-react";
+const Home = React.lazy(() => import("./pages/Home"));
+const FieldPage = React.lazy(() => import("./pages/FieldPage"));
+const GoalsPage = React.lazy(() => import("./pages/GoalsPage"));
+const Chat = React.lazy(() => import("./chat/Chat"));
+const CheckoutSuccess = React.lazy(() => import("./pages/FieldPage"));
+const CheckoutFail = React.lazy(() => import("./pages/CheckoutFail"));
 
 function App() {
   function HomeRoute(props) {
@@ -50,18 +52,24 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <Switch>
-          <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
-          <HomeRoute exact path="/" component={Home} />
-          <PrivateRoute exact path="/field" component={FieldPage} />
-          <PrivateRoute exact path="/chat/:partnerId" component={Chat} />
-          <PrivateRoute
-            exact
-            path="/checkout/success"
-            component={CheckoutSuccess}
-          />
-          <PrivateRoute exact path="/checkout/fail" component={CheckoutFail} />
-        </Switch>
+        <Suspense fallback={<Loader active className="spinner" />}>
+          <Switch>
+            <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
+            <HomeRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/field" component={FieldPage} />
+            <PrivateRoute exact path="/chat/:partnerId" component={Chat} />
+            <PrivateRoute
+              exact
+              path="/checkout/success"
+              component={CheckoutSuccess}
+            />
+            <PrivateRoute
+              exact
+              path="/checkout/fail"
+              component={CheckoutFail}
+            />
+          </Switch>
+        </Suspense>
       </div>
     </Router>
   );
