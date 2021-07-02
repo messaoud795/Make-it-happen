@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res, next) => {
     let url = req.originalUrl;
     res.setHeader("Accept-Encoding", "gzip, compress, br");
+    res.redirect("https://" + req.headers.host + req.url);
     if (url.startsWith("/uploads")) {
       let file = url.slice(16);
       res.sendFile(path.resolve(__dirname, "uploads", "images", file));
