@@ -31,7 +31,12 @@
     "semantic-ui-react": "^2.0.3",
     "socket.io-client": "^4.1.1",
     "validator": "^13.5.2",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "workbox-core": "^6.1.5",
+    "workbox-expiration": "^6.1.5",
+    "workbox-precaching": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
