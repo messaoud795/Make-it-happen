@@ -21,6 +21,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res, next) => {
     let url = req.originalUrl;
+    if (!req.secure) res.redirect("https://" + req.headers.host + req.url);
+
     res.setHeader("Accept-Encoding", "gzip, compress, br");
     if (url.startsWith("/uploads")) {
       let file = url.slice(16);
