@@ -9,6 +9,7 @@ const socketio = require("socket.io");
 const newMsg = require("./routes/msgRoute");
 const chechoutCompleted = require("./middlewares/chechoutCompleted");
 var compression = require("compression");
+var sslRedirect = require("heroku-ssl-redirect");
 
 //configuration
 const app = express();
@@ -19,10 +20,9 @@ app.use(compression());
 //deployment
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+  app.use(sslRedirect());
   app.get("*", (req, res, next) => {
     let url = req.originalUrl;
-    if (!req.secure) res.redirect("https://" + req.headers.host + req.url);
-
     res.setHeader("Accept-Encoding", "gzip, compress, br");
     if (url.startsWith("/uploads")) {
       let file = url.slice(16);
