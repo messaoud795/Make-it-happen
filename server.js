@@ -9,12 +9,14 @@ const socketio = require("socket.io");
 const newMsg = require("./routes/msgRoute");
 const chechoutCompleted = require("./middlewares/chechoutCompleted");
 var compression = require("compression");
+var secure = require("ssl-express-www");
 
 //configuration
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(compression());
+app.use(secure);
 
 //deployment
 if (process.env.NODE_ENV === "production") {
