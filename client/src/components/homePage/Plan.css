@@ -94,3 +94,20 @@
     letter-spacing: 0px;
   }
 }
+
+/* phone screen 400px */
+@media (max-width: 25em) {
+  .plan__fig {
+    display: none;
+  }
+  .plan__description {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    color: white;
+    background-image: url("../../pictures/plan.jpg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-color: transparent !important;
+  }
+}
