@@ -41,7 +41,7 @@ export default function Header() {
                 src={
                   profile?.image.startsWith("http")
                     ? `${profile?.image}`
-                    : `https://make-it-happen-demo.herokuapp.com/${profile?.image}`
+                    : `/${profile?.image}`
                 }
                 alt=""
                 className="Header__img"
