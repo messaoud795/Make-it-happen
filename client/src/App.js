@@ -52,6 +52,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
+        {/* dynamic import */}
         <Suspense fallback={<Loader active className="spinner" />}>
           <Switch>
             <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
