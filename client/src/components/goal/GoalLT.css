@@ -39,3 +39,16 @@
   padding: 0 5px;
   margin: auto;
 }
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Goal__content {
+    clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0 100%);
+    margin-bottom: 2rem;
+    padding: 0.5 1.5rem;
+  }
+  .GoalLT__partners {
+    font-size: 1rem;
+    padding: 0 5px;
+    margin: auto;
+  }
+}

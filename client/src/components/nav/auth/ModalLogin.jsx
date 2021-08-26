@@ -115,7 +115,7 @@ export default function ModalLogin({ props }) {
         <FacebookLogin
           appId="748676669142105"
           autoLoad={false}
-          textButton="    Facebook"
+          textButton="Facebook"
           callback={responseFacebook}
           icon="fa-facebook"
           cssClass="facebookBtn"

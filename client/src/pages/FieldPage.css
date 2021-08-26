@@ -54,7 +54,6 @@
   cursor: pointer;
 }
 .FielPage__fields {
-  /* width: 50rem; */
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   column-gap: 1rem;
@@ -82,8 +81,11 @@
 
 /* phone screen 600px */
 @media (max-width: 37.5em) {
+  .FieldPage {
+    padding: 1.5rem;
+  }
   .FieldPage__quote {
-    width: 85%;
+    width: 95%;
     margin: 0 auto 2rem !important;
   }
 }

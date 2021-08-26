@@ -77,11 +77,11 @@
 /* phone screen 600px */
 @media (max-width: 37.5em) {
   .mission__text-header {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     letter-spacing: 3px;
   }
   .mission__text-quote {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }

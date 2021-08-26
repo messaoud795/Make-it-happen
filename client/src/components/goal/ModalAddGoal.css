@@ -35,3 +35,9 @@
 .Goal__status > label {
   margin-right: 10px !important;
 }
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .ModalRegister {
+    width: 85% !important;
+  }
+}
