@@ -15,7 +15,6 @@ export default function ModalAddAction({ fieldId, parentId }) {
     priority: "",
     type: "",
   });
-  const [endDate, setEndDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const { error, loadingAction } = useSelector((state) => state.action);
   const dispatch = useDispatch();
@@ -27,7 +26,6 @@ export default function ModalAddAction({ fieldId, parentId }) {
       type: "",
     });
     setStartDate(new Date());
-    setEndDate(new Date());
     setOpen(false);
   };
 
@@ -38,14 +36,13 @@ export default function ModalAddAction({ fieldId, parentId }) {
       priority,
       type,
       startDate,
-      endDate,
       fieldId,
       parentId,
     };
     e.preventDefault();
     if (
-      endDate.getTime() - startDate.getTime() <= 0 ||
-      endDate.getTime() - startDate.getTime() > 36000000
+      startDate.getTime() - startDate.getTime() <= 0 ||
+      startDate.getTime() - startDate.getTime() > 36000000
     )
       toastr.error("Error", "Please enter a valid date range of several hours");
     else await dispatch(addAction(data));
@@ -128,7 +125,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
           </Form.Group>
           <Form.Group widths="2">
             <Form.Field>
-              <label>Start date</label>
+              <label>Date</label>
               <DatePicker
                 onChange={(date) => setStartDate(date)}
                 selected={startDate}
@@ -137,7 +134,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
                 dateFormat="dd/MM/yyyy, HH:mm "
               />
             </Form.Field>
-            <Form.Field>
+            {/* <Form.Field>
               <label>End Date</label>
               <DatePicker
                 onChange={(date) => setEndDate(date)}
@@ -146,7 +143,7 @@ export default function ModalAddAction({ fieldId, parentId }) {
                 timeFormat="HH:mm"
                 dateFormat="dd/MM/yyyy, HH:mm "
               />
-            </Form.Field>
+            </Form.Field> */}
           </Form.Group>
           <Button content="Cancel" onClick={init} secondary />
           <Button

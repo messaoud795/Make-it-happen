@@ -13,11 +13,14 @@ router.get("/:fieldId", auth, (req, res) => {
 router.get("/all/today", auth, async (req, res) => {
   try {
     let actions = await Action.find({ userId: req.userData.userId });
+    let habits = await actions.filter((action) => action.type == "Daily habit");
+    // await habits.forEach((habit) => (habit.startDate = new Date()));
+
     let todayActions = await actions.filter(
       (el) =>
         el.startDate.toLocaleDateString() == new Date().toLocaleDateString()
     );
-
+    todayActions.push(...habits);
     res.send(todayActions);
   } catch (error) {
     res.send({ msg: "error" });
@@ -31,11 +34,11 @@ router.post("/add", auth, async (req, res) => {
       priority: req.body.priority,
       type: req.body.type,
       startDate: req.body.startDate,
-      endDate: req.body.endDate,
       fieldId: req.body.fieldId,
       parentId: req.body.parentId,
       userId: req.userData.userId,
     });
+
     await newAction.save();
     res.status(200).send({ msg: "success " });
   } catch (error) {

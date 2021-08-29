@@ -16,7 +16,6 @@ export default function ModalEditAction({
     priority: data.priority,
     type: data.type,
   });
-  const [endDate, setEndDate] = useState(data.endDate);
   const [startDate, setStartDate] = useState(data.startDate);
   const { error, loadingAction } = useSelector((state) => state.action);
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ export default function ModalEditAction({
       priority,
       type,
       startDate,
-      endDate,
     };
     await dispatch(editAction(Data));
     if (!loadingAction && !error) {
@@ -108,20 +106,10 @@ export default function ModalEditAction({
           </Form.Group>
           <Form.Group widths="2">
             <Form.Field>
-              <label>Start date</label>
+              <label>Date</label>
               <DatePicker
                 onChange={(date) => setStartDate(date)}
                 selected={startDate}
-                showTimeInput
-                timeFormat="HH:mm"
-                dateFormat="dd/MM/yyyy,  HH:mm"
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>End Date</label>
-              <DatePicker
-                onChange={(date) => setEndDate(date)}
-                selected={endDate}
                 showTimeInput
                 timeFormat="HH:mm"
                 dateFormat="dd/MM/yyyy,  HH:mm"
