@@ -11,6 +11,7 @@ import Promodoro from "../components/tools/Promodoro";
 import Partners from "../components/goal/Partners";
 import { loadFields } from "../actions/field_actions";
 import { payment } from "../actions/payment_actions";
+import { toastr } from "react-redux-toastr";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -44,7 +45,10 @@ export default function GoalsPage(props) {
 
   const handlePayment = () => {
     if (profile.paid) setShowPomodoro(false);
-    else dispatch(payment());
+    else {
+      toastr.success("Payment", " the Payment page is loading");
+      dispatch(payment());
+    }
   };
 
   return (

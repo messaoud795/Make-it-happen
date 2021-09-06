@@ -33,6 +33,12 @@
   background-color: white;
   border-radius: 8px;
 }
+.toolsBtn:hover {
+  cursor: pointer;
+}
+.toolsBtn:focus {
+  background-color: rgb(62, 200, 235);
+}
 .activeBtn {
   background-color: #7daf3f;
   outline: none;
