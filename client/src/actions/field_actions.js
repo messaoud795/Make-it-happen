@@ -28,13 +28,13 @@ export const editField = (data) => {
       dispatch({ type: FIELD_ACTION_START });
       let res = await axios.patch("/api/field/edit", data, configHeaders());
       dispatch({ type: FIELD_EDIT_SUCCESS });
-      if (res.data.msg === "success")
-        toastr.success("Success!", "Field name has been updated successfully");
-      else toastr.error("error!", res.data.msg);
-      dispatch(loadFields());
+      if (res.data.msg === "success") {
+        toastr.success("Success!", res.data.msg);
+        dispatch(loadFields());
+      } else toastr.error("error!", res.data.msg);
     } catch (error) {
       dispatch({ type: FIELD_ACTION_ERROR, payload: error });
-      toastr.error("error!", "Field name not updated");
+      toastr.error("error!", "servor error");
     }
   };
 };

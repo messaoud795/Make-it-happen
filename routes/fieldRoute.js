@@ -11,11 +11,14 @@ router.get("/", auth, (req, res) => {
 });
 
 router.post("/add", auth, async (req, res) => {
+  console.log(req.body.name);
   var field = {
     userId: req.userData.userId,
     name: req.body.name,
   };
-  let search = await Field.find(field);
+  let search = await Field.findOne(field);
+  console.log({ search });
+
   if (search) res.send({ msg: "name already exists" });
   else
     try {
@@ -27,19 +30,25 @@ router.post("/add", auth, async (req, res) => {
     }
 });
 
-router.patch("/edit", auth, (req, res) => {
-  Field.findByIdAndUpdate(
-    req.body.id,
-    { name: req.body.name },
-    { new: true, runValidators: true },
-    (err, data) => {
-      if (err) {
-        err.keyPattern.name === 1
-          ? res.send({ msg: "name already exists" })
-          : res.status(500).send({ msg: "Server error" });
-      } else res.status(200).send({ msg: "success " });
-    }
-  );
+router.patch("/edit", auth, async (req, res) => {
+  const foundField = await Field.findOne({
+    userId: req.userData.userId,
+    name: req.body.name,
+  });
+
+  if (foundField) {
+    res.send({ msg: "name already exists" });
+  } else
+    Field.findOneAndUpdate(
+      { _id: req.body.id },
+      { name: req.body.name },
+      { new: true, runValidators: true },
+      (err, data) => {
+        if (err) {
+          res.status(500).send({ msg: "Server error" });
+        } else res.status(200).send({ msg: "success" });
+      }
+    );
 });
 
 router.delete("/delete/:id", auth, (req, res) => {

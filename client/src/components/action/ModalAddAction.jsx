@@ -4,7 +4,7 @@ import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { addAction, loadActions } from "../../actions/action_actions";
-import { toastr } from "react-redux-toastr";
+// import { toastr } from "react-redux-toastr";
 
 import "./ModalAddAction.css";
 
