@@ -8,12 +8,13 @@ import {
 } from "react-router-dom";
 import Header from "./components/nav/header/Header";
 import { Loader } from "semantic-ui-react";
+// import CheckoutSuccess from "./pages/CheckoutSuccess";
 const Home = React.lazy(() => import("./pages/Home"));
 const FieldPage = React.lazy(() => import("./pages/FieldPage"));
 const GoalsPage = React.lazy(() => import("./pages/GoalsPage"));
 const Chat = React.lazy(() => import("./chat/Chat"));
-const CheckoutSuccess = React.lazy(() => import("./pages/FieldPage"));
-const CheckoutFail = React.lazy(() => import("./pages/CheckoutFail"));
+const CheckoutSuccess = React.lazy(() => import("./pages/CheckoutSuccess"));
+ const CheckoutFail = React.lazy(() => import("./pages/CheckoutFail"));
 
 function App() {
   function HomeRoute(props) {
@@ -54,22 +55,22 @@ function App() {
         <Header />
         {/* dynamic import */}
         <Suspense fallback={<Loader active className="spinner" />}>
-          <Switch>
-            <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
+        <Switch>
+          <PrivateRoute exact path="/field/:fieldId" component={GoalsPage} />
             <HomeRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/field" component={FieldPage} />
             <PrivateRoute exact path="/chat/:partnerId" component={Chat} />
-            <PrivateRoute
-              exact
-              path="/checkout/success"
-              component={CheckoutSuccess}
-            />
-            <PrivateRoute
+          <PrivateRoute
+            exact
+            path="/checkout/success"
+            component={CheckoutSuccess}
+          />
+          <PrivateRoute
               exact
               path="/checkout/fail"
               component={CheckoutFail}
             />
-          </Switch>
+        </Switch>
         </Suspense>
       </div>
     </Router>

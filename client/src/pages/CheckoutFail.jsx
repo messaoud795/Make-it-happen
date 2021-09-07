@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
 import { Button } from "semantic-ui-react";
+import "./CheckoutSuccess.css";
 
 export default function CheckoutFail() {
   const history = useHistory();
