@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Header from "./components/nav/header/Header";
 import { Loader } from "semantic-ui-react";
-// import CheckoutSuccess from "./pages/CheckoutSuccess";
 const Home = React.lazy(() => import("./pages/Home"));
 const FieldPage = React.lazy(() => import("./pages/FieldPage"));
 const GoalsPage = React.lazy(() => import("./pages/GoalsPage"));
