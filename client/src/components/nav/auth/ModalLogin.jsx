@@ -119,8 +119,6 @@ export default function ModalLogin({ props }) {
           callback={responseFacebook}
           icon="fa-facebook"
           cssClass="facebookBtn"
-          xfbml      = {true}
-          version    = 'v11.0'
         />
       </Modal.Actions>
     </Modal>

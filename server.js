@@ -23,8 +23,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res, next) => {
     let url = req.originalUrl;
-    res.setHeader("Accept-Encoding", "gzip, compress, br");
-    // res.setHeader("Cache-Control", "public, max-age=86400");
+    res.setHeader("gzip, compress, br");
+    // res.setHeader("Cache-Control","Accept-Encoding", "public, max-age=86400");
     if (url.startsWith("/uploads")) {
       let file = url.slice(16);
       res.sendFile(path.resolve(__dirname, "uploads", "images", file));

@@ -44,7 +44,7 @@ export default function Discussion({ partner }) {
   useEffect(() => {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
+  console.log(messages);
   // Connected, let's sign-up for to receive messages for this room
   useEffect(() => {
     if (chatId) {
