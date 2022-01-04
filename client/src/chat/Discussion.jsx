@@ -17,7 +17,8 @@ export default function Discussion({ partner }) {
   const lastMsg = useRef();
   const dispatch = useDispatch();
   const partnerId = useParams().partnerId;
-  const socket = io("https://make-it-happen-demo.herokuapp.com");
+  // const socket = io("https://make-it-happen-demo.herokuapp.com");
+  const socket = io("http://localhost:3000");
 
   //scroll to the end of the conversation when the page is loaded
   useEffect(() => {
@@ -28,7 +29,10 @@ export default function Discussion({ partner }) {
     });
     // eslint-disable-next-line
   }, []);
-
+  socket.on("sendMsg", (newMsg) => {
+    console.log("msg received from server", newMsg);
+    dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
+  });
   //load the chat messages
   useEffect(() => {
     let activeChat = chats?.filter(
@@ -44,18 +48,15 @@ export default function Discussion({ partner }) {
   useEffect(() => {
     lastMsg.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-  console.log(messages);
   // Connected, let's sign-up for to receive messages for this room
   useEffect(() => {
     if (chatId) {
-      socket.on("connect", function () {
-        socket.emit("join-room", chatId);
-      });
+      // socket.on("connect", function () {
+      // socket.emit("join-room", chatId);
+      //   console.log("chat room created on client side", chatId);
+      // });
     }
 
-    socket.on("sendMsg", (newMsg) => {
-      dispatch({ type: CHAT_ADD_SUCCESS, payload: newMsg });
-    });
     // eslint-disable-next-line
   }, [chatId]);
 
@@ -64,7 +65,8 @@ export default function Discussion({ partner }) {
     e.preventDefault();
     let data = { text, partnerId: partner._id, timestamp: Date.now() };
     dispatch(addMsg(data));
-    socket.emit("add-msg", data);
+    // socket.emit("add-msg", data);
+
     setText("");
     textinput.current.focus();
   };
@@ -93,7 +95,7 @@ export default function Discussion({ partner }) {
           <div
             key={msg._id}
             className={
-              "discussion__msg " + (msg.userId !== partner._id ? "sent" : " ")
+              "discussion__msg " + (msg?.userId !== partner._id ? "sent" : " ")
             }
           >
             <p className="discussion__msg-text">{msg.text}</p>

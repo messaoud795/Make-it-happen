@@ -9,7 +9,6 @@ import "./Partners.css";
 export default function Partners() {
   const { partners } = useSelector((state) => state.goal);
   const history = useHistory();
-  console.log(partners);
   return (
     <div>
       <div className="partners">

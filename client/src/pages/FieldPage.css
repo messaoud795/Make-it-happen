@@ -44,7 +44,7 @@
 .iconAdd {
   margin: 0.5rem 0 0 1rem !important;
   font-size: 2rem;
-  color: rgba(30, 128, 0, 0.658);
+  color: rgba(30, 128, 0, 0.658) !important;
   opacity: 0.5;
 }
 .iconAdd:hover {
@@ -87,5 +87,8 @@
   .FieldPage__quote {
     width: 95%;
     margin: 0 auto 2rem !important;
+  }
+  .iconAdd {
+    margin: 0 !important;
   }
 }

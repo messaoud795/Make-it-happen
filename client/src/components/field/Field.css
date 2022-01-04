@@ -5,6 +5,7 @@
   width: 10rem;
   border-radius: 1.5rem;
   padding: 0.5rem;
+  margin: 0 auto;
   background-image: linear-gradient(
     rgba(255, 115, 0, 0.836),
     rgba(238, 255, 0, 0.808)
@@ -53,6 +54,6 @@
   font-size: 1.2rem;
   letter-spacing: 2px;
   font-weight: 700;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   align-self: center;
 }
