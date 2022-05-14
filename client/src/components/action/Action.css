@@ -8,8 +8,12 @@
 }
 .action__description {
   display: flex;
-  justify-content: space-between;
   font-weight: 800;
+
+}
+.action__description > *{
+margin-right: 1rem;
+
 }
 .action__operations {
   display: none;

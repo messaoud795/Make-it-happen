@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import {
   ACTION_ACTION_ERROR,
   ACTION_ACTION_START,
@@ -6,9 +7,15 @@ import {
   ACTION_EDIT_SUCCESS,
   ACTION_LOAD_SUCCESS,
   TODAYACTION_LOAD_SUCCESS,
-} from "../actions/actionsTypes";
+} from '../actions/actionsTypes';
 
-const initialState = { actions: null, loadingAction: false, error: null };
+const initialState = {
+  actions: null,
+  loadingAction: false,
+  error: null,
+  todayActions: [],
+  completedActionsOfToday: 0,
+};
 
 export const ActionReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -25,7 +32,8 @@ export const ActionReducer = (state = initialState, action) => {
       return (state = {
         loadingAction: false,
         error: null,
-        actions: payload,
+        todayActions: payload,
+        completedActionsOfToday: getCompletedActionsOfToday(payload),
       });
     case ACTION_ADD_SUCCESS:
       return (state = { ...state, loadingAction: false, error: null });
@@ -39,4 +47,17 @@ export const ActionReducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+const getCompletedActionsOfToday = actions => {
+  return actions?.filter(action => {
+    const {
+      completed: { status, completionDate },
+    } = action;
+    return (
+      status &&
+      parseISO(completionDate).toLocaleDateString() ==
+        new Date().toLocaleDateString()
+    );
+  }).length;
 };
