@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./Tool.css";
 import pomodoro from "../../pictures/pomodoro.jpg";
-// import ScrollAnimation from "react-animate-on-scroll";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
