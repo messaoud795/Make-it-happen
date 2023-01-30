@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const cors = require("cors");
 const path = require("path");
-const socketio = require("socket.io");
 const newMsg = require("./routes/msgRoute");
 const chechoutCompleted = require("./middlewares/chechoutCompleted");
 var compression = require("compression");
