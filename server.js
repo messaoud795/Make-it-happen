@@ -59,30 +59,30 @@ const expressServer = app.listen(port, () =>
 );
 
 // creation of socket.io server
-let io = socketio(expressServer, {
-  cors: {
-    // origin: "https://make-it-happen-demo.herokuapp.com",
-    origin: "http://localhost:5000/",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+// let io = socketio(expressServer, {
+//   cors: {
+//     // origin: "https://make-it-happen-demo.herokuapp.com",
+//     origin: "http://localhost:5000/",
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   },
+// });
 
-// join a discussion and send msgs to all users in it
-io.sockets.on("connection", (socket) => {
-  socket.emit("messageFromServer", { data: "Welcome to the socketio server" });
-  socket.on("dataToServer", (dataFromClient) => {
-    console.log(dataFromClient);
-    module.exports = socket;
-  });
+// // join a discussion and send msgs to all users in it
+// io.sockets.on("connection", (socket) => {
+//   socket.emit("messageFromServer", { data: "Welcome to the socketio server" });
+//   socket.on("dataToServer", (dataFromClient) => {
+//     console.log(dataFromClient);
+//     module.exports = socket;
+//   });
 
-  // socket.on("join-room", (chatId) => {
-  //   socket.join(chatId);
-  //   console.log("chat room joined", chatId);
-  //   module.exports = socket;
-  //   // socket.to(chatId).emit("sendMsg", { chatId: chatId, msg: "hi" });
-  // });
-});
+// socket.on("join-room", (chatId) => {
+//   socket.join(chatId);
+//   console.log("chat room joined", chatId);
+//   module.exports = socket;
+//   // socket.to(chatId).emit("sendMsg", { chatId: chatId, msg: "hi" });
+// });
+// });
 
 // if (process.env.NODE_ENV === 'production') {
 // 	app.use(express.static('client/build'))
