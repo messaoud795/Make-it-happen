@@ -1,4 +1,4 @@
-import { parseISO } from 'date-fns';
+import { parseISO } from "date-fns";
 import {
   ACTION_ACTION_ERROR,
   ACTION_ACTION_START,
@@ -7,7 +7,7 @@ import {
   ACTION_EDIT_SUCCESS,
   ACTION_LOAD_SUCCESS,
   TODAYACTION_LOAD_SUCCESS,
-} from '../actions/actionsTypes';
+} from "../actions/actionsTypes";
 
 const initialState = {
   actions: null,
@@ -49,14 +49,14 @@ export const ActionReducer = (state = initialState, action) => {
   }
 };
 
-const getCompletedActionsOfToday = actions => {
-  return actions?.filter(action => {
+const getCompletedActionsOfToday = (actions) => {
+  return actions?.filter((action) => {
     const {
       completed: { status, completionDate },
     } = action;
     return (
       status &&
-      parseISO(completionDate).toLocaleDateString() ==
+      parseISO(completionDate).toLocaleDateString() ===
         new Date().toLocaleDateString()
     );
   }).length;

@@ -21,15 +21,16 @@ app.use(cors());
 
 //deployment
 app.use(express.static(path.join(__dirname, "./client/build")));
-app.get("*", function (_, res) {
-  res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
-});
-
+if (process.env.NODE_ENV === "production") {
+  app.get("*", function (_, res) {
+    res.sendFile(
+      path.join(__dirname, "./client/build/index.html"),
+      function (err) {
+        res.status(500).send(err);
+      }
+    );
+  });
+}
 //database connection
 connectDB();
 

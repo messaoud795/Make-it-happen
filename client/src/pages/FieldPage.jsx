@@ -20,10 +20,12 @@ export default function FieldPage() {
   );
   const [openModalAdd, setOpenModalAdd] = useState(false);
 
-  useEffect(async () => {
-    await dispatch(loadQuote());
-    await dispatch(loadFields());
-    await dispatch(loadTodayActions());
+  console.log({name})
+
+  useEffect( () => {
+     dispatch(loadQuote());
+     dispatch(loadFields());
+     dispatch(loadTodayActions());
   }, [dispatch]);
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
@@ -51,6 +53,7 @@ export default function FieldPage() {
           {loadingField ? (
             <Loader active className='spinner' />
           ) : (
+
             <div className='FielPage__fields'>
               {name?.map(el => (
                 <Field key={el._id} id={el._id} name={el.name} />

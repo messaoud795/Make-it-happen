@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/pages/CheckoutSuccess.css"],"names":[],"mappings":"AAAA,UACE,2BACF,CACA,mBACE,aACF,CAEA,gBACE,gBAAiB,CACjB,iBACF","file":"11.94960b8c.chunk.css","sourcesContent":[".checkout {\n  padding: 3rem 6rem !important;\n}\n.checkout__success {\n  color: rgb(113, 211, 15);\n}\n\n.checkout__text {\n  font-size: 1.2rem;\n  margin-right: 3rem;\n}\n"]}

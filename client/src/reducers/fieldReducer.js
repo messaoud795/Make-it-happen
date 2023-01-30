@@ -11,6 +11,7 @@ const initialstate = { name: null, loadingField: false, error: null };
 
 export const fieldReducer = (state = initialstate, action) => {
   const { type, payload } = action;
+  console.log({ action, type });
   switch (type) {
     case FIELD_ACTION_START:
       return (state = { ...state, loadingField: true });

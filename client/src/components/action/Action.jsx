@@ -5,7 +5,7 @@ import ModalDeleteAction from './ModalDeleteAction';
 import ModalEditAction from './ModalEditAction';
 import { format } from 'date-fns';
 import { editAction, loadActions } from '../../actions/action_actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function Action({ data }) {
   const { description, startDate, priority, type, completed, _id } = data;
