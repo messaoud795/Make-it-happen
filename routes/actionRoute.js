@@ -33,9 +33,6 @@ router.get("/all/today", auth, async (req, res) => {
       process.env.ACTION_DAY = requestCurrentDay;
       todayActions.forEach((action) => (action.completed = false));
     }
-    console.log(requestCurrentDay, process.env.ACTION_DAY);
-
-    // console.log({ todayActions });
     res.send(todayActions);
   } catch (error) {
     res.send({ msg: "error" });
