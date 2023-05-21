@@ -4,6 +4,7 @@ const router = express.Router();
 const Action = require("../models/actionModel");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
+const User = require("../models/userModel");
 
 router.get("/:fieldId", auth, (req, res) => {
   Action.find({ fieldId: req.params.fieldId }, (err, data) => {
@@ -14,6 +15,7 @@ router.get("/:fieldId", auth, (req, res) => {
 
 router.get("/all/today", auth, async (req, res) => {
   try {
+    const foundUser = await User.findById(req.userData.userId);
     let actions = await Action.find({ userId: req.userData.userId });
     let habits = await actions.filter((action) => action.type == "Daily habit");
     // await habits.forEach((habit) => (habit.startDate = new Date()));
@@ -25,12 +27,20 @@ router.get("/all/today", auth, async (req, res) => {
 
     todayActions.push(...habits);
     //Reset actions completion state after midnight
-    //how to determine that the request is the first today
-    //compare the previous day stored in process variable with request time
-    // if they are different reset actions and set process variable
+    //compare the previous day stored in user schema with request time
+    // if they are different reset actions and set variable
     const requestCurrentDay = new Date().getDay();
-    if (requestCurrentDay !== process.env.ACTION_DAY) {
-      process.env.ACTION_DAY = requestCurrentDay;
+
+    if (foundUser && requestCurrentDay !== foundUser?.actionDay) {
+      await User.findByIdAndUpdate(
+        req.userData.userId,
+        { ...foundUser._doc, actionDay: requestCurrentDay },
+        {
+          new: true,
+          runValidators: true,
+          useFindAndModify: false,
+        }
+      );
       todayActions.forEach((action) => (action.completed = false));
     }
     res.send(todayActions);

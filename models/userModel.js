@@ -9,6 +9,7 @@ const userSchema = new Schema({
   image: { type: String },
   password: { type: String, required: true },
   paid: { type: Boolean, default: false },
+  actionDay: { type: Number, default: 8 },
   date: { type: Date, default: Date.now },
 });
 

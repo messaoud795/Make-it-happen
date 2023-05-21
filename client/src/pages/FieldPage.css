@@ -34,7 +34,9 @@
 
 .FieldPage__sectionFields-header {
   display: flex;
+  align-items: baseline;
   margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 .FieldPage__sectionFields {
   width: 50%;
@@ -63,6 +65,7 @@
   width: 40% !important;
   position: relative;
   min-height: 50vh;
+  letter-spacing: 0.7px;
 }
 
 /* tab screen 900px */
@@ -90,5 +93,8 @@
   }
   .iconAdd {
     margin: 0 !important;
+  }
+  .FieldPage__actions {
+    width: 100% !important;
   }
 }

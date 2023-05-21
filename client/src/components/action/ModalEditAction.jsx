@@ -3,7 +3,11 @@ import { Button, Form, Modal } from "semantic-ui-react";
 import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
-import { editAction, loadActions } from "../../actions/action_actions";
+import {
+  editAction,
+  loadActions,
+  loadTodayActions,
+} from "../../actions/action_actions";
 import "./ModalAddAction.css";
 
 export default function ModalEditAction({
@@ -20,7 +24,7 @@ export default function ModalEditAction({
   const { error, loadingAction } = useSelector((state) => state.action);
   const dispatch = useDispatch();
 
-  const submitForm = async (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
     const { description, priority, type } = details;
     const Data = {
@@ -30,10 +34,11 @@ export default function ModalEditAction({
       type,
       startDate,
     };
-    await dispatch(editAction(Data));
+    dispatch(editAction(Data));
     if (!loadingAction && !error) {
       handleModalEdit();
       dispatch(loadActions(data.fieldId));
+      dispatch(loadTodayActions());
     }
   };
   return (

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { Checkbox, Icon } from 'semantic-ui-react';
-import './Action.css';
-import ModalDeleteAction from './ModalDeleteAction';
-import ModalEditAction from './ModalEditAction';
-import { format } from 'date-fns';
-import { editAction, loadActions } from '../../actions/action_actions';
-import { useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { Checkbox, Icon } from "semantic-ui-react";
+import "./Action.css";
+import ModalDeleteAction from "./ModalDeleteAction";
+import ModalEditAction from "./ModalEditAction";
+import { format } from "date-fns";
+import {
+  editAction,
+  loadActions,
+  loadTodayActions,
+} from "../../actions/action_actions";
+import { useDispatch } from "react-redux";
 
 export default function Action({ data }) {
   const { description, startDate, priority, type, completed, _id } = data;
@@ -19,8 +23,8 @@ export default function Action({ data }) {
   const handleModalEdit = () => {
     setOpenModalEdit(!openModalEdit);
   };
-  const updateCompletedStatus = async () => {
-    await dispatch(
+  const updateCompletedStatus = () => {
+    dispatch(
       editAction({
         id: _id,
         completed: {
@@ -29,13 +33,14 @@ export default function Action({ data }) {
         },
       })
     );
-    await dispatch(loadActions(data.fieldId));
+    dispatch(loadActions(data.fieldId));
+    dispatch(loadTodayActions());
   };
   return (
-    <div className='action__content'>
-      <div className='action__operations'>
+    <div className="action__content">
+      <div className="action__operations">
         <div onClick={handleModalEdit}>
-          <Icon name='edit' className='edit' />
+          <Icon name="edit" className="edit" />
         </div>
         <ModalEditAction
           openModalEdit={openModalEdit}
@@ -43,7 +48,7 @@ export default function Action({ data }) {
           data={data}
         />
         <div onClick={handleModalDelete}>
-          <Icon name='delete' className='delete' />
+          <Icon name="delete" className="delete" />
         </div>
         <ModalDeleteAction
           openModalDelete={openModalDelete}
@@ -51,16 +56,16 @@ export default function Action({ data }) {
           data={data}
         />
       </div>
-      <span className='action__priority'>
+      <span className="action__priority">
         {priority} -- {type}
       </span>
-      <div className='action__description'>
+      <div className="action__description">
         <Checkbox checked={completed.status} onChange={updateCompletedStatus} />
         <span>{description}</span>
       </div>
-      <div className='action__time'>
+      <div className="action__time">
         <span>
-          {format(startDate, 'HH:mm ')} -- {format(startDate, 'dd/MM/yyyy')}
+          {format(startDate, "HH:mm ")} -- {format(startDate, "dd/MM/yyyy")}
         </span>
         {/* <span>
           {format(endDate, "HH:mm ")} -- {format(endDate, "dd/MM/yyyy")}

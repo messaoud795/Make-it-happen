@@ -1,7 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal } from "semantic-ui-react";
-import { deleteAction, loadActions } from "../../actions/action_actions";
+import {
+  deleteAction,
+  loadActions,
+  loadTodayActions,
+} from "../../actions/action_actions";
 
 export default function ModalDeleteAction({
   openModalDelete,
@@ -11,11 +15,12 @@ export default function ModalDeleteAction({
   const dispatch = useDispatch();
   const { loadingAction, error } = useSelector((state) => state.action);
 
-  const handleDeleteAction = async () => {
-    await dispatch(deleteAction(data._id));
+  const handleDeleteAction = () => {
+    dispatch(deleteAction(data._id));
     if (!loadingAction && !error) {
       handleModalDelete();
       dispatch(loadActions(data.fieldId));
+      dispatch(loadTodayActions());
     }
   };
   return (

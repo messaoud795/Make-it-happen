@@ -3,7 +3,7 @@
   width: 80%;
   padding: 1rem 3rem;
   margin-bottom: 1rem;
-  border-radius: 1.5rem;
+  border-radius: 10px;
   color: rgb(121, 115, 115);
   background-image: linear-gradient(
     to right,
@@ -50,6 +50,9 @@
 }
 /* phone screen 600px */
 @media (max-width: 37.5em) {
+  .action {
+    width: 100%;
+  }
   .action__content {
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;

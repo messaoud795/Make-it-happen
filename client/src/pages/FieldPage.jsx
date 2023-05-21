@@ -42,7 +42,7 @@ export default function FieldPage() {
       <div className="FieldPage__content">
         <div className="FieldPage__sectionFields">
           <div className="FieldPage__sectionFields-header">
-            <h1>Fields :</h1>
+            <h1>Life Areas :</h1>
             <div onClick={handleAddField} className="iconAdd">
               <Icon name="add circle" />
             </div>

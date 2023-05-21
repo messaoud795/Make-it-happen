@@ -16,11 +16,10 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <ReduxToastr
-      position="bottom-right"
+      position="top-right"
       transitionIn="fadeIn"
       transitionOut="fadeOut"
     />
-
     <App />
   </Provider>,
   document.getElementById("root")
