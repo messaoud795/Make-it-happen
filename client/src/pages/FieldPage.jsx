@@ -1,78 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Icon, Loader } from 'semantic-ui-react';
-import { loadFields } from '../actions/field_actions';
-import { loadQuote } from '../actions/loadQuote';
-import Field from '../components/field/Field';
-import ModalAddField from '../components/field/ModalAddField';
-import { format } from 'date-fns';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Icon, Loader } from "semantic-ui-react";
+import { loadFields } from "../actions/field_actions";
+import { loadQuote } from "../actions/loadQuote";
+import Field from "../components/field/Field";
+import ModalAddField from "../components/field/ModalAddField";
+import { format } from "date-fns";
 
-import './FieldPage.css';
-import { loadTodayActions } from '../actions/action_actions';
-import Action from '../components/action/Action';
+import "./FieldPage.css";
+import { loadTodayActions } from "../actions/action_actions";
+import Action from "../components/action/Action";
 
 export default function FieldPage() {
   const dispatch = useDispatch();
-  const { quote, author, loadingQuote } = useSelector(state => state.quote);
-  const { loadingField, name } = useSelector(state => state.field);
+  const { quote, author, loadingQuote } = useSelector((state) => state.quote);
+  const { loadingField, name } = useSelector((state) => state.field);
   const { loadingAction, todayActions, completedActionsOfToday } = useSelector(
-    state => state.action
+    (state) => state.action
   );
   const [openModalAdd, setOpenModalAdd] = useState(false);
 
-  console.log({name})
-
-  useEffect( () => {
-     dispatch(loadQuote());
-     dispatch(loadFields());
-     dispatch(loadTodayActions());
+  useEffect(() => {
+    dispatch(loadQuote());
+    dispatch(loadFields());
+    dispatch(loadTodayActions());
   }, [dispatch]);
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
   };
   return (
-    <div className='FieldPage'>
+    <div className="FieldPage">
       {loadingQuote ? (
-        <Loader active inline='centered' className='FieldPage__quote' />
+        <Loader active inline="centered" className="FieldPage__quote" />
       ) : (
-        <div className='FieldPage__quote'>
-          <span className='FieldPage__quote-content'>{quote}</span>
-          <span className='FieldPage__quote-author'>{author}</span>
+        <div className="FieldPage__quote">
+          <span className="FieldPage__quote-content">{quote}</span>
+          <span className="FieldPage__quote-author">{author}</span>
         </div>
       )}
 
-      <div className='FieldPage__content'>
-        <div className='FieldPage__sectionFields'>
-          <div className='FieldPage__sectionFields-header'>
+      <div className="FieldPage__content">
+        <div className="FieldPage__sectionFields">
+          <div className="FieldPage__sectionFields-header">
             <h1>Fields :</h1>
-            <div onClick={handleAddField} className='iconAdd'>
-              <Icon name='add circle' />
+            <div onClick={handleAddField} className="iconAdd">
+              <Icon name="add circle" />
             </div>
             <ModalAddField open={openModalAdd} setOpen={handleAddField} />
           </div>
           {loadingField ? (
-            <Loader active className='spinner' />
+            <Loader active className="spinner" />
           ) : (
-
-            <div className='FielPage__fields'>
-              {name?.map(el => (
+            <div className="FielPage__fields">
+              {name?.map((el) => (
                 <Field key={el._id} id={el._id} name={el.name} />
               ))}
             </div>
           )}
         </div>
-        <div className='FieldPage__actions'>
-          <h2> {format(new Date(), 'EEEE dd MMMM')}</h2>
+        <div className="FieldPage__actions">
+          <h2> {format(new Date(), "EEEE dd MMMM")}</h2>
           <h3>
-            Today actions done: {completedActionsOfToday} /{' '}
+            Today actions done: {completedActionsOfToday} /{" "}
             {todayActions?.length}
           </h3>
 
           {loadingAction ? (
-            <Loader active className='spinner' />
+            <Loader active className="spinner" />
           ) : (
             <div>
-              {todayActions?.map(action => (
+              {todayActions?.map((action) => (
                 <Action key={action._id} data={action} />
               ))}
             </div>
