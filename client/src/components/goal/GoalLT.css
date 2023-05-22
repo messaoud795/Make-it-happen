@@ -1,11 +1,15 @@
+.GoalLT {
+  margin-bottom: 1.5rem;
+}
+
 .Goal__content {
   height: auto;
   width: 100%;
   padding: 1rem 3rem;
-  clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0 100%);
-  background-color: rgba(0, 183, 255, 0.459);
   margin-bottom: 2rem;
-  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.76);
+  border-radius: 5px;
+  background-color: white;
+  border-left: 4px solid rgba(0, 183, 255, 0.459);
 }
 .GoalLT-add {
   display: flex;
@@ -23,6 +27,8 @@
 }
 
 .Goal__description {
+  display: flex;
+  justify-content: space-between;
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 1px !important;
@@ -37,7 +43,10 @@
 }
 .GoalLT__partners {
   padding: 0 5px;
-  margin: auto;
+  display: block;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
 }
 /* phone screen 600px */
 @media (max-width: 37.5em) {

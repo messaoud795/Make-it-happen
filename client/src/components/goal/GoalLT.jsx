@@ -7,6 +7,7 @@ import ModalAddGoal from "./ModalAddGoal";
 import { useDispatch, useSelector } from "react-redux";
 import GoalMT from "./GoalMT";
 import { goalPartners } from "../../actions/goal_actions";
+import PeersIcon from "../../icons/PeersIcon";
 
 export default function Goal({ data }) {
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -23,7 +24,7 @@ export default function Goal({ data }) {
   };
 
   return (
-    <div>
+    <div className="GoalLT">
       <div className="GoalLT-add">
         <div className="Goal__content">
           <div className="Goal__operations">
@@ -45,16 +46,19 @@ export default function Goal({ data }) {
             />
           </div>
 
-          <p className="Goal__description">{description}</p>
+          <p className="Goal__description">
+            {description}
+            <span
+              onClick={() => dispatch(goalPartners(data._id))}
+              className="GoalLT__partners"
+              title="find someone with the same goal"
+            >
+              <PeersIcon />
+            </span>
+          </p>
           <div className="Goal__time">
             <span>{startDate.toLocaleString("fr-FR").slice(0, 10)}</span>
             <span>{endDate.toLocaleString("fr-FR").slice(0, 10)}</span>
-            <button
-              onClick={() => dispatch(goalPartners(data._id))}
-              className="GoalLT__partners"
-            >
-              find peers
-            </button>
           </div>
         </div>
         <ModalAddGoal

@@ -23,20 +23,17 @@ export default function GoalsPage(props) {
   const fieldId = useParams().fieldId;
   const dispatch = useDispatch();
 
+  console.log({ fieldId });
   useEffect(() => {
-    async function fetchFields() {
-      await dispatch(loadFields());
-    }
-    fetchFields();
+    dispatch(loadFields());
   }, [dispatch]);
 
   useEffect(() => {
-    async function fetchData() {
-      setfieldName(field.name?.filter((el) => el._id === fieldId)[0].name);
-      await dispatch(loadGoals(fieldId));
-      await dispatch(loadActions(fieldId));
-    }
-    fetchData();
+    setfieldName(
+      field.name?.filter((el) => el._id === fieldId)[0].name.toLowerCase()
+    );
+    dispatch(loadGoals(fieldId));
+    dispatch(loadActions(fieldId));
   }, [dispatch, fieldId, field.name]);
 
   useEffect(() => {
@@ -55,7 +52,7 @@ export default function GoalsPage(props) {
     <div className="GoalsPage">
       <div className="GoalsPage__plan">
         <div className="GoalsPage__header">
-          <h1> {`Plan in ${fieldName?.toLowerCase()} :`}</h1>
+          <h1> {`${fieldName ?? ""} Plan:`}</h1>
           <ModalAddGoal
             fieldId={fieldId}
             category="long term"
@@ -74,7 +71,7 @@ export default function GoalsPage(props) {
         </div>
       </div>
       <div className="GoalsPage__tools">
-        <h2>Get things done</h2>
+        <h2>Tools</h2>
         <button
           onClick={() => setShowPomodoro(true)}
           className={"toolsBtn " + (showPomodoro ? " activeBtn" : " ")}
@@ -85,7 +82,7 @@ export default function GoalsPage(props) {
           onClick={handlePayment}
           className={"toolsBtn " + (showPomodoro ? "" : "activeBtn")}
         >
-          find peers Payable
+          find peers
         </button>
         {showPomodoro && <Promodoro />}
         <div className="GoalsPage__partners">

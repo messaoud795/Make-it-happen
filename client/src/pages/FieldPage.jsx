@@ -25,6 +25,7 @@ export default function FieldPage() {
     dispatch(loadFields());
     dispatch(loadTodayActions());
   }, [dispatch]);
+
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
   };

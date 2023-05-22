@@ -51,11 +51,13 @@ export default function GoalST({ data }) {
         </div>
         <ModalAddAction fieldId={data.fieldId} parentId={data._id} />
       </div>
-      {actions
-        ?.filter((action) => action.parentId === data._id)
-        .map((action) => (
-          <Action key={action._id} data={{ ...action }} />
-        ))}
+      <div className="goal-actions">
+        {actions
+          ?.filter((action) => action.parentId === data._id)
+          .map((action) => (
+            <Action key={action._id} data={{ ...action }} />
+          ))}
+      </div>
     </div>
   );
 }

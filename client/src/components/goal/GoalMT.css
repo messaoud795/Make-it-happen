@@ -4,10 +4,12 @@
 }
 .GoalMT__content {
   height: auto;
-  width: 90%;
+  width: 100%;
   padding: 1rem 3rem;
-  background-color: rgba(60, 255, 0, 0.459);
-  margin: 0 2rem 2rem 0;
+  margin: 0 0rem 2rem 1rem;
+  border-radius: 5px;
+  background-color: white;
+  border-left: 4px solid rgba(60, 255, 0, 0.459);
 }
 .Goal__operations {
   display: none;
