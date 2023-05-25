@@ -1,5 +1,5 @@
 .FieldPage {
-  padding: 3rem;
+  padding: 1rem 3rem;
   width: 100% !important;
 }
 .spinner {
@@ -13,7 +13,7 @@
   flex-direction: column;
   width: 70%;
   align-items: center;
-  margin: 0 auto 2rem !important;
+  margin: 0 auto 3rem !important;
   position: relative;
 }
 
@@ -35,7 +35,7 @@
 .FieldPage__sectionFields-header {
   display: flex;
   align-items: baseline;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   letter-spacing: 1px;
 }
 .FieldPage__sectionFields {
@@ -66,6 +66,8 @@
   position: relative;
   min-height: 50vh;
   letter-spacing: 0.7px;
+  display: grid;
+  grid-gap: 1rem;
 }
 
 /* tab screen 900px */

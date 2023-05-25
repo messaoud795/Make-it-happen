@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+
 const promodoroSchema = new mongoose.Schema({
-  distractions: [{ result: Number, date: { type: Date, default: new Date() } }],
+  distractions: { type: Number, default: 30 },
   userId: String,
 });
 

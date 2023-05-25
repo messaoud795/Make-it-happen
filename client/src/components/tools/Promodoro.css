@@ -1,71 +1,63 @@
 .Promodoro__time {
   text-align: center;
-  width: 10rem;
-  font-size: 2rem;
-  color: cornflowerblue;
-  border-radius: 50rem;
-  border: 2px black solid;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: repeat(5, min-content);
+  align-items: center;
+  margin-top: 2rem;
+}
+.time-units {
   font-weight: 700;
-  padding: 4.2rem 1rem;
-  margin: 4rem auto 1rem;
-  background-color: whitesmoke;
+  font-size: 2.5rem;
+  color: cornflowerblue;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 3px;
+  border: 2px solid rgba(161, 158, 158, 0.212);
 }
 
-.Promodoro__distractions {
-  position: absolute;
-  top: 0rem;
-  left: 56%;
-  font-weight: 700;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 5rem;
-  border: 1px solid black;
-  background-color: yellow;
+.score-container {
+  display: grid;
+  grid-template-rows: repeat(2, min-content);
+  justify-items: center;
+  margin: 2rem 0;
 }
-.Promodoro__goal {
-  padding: 10px 8px;
-  position: absolute;
-  top: 0rem;
-  left: 36%;
+
+.score {
+  display: block;
   font-weight: 700;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 5rem;
-  border: 1px solid black;
-  background-color: blue;
+  font-size: 1.5rem;
+  width: 4rem;
+  padding: 1rem;
   font-weight: 700;
+  border-radius: 3px;
   text-align: center;
+  border: 2px solid rgba(161, 158, 158, 0.212);
+  cursor: pointer;
 }
+
 .Promodoro {
   position: relative;
 }
 
 .Promodoro__control {
   display: flex;
-  justify-content: center;
+  width: 45%;
+  margin: auto;
+  cursor: pointer;
+  /* justify-content: center; */
 }
-.single-digit {
-  font-size: 1.5rem;
-  padding: 10px 14px;
-}
-.double-digit {
-  font-size: 1rem;
-  padding: 10px 10px;
-}
+/* .Promodoro__control:hover .Promodoro__control * {
+  color: aqua;
+} */
+
 .Promodoro__content {
   position: relative;
   width: 100%;
 }
 
-.oncourse {
-  background-color: green;
-}
-.ofcourse {
-  background-color: rgb(255, 60, 0);
-}
-
 .promodoro__description {
-  padding: 2rem 5rem 0 2rem;
+  padding: 2rem 5rem 0 0rem;
   line-height: 1.5;
   font-size: 1.1rem;
 }

@@ -23,9 +23,8 @@ export const promodoroReducer = (state = initialState, action) => {
     case PROMODORO_LOAD_SUCCESS:
       return (state = {
         loadingPromodoro: false,
-        results: payload,
+        record: payload,
         error: null,
-        goal: minDistractions(payload),
       });
     case PROMODORO_ADD_SUCCESS:
       return (state = {
@@ -38,8 +37,4 @@ export const promodoroReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-const minDistractions = (array) => {
-  return Math.min(...array.map((el) => el.result));
 };

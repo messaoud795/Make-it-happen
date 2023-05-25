@@ -10,6 +10,12 @@ import { format } from "date-fns";
 import "./FieldPage.css";
 import { loadTodayActions } from "../actions/action_actions";
 import Action from "../components/action/Action";
+import CareerIcon from "../icons/CareerIcon";
+import FinanceIcon from "../icons/FinanceIcon";
+import HealthIcon from "../icons/HealthIcon";
+import FunIcon from "../icons/FunIcon";
+import GrowthIcon from "../icons/GrowthIcon";
+import RelationsIcon from "../icons/RelationsIcon";
 
 export default function FieldPage() {
   const dispatch = useDispatch();
@@ -29,21 +35,37 @@ export default function FieldPage() {
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
   };
+  const fieldsIcons = [
+    CareerIcon,
+    FinanceIcon,
+    HealthIcon,
+    GrowthIcon,
+    FunIcon,
+    RelationsIcon,
+  ];
+
   return (
     <div className="FieldPage">
+      <h3> {format(new Date(), "EEEE dd MMMM")}</h3>
       {loadingQuote ? (
         <Loader active inline="centered" className="FieldPage__quote" />
       ) : (
         <div className="FieldPage__quote">
-          <span className="FieldPage__quote-content">{quote}</span>
-          <span className="FieldPage__quote-author">{author}</span>
+          <span className="FieldPage__quote-content">
+            {quote.length == 0
+              ? "You are never too old to set another goal or to dream a new dream."
+              : quote}
+          </span>
+          <span className="FieldPage__quote-author">
+            {author.length == 0 ? "C.S LEWIS" : author}
+          </span>
         </div>
       )}
 
       <div className="FieldPage__content">
         <div className="FieldPage__sectionFields">
           <div className="FieldPage__sectionFields-header">
-            <h1>Life Areas :</h1>
+            <h2>Life Areas :</h2>
             <div onClick={handleAddField} className="iconAdd">
               <Icon name="add circle" />
             </div>
@@ -53,18 +75,19 @@ export default function FieldPage() {
             <Loader active className="spinner" />
           ) : (
             <div className="FielPage__fields">
-              {name?.map((el) => (
-                <Field key={el._id} id={el._id} name={el.name} />
+              {name?.map((el, index) => (
+                <Field key={el._id} id={el._id} name={el.name}>
+                  {React.createElement(fieldsIcons[index], {})}
+                </Field>
               ))}
             </div>
           )}
         </div>
         <div className="FieldPage__actions">
-          <h2> {format(new Date(), "EEEE dd MMMM")}</h2>
-          <h3>
+          <h2>
             Today actions done: {completedActionsOfToday} /{" "}
             {todayActions?.length}
-          </h3>
+          </h2>
 
           {loadingAction ? (
             <Loader active className="spinner" />

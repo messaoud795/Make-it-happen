@@ -21,20 +21,16 @@ export const addDistractions = (result) => {
   };
 };
 
-export const updateDistractions = (result) => {
-  console.log(result);
-  return async (dispatch) => {
-    try {
-      dispatch({ type: PROMODORO_ACTION_START });
-      await axios.patch("/api/promodoro/update", result, configHeaders());
-      dispatch({ type: PROMODORO_UPDATE_SUCCESS });
-      await dispatch(loadPromodoro());
-    } catch (error) {
-      dispatch({ type: PROMODORO_ACTION_ERROR });
-    }
-  };
+export const updateDistractions = (result) => async (dispatch) => {
+  try {
+    dispatch({ type: PROMODORO_ACTION_START });
+    await axios.post("/api/promodoro/update", result, configHeaders());
+    dispatch({ type: PROMODORO_UPDATE_SUCCESS });
+    await dispatch(loadPromodoro());
+  } catch (error) {
+    dispatch({ type: PROMODORO_ACTION_ERROR });
+  }
 };
-
 export const loadPromodoro = () => {
   return async (dispatch) => {
     try {

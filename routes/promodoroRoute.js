@@ -16,10 +16,15 @@ router.post("/add", auth, async (req, res) => {
   }
 });
 
-router.patch("/update", auth, async (req, res) => {
-  Promodoro.updateOne(
+router.post("/update", auth, async (req, res) => {
+  const pomodoro = await Promodoro.findOne({
+    userId: req.userData.userId,
+  });
+  let record = pomodoro?.distractions;
+  if (req.body.result < record || !record) record = req.body.result;
+  Promodoro.findOneAndUpdate(
     { userId: req.userData.userId },
-    { $push: { distractions: { result: req.body.result } } },
+    { distractions: record },
     { upsert: true },
     (err, data) => {
       if (err) console.log(err);

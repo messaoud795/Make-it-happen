@@ -7,11 +7,18 @@
 
 .GoalsPage__header {
   display: flex;
-  align-items: baseline;
   margin-bottom: 1rem;
-  align-items: center;
+  gap: 5px;
+  align-items: baseline;
   text-transform: capitalize;
   letter-spacing: 0.7px;
+}
+.GoalsPage__title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 .loader {
   margin: 5rem auto;
@@ -19,6 +26,7 @@
 .GoalsPage__plan {
   width: 50%;
 }
+
 .GoalsPage__tools {
   width: 40%;
   height: 100%;
@@ -31,6 +39,7 @@
 .toolsBtn {
   padding: 8px 20px;
   margin-right: 1.5rem;
+  margin-top: 1.8rem;
   font-size: 1.1rem;
   font-family: "Roboto";
   letter-spacing: 1px;
@@ -40,6 +49,7 @@
   border: none;
   border-radius: 50px;
   box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.55);
+  text-transform: capitalize;
 }
 .toolsBtn:hover {
   cursor: pointer;
@@ -65,6 +75,11 @@
   .GoalsPage__tools {
     width: 90%;
   }
+}
+
+.icon {
+  display: flex;
+  align-items: baseline;
 }
 
 /* phone screen 600px */

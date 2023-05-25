@@ -5,7 +5,7 @@ import ModalDeleteField from "./ModalDeleteField";
 import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-export default function Field({ name, id }) {
+export default function Field({ name, id, children }) {
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
@@ -35,9 +35,12 @@ export default function Field({ name, id }) {
           />
         </div>
       </div>
-      <Link to={`/field/${id}`} className="Field__text">
-        <span>{name}</span>
-      </Link>
+      <div className="field__content">
+        <Link to={`/field/${id}`} className="Field__text">
+          <span>{name}</span>
+        </Link>
+        {children}
+      </div>
     </div>
   );
 }

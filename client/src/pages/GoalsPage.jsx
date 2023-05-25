@@ -12,6 +12,8 @@ import Partners from "../components/goal/Partners";
 import { loadFields } from "../actions/field_actions";
 import { payment } from "../actions/payment_actions";
 import { toastr } from "react-redux-toastr";
+import ToolsIcon from "../icons/ToolsIcon.jsx";
+import PlanIcon from "../icons/PlanIcon.jsx";
 
 export default function GoalsPage(props) {
   const [fieldName, setfieldName] = useState("");
@@ -23,7 +25,6 @@ export default function GoalsPage(props) {
   const fieldId = useParams().fieldId;
   const dispatch = useDispatch();
 
-  console.log({ fieldId });
   useEffect(() => {
     dispatch(loadFields());
   }, [dispatch]);
@@ -52,7 +53,12 @@ export default function GoalsPage(props) {
     <div className="GoalsPage">
       <div className="GoalsPage__plan">
         <div className="GoalsPage__header">
-          <h1> {`${fieldName ?? ""} Plan:`}</h1>
+          <div className="GoalsPage__title">
+            <span className={"icon"}>
+              <PlanIcon color={"#3276c3"} />
+            </span>
+            <span>{fieldName ?? ""}</span>
+          </div>
           <ModalAddGoal
             fieldId={fieldId}
             category="long term"
@@ -71,10 +77,15 @@ export default function GoalsPage(props) {
         </div>
       </div>
       <div className="GoalsPage__tools">
-        <h2>Tools</h2>
+        <div className="GoalsPage__title">
+          <span className="icon">
+            <ToolsIcon color={"#3276c3"} />
+          </span>
+          <span> Tools</span>
+        </div>
         <button
           onClick={() => setShowPomodoro(true)}
-          className={"toolsBtn " + (showPomodoro ? " activeBtn" : " ")}
+          className={"toolsBtn " + (showPomodoro ? " activeBtn" : "")}
         >
           Pomodoro
         </button>

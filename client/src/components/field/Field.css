@@ -52,3 +52,11 @@
   font-family: "Times New Roman", Times, serif;
   align-self: center;
 }
+
+.field__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}

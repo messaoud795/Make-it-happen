@@ -1,7 +1,7 @@
 .iconAdd {
   position: relative;
-  display: inline-block;
-  margin-top: -3px;
+  margin: -18px 8px 0 8px;
+  cursor: pointer;
 }
 
 .iconAdd .tooltiptext {
