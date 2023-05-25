@@ -52,12 +52,12 @@ export default function FieldPage() {
       ) : (
         <div className="FieldPage__quote">
           <span className="FieldPage__quote-content">
-            {quote.length == 0
+            {quote.length === 0
               ? "You are never too old to set another goal or to dream a new dream."
               : quote}
           </span>
           <span className="FieldPage__quote-author">
-            {author.length == 0 ? "C.S LEWIS" : author}
+            {author.length === 0 ? "C.S LEWIS" : author}
           </span>
         </div>
       )}

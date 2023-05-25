@@ -6,6 +6,15 @@ import {
   QUOTE_LOAD_SUCCESS,
 } from "./actionsTypes";
 
+function generateRandom(maxLimit = 100) {
+  let rand = Math.random() * maxLimit;
+  console.log(rand); // say 99.81321410836433
+
+  rand = Math.floor(rand); // 99
+
+  return rand;
+}
+
 export const loadQuote = () => {
   return async (dispatch) => {
     try {
@@ -13,10 +22,7 @@ export const loadQuote = () => {
       var author;
       do {
         dispatch({ type: QUOTE_LOAD_START });
-
-        const { data } = await axios.get("https://zenquotes.io/api/quotes", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        });
+        const { data } = await axios.get("https://type.fit/api/quotes");
         // await axios.get("https://quotes15.p.rapidapi.com/quotes/random/", {
         //   headers: {
         //     "x-rapidapi-key":
@@ -25,8 +31,9 @@ export const loadQuote = () => {
         //     useQueryString: true,
         //   },
         // });
-        quote = data[0].q;
-        author = data[0].a;
+        const index = generateRandom(data.length);
+        quote = data[index].text;
+        author = data[index].author;
       } while (quote.length > 150 && !quote.include("fuck"));
 
       await dispatch({ type: QUOTE_LOAD_SUCCESS, payload: { quote, author } });
