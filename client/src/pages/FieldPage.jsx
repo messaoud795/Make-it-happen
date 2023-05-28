@@ -35,15 +35,14 @@ export default function FieldPage() {
   const handleAddField = () => {
     setOpenModalAdd(!openModalAdd);
   };
-  const fieldsIcons = [
-    CareerIcon,
-    FinanceIcon,
-    HealthIcon,
-    GrowthIcon,
-    FunIcon,
-    RelationsIcon,
-  ];
-
+  const fieldsIcons = {
+    CAREER: CareerIcon,
+    FINANCE: FinanceIcon,
+    HEALTH: HealthIcon,
+    GROWTH: GrowthIcon,
+    LEISURE: FunIcon,
+    RELATIONS: RelationsIcon,
+  };
   return (
     <div className="FieldPage">
       <h3> {format(new Date(), "EEEE dd MMMM")}</h3>
@@ -75,9 +74,9 @@ export default function FieldPage() {
             <Loader active className="spinner" />
           ) : (
             <div className="FielPage__fields">
-              {name?.map((el, index) => (
+              {name?.map((el) => (
                 <Field key={el._id} id={el._id} name={el.name}>
-                  {React.createElement(fieldsIcons[index], {})}
+                  {React.createElement(fieldsIcons[el.name], {})}
                 </Field>
               ))}
             </div>
