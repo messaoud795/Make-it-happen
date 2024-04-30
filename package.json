@@ -1,0 +1,33 @@
+{
+  "name": "production",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-client": "cd ./client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": " node server.js",
+    "client": "cd ./client && npm start",
+    "dev": "concurrently \"nodemon server.js\" \"npm run client\"",
+    "back": " nodemon server.js"
+  },
+  "author": "Nabil Messaoud",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "concurrently": "^6.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^7.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.13",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "ssl-express-www": "^3.0.8",
+    "stripe": "^8.143.0",
+    "uuid": "^8.3.2"
+  }
+}

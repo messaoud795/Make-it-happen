@@ -1,0 +1,62 @@
+.synergy {
+  height: 40rem;
+  display: flex;
+}
+.synergy__img {
+  width: 60%;
+  height: 35rem;
+}
+.synergy__description {
+  position: relative;
+  width: 100%;
+  height: 90%;
+  padding-left: 2rem;
+}
+.synergy__video {
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  /* height: 100%; */
+  width: 100%;
+  overflow: hidden;
+  margin-left: -4rem;
+}
+.synergy__video-content {
+  height: 20rem;
+  width: 100%;
+  object-fit: cover;
+}
+.synergy__text {
+  background-color: white;
+  color: black;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  padding: 1.5rem;
+  margin-top: -1rem;
+}
+.synergy__icon {
+  margin-right: 1rem !important;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .synergy__img {
+    width: 55%;
+    height: 30rem;
+  }
+  .synergy__video {
+    width: 28rem;
+    margin-left: -7rem;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .synergy__img {
+    display: none;
+  }
+  .synergy__video {
+    width: 90%;
+    margin: 0 2rem;
+  }
+}

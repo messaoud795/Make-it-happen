@@ -1,0 +1,93 @@
+.GoalsPage {
+  padding: 3rem;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.GoalsPage__header {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 5px;
+  align-items: baseline;
+  text-transform: capitalize;
+  letter-spacing: 0.7px;
+}
+.GoalsPage__title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.loader {
+  margin: 5rem auto;
+}
+.GoalsPage__plan {
+  width: 50%;
+}
+
+.GoalsPage__tools {
+  width: 40%;
+  height: 100%;
+  letter-spacing: 0.7px;
+}
+.GoalsPage__partners {
+  position: relative;
+}
+
+.toolsBtn {
+  padding: 8px 20px;
+  margin-right: 1.5rem;
+  margin-top: 1.8rem;
+  font-size: 1.1rem;
+  font-family: "Roboto";
+  letter-spacing: 1px;
+  background-color: white;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+  box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.55);
+  text-transform: capitalize;
+}
+.toolsBtn:hover {
+  cursor: pointer;
+}
+.toolsBtn:focus {
+  background-color: rgb(62, 200, 235);
+}
+.activeBtn {
+  background-color: #7daf3f;
+  outline: none;
+  color: white;
+  font-weight: 500;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .GoalsPage {
+    flex-direction: column;
+  }
+  .GoalsPage__plan {
+    width: 90%;
+  }
+  .GoalsPage__tools {
+    width: 90%;
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: baseline;
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .GoalsPage {
+    padding: 1.5rem;
+  }
+  .GoalsPage__plan {
+    width: 100%;
+  }
+}

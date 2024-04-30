@@ -1,0 +1,62 @@
+.Field {
+  display: grid;
+  grid-template-rows: 1fr;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 1.5rem;
+  padding: 0.5rem;
+  background-color: white;
+  box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, 0.62);
+  transition: all 0.5s;
+}
+.Field:hover {
+  grid-template-rows: 0.5rem 8fr;
+  transform: scale(1.1) translateY(-2px);
+  cursor: pointer;
+  background-color: rgba(212, 204, 204, 0.349);
+}
+
+.Field__operations {
+  display: none;
+}
+.Field:hover .Field__operations {
+  display: inline-flex;
+  justify-self: flex-end;
+}
+.delete {
+  color: gray;
+  outline: none;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+.delete:hover {
+  transform: scale(1.1) translateY(-2px) !important;
+  cursor: pointer;
+}
+.edit {
+  color: royalblue;
+  transition: all 0.3s;
+}
+.edit:hover {
+  transform: scale(1.1) translateY(-1px) !important;
+  cursor: pointer;
+}
+.Field__text {
+  color: black;
+  text-align: center;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-family: "Times New Roman", Times, serif;
+  align-self: center;
+}
+
+.field__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}

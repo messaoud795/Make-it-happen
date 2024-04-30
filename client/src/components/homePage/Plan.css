@@ -1,0 +1,113 @@
+.plan__description {
+  width: 40%;
+  font-size: 1.2rem;
+  border: solid rgba(128, 128, 128, 0.719) 2px;
+  padding: 3rem 3rem;
+  font-family: "Roboto", sans-serif;
+  z-index: 5;
+  color: black;
+  position: absolute;
+  background-color: white;
+}
+.plan__description li:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.plan__description:hover {
+  background-color: green;
+  color: white;
+}
+.plan {
+  padding: 1rem 10rem;
+  margin: 6rem 0;
+  height: 22rem;
+  position: relative;
+}
+.plan__fig {
+  width: 60%;
+  height: 22rem;
+  position: absolute;
+  top: 5%;
+  left: 30%;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.plan__img {
+  height: 100%;
+  width: 100%;
+  transition: all 0.5s;
+}
+.plan__caption {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 20%);
+  text-transform: uppercase;
+  font-size: 1.7rem;
+  text-align: center;
+  letter-spacing: 2px;
+  width: 90%;
+  color: white;
+  line-height: 1.6;
+  display: none;
+  transition: all 0.5s;
+}
+.plan__img:hover {
+  transform: scale(1.1);
+}
+.plan__fig:hover .plan__caption {
+  display: block;
+}
+.plan__fig:hover {
+  outline-offset: 1rem;
+  outline: solid 1rem rgba(0, 0, 0, 0.733);
+  z-index: 10;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .plan {
+    padding: 1rem 2rem;
+    margin: 6rem 0;
+  }
+  .plan__description {
+    width: 55%;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .plan__fig {
+    height: 19rem;
+  }
+  .plan__description {
+    width: 65%;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+  }
+  .plan__description ul {
+    margin-left: 1rem;
+  }
+  .plan__caption {
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 0px;
+  }
+}
+
+/* phone screen 400px */
+@media (max-width: 25em) {
+  .plan__fig {
+    display: none;
+  }
+  .plan__description {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    color: white;
+    background-image: url("../../pictures/plan.jpg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-color: transparent !important;
+  }
+}

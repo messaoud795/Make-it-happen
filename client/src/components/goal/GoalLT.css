@@ -1,0 +1,62 @@
+.GoalLT {
+  margin-bottom: 1.5rem;
+}
+
+.Goal__content {
+  height: auto;
+  width: 100%;
+  padding: 1rem 3rem;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  background-color: white;
+  border-left: 4px solid rgba(0, 183, 255, 0.459);
+}
+.GoalLT-add {
+  display: flex;
+  align-items: center;
+}
+
+.Goal__operations {
+  display: none;
+}
+
+.Goal__content:hover .Goal__operations {
+  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Goal__description {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1px !important;
+}
+.Goal__time {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+.Goal__time * {
+  margin-right: 1rem;
+}
+.GoalLT__partners {
+  padding: 0 5px;
+  display: block;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+}
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Goal__content {
+    margin-bottom: 2rem;
+    padding: 0.5 1.5rem;
+  }
+  .GoalLT__partners {
+    font-size: 1rem;
+    padding: 0 5px;
+    margin: auto;
+  }
+}

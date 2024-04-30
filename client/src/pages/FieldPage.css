@@ -1,0 +1,102 @@
+.FieldPage {
+  padding: 1rem 3rem;
+  width: 100% !important;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.FieldPage__quote {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: center;
+  margin: 0 auto 3rem !important;
+  position: relative;
+}
+
+.FieldPage__quote-content {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+}
+.FieldPage__quote-author {
+  align-self: flex-end;
+  letter-spacing: 0.2rem;
+}
+
+.FieldPage__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FieldPage__sectionFields-header {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+.FieldPage__sectionFields {
+  width: 50%;
+  min-height: 50vh;
+  position: relative;
+}
+.iconAdd {
+  margin: 0.5rem 0 0 1rem !important;
+  font-size: 2rem;
+  color: rgba(30, 128, 0, 0.658) !important;
+  opacity: 0.5;
+}
+.iconAdd:hover {
+  opacity: 1;
+}
+.iconAdd:hover {
+  cursor: pointer;
+}
+.FielPage__fields {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  column-gap: 1rem;
+  row-gap: 3rem;
+}
+.FieldPage__actions {
+  width: 40% !important;
+  position: relative;
+  min-height: 50vh;
+  letter-spacing: 0.7px;
+  display: grid;
+  grid-gap: 1rem;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .FieldPage__content {
+    flex-direction: column;
+  }
+  .FieldPage__sectionFields {
+    width: 100% !important;
+  }
+  .FieldPage__actions {
+    width: 80% !important;
+    margin-top: 3rem;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .FieldPage {
+    padding: 1.5rem;
+  }
+  .FieldPage__quote {
+    width: 95%;
+    margin: 0 auto 2rem !important;
+  }
+  .iconAdd {
+    margin: 0 !important;
+  }
+  .FieldPage__actions {
+    width: 100% !important;
+  }
+}

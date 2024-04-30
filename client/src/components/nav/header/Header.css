@@ -1,0 +1,72 @@
+.Header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  padding: 1.5rem 4rem;
+  border-bottom: 1px rgba(141, 140, 140, 0.568) solid;
+  background-color: white;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.43);
+  position: sticky;
+  top: 0%;
+  left: 0%;
+  z-index: 10;
+}
+.Header__logo {
+  display: flex;
+  align-items: center;
+}
+.Header__img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 15rem;
+  margin-right: 1rem;
+}
+.header__dropdown {
+  margin-left: -2rem;
+  font-size: 2rem !important;
+  color: gray !important;
+}
+
+.Header__span {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 2px;
+  color: black;
+}
+.Header__auth {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.Header__menu {
+  color: white !important;
+  font-size: 2.5rem !important;
+}
+.header__functions {
+  display: flex;
+  align-items: center;
+}
+.header__chat {
+  margin: 0 3rem !important;
+  font-size: 1.8rem !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Header {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+/* phone screen 400px */
+@media (max-width: 25em) {
+  .Header__span {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+}

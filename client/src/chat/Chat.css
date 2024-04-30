@@ -1,0 +1,5 @@
+.chat {
+  display: grid;
+  padding: 1rem 2rem 0.8rem;
+  grid-template-columns: 25% 75%;
+}

@@ -1,0 +1,43 @@
+.iconAdd {
+  position: relative;
+  margin: -18px 8px 0 8px;
+  cursor: pointer;
+}
+
+.iconAdd .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 1rem;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.iconAdd:hover .tooltiptext {
+  visibility: visible;
+}
+.Goal__status {
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+}
+.Goal__status > input {
+  margin-right: 5px;
+}
+.Goal__status > label {
+  margin-right: 10px !important;
+}
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .ModalRegister {
+    width: 85% !important;
+  }
+}

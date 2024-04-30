@@ -1,0 +1,57 @@
+.home__pomodoro {
+  margin: 0rem 8rem 3rem 8rem;
+  padding: 1.5rem 3rem;
+}
+.pomodoro__description {
+  border: gray 2px solid;
+  padding: 3rem 1rem 2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+.pomodoro__description ul {
+  width: 65%;
+}
+.pomodoro__description li {
+  margin-bottom: 2rem;
+}
+.pomodoro__img {
+  flex-grow: 0;
+  height: 15rem;
+  flex: 0 0 0.3;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .home__pomodoro {
+    margin: 0rem 0rem 3rem 0rem;
+    padding: 1.5rem 1rem;
+  }
+  .pomodoro__description {
+    padding: 2rem 1rem 2rem;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+  .pomodoro__description ul {
+    margin-left: 1rem;
+    width: 100%;
+  }
+  .pomodoro__img {
+    margin-right: 1rem;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .pomodoro__description {
+    display: block;
+  }
+  .pomodoro__img {
+    margin-left: 6rem;
+  }
+}

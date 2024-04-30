@@ -1,0 +1,22 @@
+.ModalRegister {
+  width: 40% !important;
+}
+.ModalRegister__social {
+  padding: 2rem 0 !important;
+  display: flex;
+  justify-content: center;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .ModalRegister {
+    width: 60% !important;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .ModalRegister {
+    width: 80% !important;
+  }
+}

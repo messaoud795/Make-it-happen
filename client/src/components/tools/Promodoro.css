@@ -1,0 +1,89 @@
+.Promodoro__time {
+  text-align: center;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: repeat(5, min-content);
+  align-items: center;
+  margin-top: 2rem;
+}
+.time-units {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: cornflowerblue;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 3px;
+  border: 2px solid rgba(161, 158, 158, 0.212);
+}
+
+.score-container {
+  display: grid;
+  grid-template-rows: repeat(2, min-content);
+  justify-items: center;
+  margin: 2rem 0;
+}
+
+.score {
+  display: block;
+  font-weight: 700;
+  font-size: 1.5rem;
+  width: 4rem;
+  padding: 1rem;
+  font-weight: 700;
+  border-radius: 3px;
+  text-align: center;
+  border: 2px solid rgba(161, 158, 158, 0.212);
+  cursor: pointer;
+}
+
+.Promodoro {
+  position: relative;
+}
+
+.Promodoro__control {
+  display: flex;
+  width: 45%;
+  margin: auto;
+  cursor: pointer;
+  /* justify-content: center; */
+}
+/* .Promodoro__control:hover .Promodoro__control * {
+  color: aqua;
+} */
+
+.Promodoro__content {
+  position: relative;
+  width: 100%;
+}
+
+.promodoro__description {
+  padding: 2rem 5rem 0 0rem;
+  line-height: 1.5;
+  font-size: 1.1rem;
+}
+
+/* tab screen 900px */
+@media (max-width: 56.25em) {
+  .Promodoro__distractions {
+    left: 54%;
+  }
+  .Promodoro__goal {
+    left: 38%;
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .Promodoro__distractions {
+    left: 56%;
+  }
+  .Promodoro__goal {
+    left: 36%;
+  }
+  .single-digit {
+    padding: 6px 7px;
+  }
+  .double-digit {
+    padding: 6px 10px;
+  }
+}

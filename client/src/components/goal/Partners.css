@@ -1,0 +1,42 @@
+.partners {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 9rem);
+  grid-row-gap: 2rem;
+  margin-top: 2rem;
+  height: fit-content;
+}
+
+.partner__img {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 5rem;
+  margin-right: 2rem;
+  align-self: center;
+  justify-self: center;
+}
+
+.partner {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  border: 1px rgba(10, 10, 10, 0.767) solid;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  align-items: center;
+  background-color: white;
+}
+
+.partner__name {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+}
+.partner__description {
+  margin: 0;
+  padding: 3px;
+}
+.partner__chat {
+  font-size: 1.8rem !important;
+  cursor: pointer;
+  margin-top: -2rem !important;
+}

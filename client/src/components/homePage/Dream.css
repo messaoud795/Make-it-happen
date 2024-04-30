@@ -1,0 +1,87 @@
+.mission {
+  position: relative;
+  margin-top: 6rem;
+  height: 30rem;
+}
+.bg-video {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.bg-video__content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.mission__text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  text-align: center;
+  color: white;
+}
+.mission__text-header {
+  display: block;
+  font-family: "Shadows Into Light", cursive;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  animation-name: moveInLeft;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-delay: 1s;
+}
+.mission__text-quote {
+  display: block;
+  font-family: "Shadows Into Light", cursive;
+  font-size: 2.5rem;
+  font-weight: 700;
+  animation-name: moveInRight;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-delay: 1s;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-150rem);
+  }
+  80% {
+    transform: translateX(2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(150rem);
+  }
+  80% {
+    transform: translateX(-2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* phone screen 600px */
+@media (max-width: 37.5em) {
+  .mission__text-header {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+  }
+  .mission__text-quote {
+    font-size: 1.5rem;
+  }
+}

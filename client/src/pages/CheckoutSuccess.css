@@ -1,0 +1,11 @@
+.checkout {
+  padding: 3rem 6rem !important;
+}
+.checkout__success {
+  color: rgb(113, 211, 15);
+}
+
+.checkout__text {
+  font-size: 1.2rem;
+  margin-right: 3rem;
+}

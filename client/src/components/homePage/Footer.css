@@ -1,0 +1,41 @@
+.footer {
+  background-color: #333333;
+  padding: 2rem 6rem;
+  color: white;
+}
+.footer__logo {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.footer__img {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+.footer__span {
+  font-size: 1.2rem;
+}
+.footer__info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.footer__contact {
+  width: 30rem;
+  border-top: solid 1px white;
+  padding: 1.5rem 0;
+}
+.footer__copyright {
+  width: 30rem;
+  border-top: solid 1px white;
+  padding: 1.5rem 0;
+}
+.footer__icon {
+  font-size: 1.5rem !important;
+  color: rgb(120, 216, 65);
+  margin-right: 1rem !important;
+}

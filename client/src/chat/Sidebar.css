@@ -1,0 +1,53 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  border-right: rgba(175, 171, 171, 0.856) 1px solid;
+  /* height: 80vh; */
+  border-radius: 5px;
+  padding: 1rem;
+}
+.sidebar__discussion {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+  width: 90%;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  font-size: 1.15rem;
+}
+.sidebar__discussion-img {
+  font-size: 2.5rem !important;
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 5rem;
+  margin-right: 1rem;
+}
+.sidebar__name {
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+
+/* phone screen 900px */
+@media (max-width: 56.25em) {
+  .sidebar__msg {
+    display: none;
+  }
+  .sidebar__discussion {
+    grid-template-columns: 100% 0%;
+  }
+  .sidebar__discussion-img {
+    font-size: 2.5rem !important;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 5rem;
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 37.5em) {
+  .sidebar h2 {
+    font-size: 1.2rem;
+  }
+}
