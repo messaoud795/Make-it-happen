@@ -25,15 +25,21 @@ app.use(cors(corsOptions));
 // app.use(secure);
 
 //deployment
-app.use(express.static(path.join(__dirname, './client/build')));
+
 if (process.env.NODE_ENV === 'production') {
-  app.get('*', function (_, res) {
-    res.sendFile(
-      path.join(__dirname, './client/build/index.html'),
-      function (err) {
-        res.status(500).send(err);
-      }
-    );
+  app.use(express.static(path.join(__dirname, './client/build')));
+  app.get('*', function (req, res, next) {
+    const url = req.originalUrl;
+    if (!url.startsWith('/api/')) {
+      res.sendFile(
+        path.join(__dirname, './client/build/index.html'),
+        function (err) {
+          res.status(500).send(err);
+        }
+      );
+      return;
+    }
+    next();
   });
 }
 //database connection
