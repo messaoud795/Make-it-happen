@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "semantic-ui-react";
-import "../../components/nav/auth/ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
 import { addField } from "../../actions/field_actions";
 
 export default function ModalAddField({ open, setOpen }) {
@@ -9,43 +21,63 @@ export default function ModalAddField({ open, setOpen }) {
   const { error } = useSelector((state) => state.field);
   const dispatch = useDispatch();
 
+  const handleClose = () => {
+    setInput("");
+    setOpen(); // Matches your parent handler execution
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
     let data = { name: input.toUpperCase() };
     await dispatch(addField(data));
     if (!error) {
-      await setOpen();
       setInput("");
+      setOpen();
     }
   };
+
   return (
-    <Modal
-      className="ModalRegister"
-      onClose={() => setOpen()}
-      onOpen={() => setOpen()}
-      open={open}
-    >
-      <Modal.Header>Enter the name of the field</Modal.Header>
-      <Modal.Content>
-        <Form onSubmit={submitForm}>
-          <Form.Field required>
-            <input
-              placeholder="new field"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-            />
-          </Form.Field>
-          <Button content="cancel" onClick={setOpen} secondary />
-          <Button
-            content="Submit"
-            labelPosition="right"
-            icon="checkmark"
-            type="submit"
-            onClick={submitForm}
-            positive
-          />
-        </Form>
-      </Modal.Content>
+    <Modal isOpen={open} onClose={handleClose} isCentered size="md">
+      <ModalOverlay backdropFilter="blur(4px)" />
+      <ModalContent borderRadius="2xl" p={2}>
+        <ModalHeader fontSize="xl" fontWeight="bold" color="gray.800">
+          Enter the name of the field
+        </ModalHeader>
+        <ModalCloseButton borderRadius="full" mt={2} />
+
+        <form onSubmit={submitForm}>
+          <ModalBody>
+            <VStack spacing={4}>
+              <FormControl isRequired>
+                <FormLabel fontWeight="semibold" color="gray.600">
+                  Field Name
+                </FormLabel>
+                <Input
+                  placeholder="e.g. Health, Career, Finance..."
+                  focusBorderColor="blue.400"
+                  borderRadius="xl"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+              </FormControl>
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter gap={3}>
+            <Button
+              onClick={handleClose}
+              variant="ghost"
+              borderRadius="xl"
+              colorScheme="gray"
+            >
+              Cancel
+            </Button>
+            <Button colorScheme="blue" type="submit" borderRadius="xl" px={6}>
+              Create Field
+            </Button>
+          </ModalFooter>
+        </form>
+      </ModalContent>
     </Modal>
   );
 }

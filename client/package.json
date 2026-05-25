@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^1.8.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
@@ -13,6 +17,7 @@
     "date-fns": "^2.19.0",
     "emoji-mart": "^3.0.1",
     "emoji-picker-react": "^3.4.4",
+    "framer-motion": "^4.1.17",
     "react": "^17.0.1",
     "react-compound-timer": "^1.2.0",
     "react-datepicker": "^3.4.1",
@@ -39,10 +44,11 @@
     "workbox-strategies": "^6.1.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "node -e \"const fs = require('fs'); const path = './node_modules/react-scripts/config/webpack.config.js'; if (fs.existsSync(path)) { let c = fs.readFileSync(path, 'utf8'); if (!c.includes('mjs:')) { c = c.replace(/rules:\\s*\\[/, 'rules: [\\n      { test: /\\\\.mjs$/, include: /node_modules/, type: 'javascript/auto' },'); fs.writeFileSync(path, c); } }\""
   },
   "eslintConfig": {
     "extends": [

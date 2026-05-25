@@ -1,6 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Modal } from "semantic-ui-react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  Text,
+  Heading,
+} from "@chakra-ui/react";
 import {
   deleteAction,
   loadActions,
@@ -23,21 +34,53 @@ export default function ModalDeleteAction({
       dispatch(loadTodayActions());
     }
   };
+
+  // Guard clause to prevent rendering if data hasn't loaded yet
+  if (!data) return null;
+
   return (
     <Modal
-      className="ModalRegister"
+      isOpen={openModalDelete}
       onClose={handleModalDelete}
-      onOpen={handleModalDelete}
-      open={openModalDelete}
+      isCentered
+      size="md"
     >
-      <Modal.Header>Confirm to delete this Goal</Modal.Header>
-      <Modal.Content>
-        <h3>{data.description}</h3>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button content="Cancel" primary onClick={handleModalDelete} />
-        <Button content="OK" negative onClick={handleDeleteAction} />
-      </Modal.Actions>
+      <ModalOverlay backdropFilter="blur(4px)" />
+      <ModalContent borderRadius="2xl" p={2}>
+        <ModalHeader fontSize="xl" fontWeight="bold" color="gray.800">
+          Confirm to delete this Goal
+        </ModalHeader>
+        <ModalCloseButton borderRadius="full" mt={2} />
+
+        <ModalBody>
+          <Text color="gray.500" mb={2} fontSize="sm" fontWeight="semibold">
+            Are you sure you want to permanently delete this action?
+          </Text>
+          <Heading as="h3" size="md" color="red.600" fontWeight="medium" py={2}>
+            {data.description}
+          </Heading>
+        </ModalBody>
+
+        <ModalFooter gap={3}>
+          <Button
+            onClick={handleModalDelete}
+            variant="ghost"
+            borderRadius="xl"
+            colorScheme="gray"
+          >
+            Cancel
+          </Button>
+          <Button
+            colorScheme="red"
+            onClick={handleDeleteAction}
+            borderRadius="xl"
+            isLoading={loadingAction}
+            px={6}
+          >
+            Delete
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 }

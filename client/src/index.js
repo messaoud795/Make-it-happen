@@ -8,19 +8,23 @@ import { configureStore } from "./store/configureStore";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import ReduxToastr from "react-redux-toastr";
 import "react-datepicker/dist/react-datepicker.css";
-import "./semantic-ui-css/semantic.min.css";
+// import "./semantic-ui-css/semantic.min.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <ReduxToastr
-      position="top-right"
-      transitionIn="fadeIn"
-      transitionOut="fadeOut"
-    />
-    <App />
+    {/* 2. Wrap everything inside ChakraProvider */}
+    <ChakraProvider>
+      <ReduxToastr
+        position="top-right"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut"
+      />
+      <App />
+    </ChakraProvider>
   </Provider>,
   document.getElementById("root"),
 );
