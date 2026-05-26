@@ -40,7 +40,13 @@ export default function FieldPage() {
     (state) => state.action,
   );
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ days: 365, hours: 24 });
+
+  // Tracked days, hours, and minutes inside component state
+  const [timeLeft, setTimeLeft] = useState({
+    days: 365,
+    hours: 24,
+    minutes: 0,
+  });
 
   useEffect(() => {
     dispatch(loadQuote());
@@ -51,28 +57,29 @@ export default function FieldPage() {
       const now = new Date();
       const currentYear = now.getFullYear();
 
-      // Create target date for August 27th of the current year (Month 7 is August in JavaScript 0-indexed months)
       let targetDate = new Date(currentYear, 7, 27, 23, 59, 59);
 
-      // If August 27th has already passed this year, point to August 27th of next year
       if (now > targetDate) {
         targetDate = new Date(currentYear + 1, 7, 27, 23, 59, 59);
       }
 
-      // Calculate difference in milliseconds
       const diffTime = targetDate - now;
 
-      // Convert milliseconds into full remaining days
+      // Calculate total breakdown units cleanly
       const daysRemaining = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-      // Calculate exact hours remaining until the end of the current day
       const hoursRemaining = 23 - now.getHours();
+      const minutesRemaining = 59 - now.getMinutes();
 
-      setTimeLeft({ days: daysRemaining, hours: hoursRemaining });
+      setTimeLeft({
+        days: daysRemaining,
+        hours: hoursRemaining,
+        minutes: minutesRemaining,
+      });
     };
 
     calculateCountdown();
-    const timer = setInterval(calculateCountdown, 60000);
+    // Run interval checks every 30 seconds to maintain exact minute precision
+    const timer = setInterval(calculateCountdown, 30000);
     return () => clearInterval(timer);
   }, [dispatch]);
 
@@ -80,6 +87,7 @@ export default function FieldPage() {
     setOpenModalAdd(!openModalAdd);
   };
 
+  // Explicit typing stops TypeScript from recursively joining huge Chakra interface states
   const fieldsIcons = {
     CAREER: CareerIcon,
     FINANCE: FinanceIcon,
@@ -142,7 +150,7 @@ export default function FieldPage() {
             py={2}
             px={6}
             boxShadow="md"
-            minW="140px"
+            minW="160px"
           >
             <Stat size="sm">
               <StatLabel
@@ -151,14 +159,16 @@ export default function FieldPage() {
                 fontWeight="bold"
                 textTransform="uppercase"
               >
-                Hours Left
+                Time Left
               </StatLabel>
               <StatNumber
                 textAlign="center"
-                fontSize="3xl"
+                fontSize="2xl"
                 fontWeight="extrabold"
+                whiteSpace="nowrap"
               >
                 {timeLeft.hours}h
+                {timeLeft.minutes?.toString().padStart(2, "0") || "00"}m
               </StatNumber>
             </Stat>
           </Box>
@@ -176,19 +186,20 @@ export default function FieldPage() {
         w="100%"
       >
         {loadingQuote ? (
-          <Flex align="center" justify="center" gap={2}>
+          <Flex align="center" justify="center" gap={2} py={2}>
             <Spinner size="sm" color="blue.500" />
             <Text fontSize="md" color="gray.500" fontStyle="italic">
-              Loading quote...
+              Fetching your fresh daily inspiration...
             </Text>
           </Flex>
         ) : (
-          <VStack spacing={1} textAlign="center" justify="center" w="100%">
+          <VStack spacing={2} textAlign="center" justify="center" w="100%">
             <Text
               fontStyle="italic"
-              fontSize="md"
+              fontSize="lg"
               fontWeight="medium"
               color="gray.800"
+              maxW="4xl"
             >
               "{quote || "Make it happen today. Consistency yields progress."}"
             </Text>
@@ -205,14 +216,14 @@ export default function FieldPage() {
         )}
       </Box>
 
-      {/* Main Side-by-Side Flex Layout (Utilizes 100% Window Space) */}
+      {/* Main Side-by-Side Flex Layout */}
       <Flex
         direction={{ base: "column", lg: "row" }}
         gap={30}
         w="100%"
         alignItems="start"
       >
-        {/* Left Section: Strict 2x3 Life Areas Layout (Takes up 60% Width) */}
+        {/* Left Section: Life Areas */}
         <Box
           w={{ base: "100%", lg: "60%" }}
           className="FieldPage__sectionFields"
@@ -255,7 +266,7 @@ export default function FieldPage() {
           )}
         </Box>
 
-        {/* Right Section: Actions Panel (Takes up remaining 40% Width completely) */}
+        {/* Right Section: Actions Panel */}
         <Box w={{ base: "100%", lg: "40%" }} className="FieldPage__actions">
           <Heading
             as="h2"
