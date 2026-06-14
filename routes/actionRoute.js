@@ -15,37 +15,32 @@ router.get("/:fieldId", auth, (req, res) => {
 
 router.get("/all/today", auth, async (req, res) => {
   try {
-    const foundUser = await User.findById(req.userData.userId);
-    let actions = await Action.find({ userId: req.userData.userId });
-    let habits = await actions.filter((action) => action.type == "Daily habit");
-    // await habits.forEach((habit) => (habit.startDate = new Date()));
+    // 1. Define the absolute start and end of "today" in UTC
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
 
-    let todayActions = await actions.filter(
-      (el) =>
-        el.startDate.toLocaleDateString() == new Date().toLocaleDateString()
-    );
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
 
-    todayActions.push(...habits);
-    //Reset actions completion state after midnight
-    //compare the previous day stored in user schema with request time
-    // if they are different reset actions and set variable
-    const requestCurrentDay = new Date().getDay();
-
-    if (foundUser && requestCurrentDay !== foundUser?.actionDay) {
-      await User.findByIdAndUpdate(
-        req.userData.userId,
-        { ...foundUser._doc, actionDay: requestCurrentDay },
+    // 2. Query MongoDB using an OR condition
+    const todayActions = await Action.find({
+      userId: req.userData.userId,
+      $or: [
+        { type: "Daily habit" }, // Condition A: It's a daily habit
         {
-          new: true,
-          runValidators: true,
-          useFindAndModify: false,
-        }
-      );
-      todayActions.forEach((action) => (action.completed = false));
-    }
-    res.send(todayActions);
+          startDate: {
+            // Condition B: The startDate falls within today
+            $gte: startOfToday,
+            $lte: endOfToday,
+          },
+        },
+      ],
+    });
+
+    res.status(200).send(todayActions);
   } catch (error) {
-    res.send({ msg: "error" });
+    console.error("Error fetching today's actions:", error);
+    res.status(500).send({ msg: "error" });
   }
 });
 
@@ -78,7 +73,7 @@ router.patch("/edit", auth, (req, res) => {
       else {
         res.status(200).send({ msg: "success " });
       }
-    }
+    },
   );
 });
 

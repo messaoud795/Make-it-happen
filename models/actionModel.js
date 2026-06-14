@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const actionSchema = new mongoose.Schema({
   description: { type: String, required: true },
   priority: { type: String, required: true },
   type: { type: String },
   completed: {
-    status: { type: Boolean, default: true },
+    status: { type: Boolean, default: false },
     completionDate: { type: Date },
   },
   startDate: { type: Date, required: true },
@@ -13,4 +13,4 @@ const actionSchema = new mongoose.Schema({
   userId: String,
 });
 
-module.exports = mongoose.model('Action', actionSchema);
+module.exports = mongoose.model("Action", actionSchema);

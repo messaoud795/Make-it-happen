@@ -13,9 +13,6 @@ import {
   ModalCloseButton,
   VStack,
   useDisclosure,
-  Text,
-  Divider,
-  Box,
 } from "@chakra-ui/react";
 import "./ModalLogin.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,8 +24,6 @@ import {
 } from "../../../actions/auth_actions";
 import isEmail from "validator/lib/isEmail";
 import { toastr } from "react-redux-toastr";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
 
 export default function ModalLogin() {
   const { isOpen, onOpen, onClose } = useDisclosure();
