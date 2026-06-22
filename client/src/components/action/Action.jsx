@@ -8,7 +8,6 @@ import {
   HStack,
   Badge,
 } from "@chakra-ui/react";
-// 1. Swapped semantic icons out for native Chakra Icons
 import { EditIcon, DeleteIcon, TimeIcon } from "@chakra-ui/icons";
 import "./Action.css";
 import ModalDeleteAction from "./ModalDeleteAction";
@@ -22,10 +21,18 @@ import {
 import { useDispatch } from "react-redux";
 
 export default function Action({ data }) {
-  const { description, startDate, priority, type, completed, _id } = data;
+  const { description, startDate, priority, type, completed, _id, fieldId } =
+    data;
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const dispatch = useDispatch();
+
+  // Safety check: Only treat as completed if status is true AND completionDate matches today
+  const isCompletedToday =
+    completed?.status &&
+    completed?.completionDate &&
+    format(new Date(completed.completionDate), "yyyy-MM-dd") ===
+      format(new Date(), "yyyy-MM-dd");
 
   const handleModalDelete = (e) => {
     e.stopPropagation();
@@ -43,7 +50,7 @@ export default function Action({ data }) {
       editAction({
         id: _id,
         completed: {
-          status: !completed.status,
+          status: !isCompletedToday, // Toggles based on today's localized status
           completionDate: new Date(),
         },
       }),
@@ -53,7 +60,7 @@ export default function Action({ data }) {
   };
 
   const getThemeColors = () => {
-    if (completed.status)
+    if (isCompletedToday)
       return {
         border: "green.400",
         bg: "green.50",
@@ -87,9 +94,9 @@ export default function Action({ data }) {
       w="100%"
       p={6}
       mb={4}
-      bg={completed.status ? colors.bg : "white"}
+      bg={isCompletedToday ? colors.bg : "white"}
       border="1px solid"
-      borderColor={completed.status ? "green.200" : "gray.100"}
+      borderColor={isCompletedToday ? "green.200" : "gray.100"}
       borderLeft="6px solid"
       borderLeftColor={colors.border}
       borderRadius="2xl"
@@ -97,7 +104,7 @@ export default function Action({ data }) {
       _hover={{
         transform: "translateY(-4px)",
         boxShadow: `0 20px 35px -5px ${colors.glow}, 0 12px 16px -8px rgba(0,0,0,0.05)`,
-        borderColor: completed.status ? "green.300" : "gray.200",
+        borderColor: isCompletedToday ? "green.300" : "gray.200",
       }}
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
     >
@@ -112,7 +119,7 @@ export default function Action({ data }) {
           <HStack spacing={4} alignItems="start" flex="1">
             <Checkbox
               id={`cb-${_id}`}
-              isChecked={completed.status}
+              isChecked={isCompletedToday}
               onChange={updateCompletedStatus}
               colorScheme="green"
               size="lg"
@@ -122,7 +129,7 @@ export default function Action({ data }) {
             />
             <Text
               className="action__description"
-              color={completed.status ? "gray.400" : "gray.800"}
+              color={isCompletedToday ? "gray.400" : "gray.800"}
               fontWeight="bold"
               fontSize="lg"
               lineHeight="base"
@@ -132,7 +139,7 @@ export default function Action({ data }) {
             </Text>
           </HStack>
 
-          {/* Quick Control Buttons Panel - Now with clean native Chakra icons */}
+          {/* Quick Control Buttons Panel */}
           <HStack spacing={1} shrink={0} bg="gray.50" borderRadius="xl" p={1}>
             <IconButton
               icon={<EditIcon />}
@@ -178,7 +185,7 @@ export default function Action({ data }) {
             <Badge
               variant="solid"
               bg={
-                completed.status
+                isCompletedToday
                   ? "green.500"
                   : `${colors.border.split(".")[0]}.500`
               }
