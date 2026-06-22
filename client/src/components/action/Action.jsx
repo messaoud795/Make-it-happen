@@ -48,22 +48,26 @@ export default function Action({ data }) {
   const updateCompletedStatus = async (e) => {
     e.stopPropagation();
 
-    // 1. Wait for the server to successfully update the status
-    await dispatch(
-      editAction({
-        id: _id,
-        completed: {
-          status: !isCompletedToday,
-          completionDate: new Date(),
-        },
-      }),
-    );
+    try {
+      await dispatch(
+        editAction({
+          id: _id,
+          completed: {
+            status: !isCompletedToday,
+            completionDate: new Date(),
+          },
+        }),
+      );
 
-    // 2. Now that the database is updated, safely pull fresh data
-    if (fieldId) {
-      dispatch(loadActions(fieldId));
+      // 🔴 force fresh fetch AFTER backend is guaranteed updated
+      if (fieldId) {
+        await dispatch(loadActions(fieldId));
+      }
+
+      await dispatch(loadTodayActions());
+    } catch (err) {
+      console.error(err);
     }
-    dispatch(loadTodayActions());
   };
 
   const getThemeColors = () => {
