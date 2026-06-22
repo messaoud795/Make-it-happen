@@ -44,18 +44,25 @@ export default function Action({ data }) {
     setOpenModalEdit(!openModalEdit);
   };
 
-  const updateCompletedStatus = (e) => {
+  // Made this function ASYNC to wait for database updates
+  const updateCompletedStatus = async (e) => {
     e.stopPropagation();
-    dispatch(
+
+    // 1. Wait for the server to successfully update the status
+    await dispatch(
       editAction({
         id: _id,
         completed: {
-          status: !isCompletedToday, // Toggles based on today's localized status
+          status: !isCompletedToday,
           completionDate: new Date(),
         },
       }),
     );
-    dispatch(loadActions(data.fieldId));
+
+    // 2. Now that the database is updated, safely pull fresh data
+    if (fieldId) {
+      dispatch(loadActions(fieldId));
+    }
     dispatch(loadTodayActions());
   };
 
@@ -173,7 +180,7 @@ export default function Action({ data }) {
           </HStack>
         </Flex>
 
-        {/* Footer Row: Clean separation of categories and timestamps */}
+        {/* Footer Row: Categories and timestamps */}
         <Flex
           justify="space-between"
           alignItems="center"
@@ -213,7 +220,7 @@ export default function Action({ data }) {
             </Badge>
           </HStack>
 
-          {/* Clean Clock Display Format with Native Time Icon */}
+          {/* Clock Display Format with Native Time Icon */}
           <HStack spacing={1.5} color="gray.400">
             <TimeIcon boxSize="3.5px" />
             <Text fontSize="xs" fontWeight="bold" letterSpacing="wide">
