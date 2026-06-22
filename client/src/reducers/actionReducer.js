@@ -19,30 +19,59 @@ const initialState = {
 
 export const ActionReducer = (state = initialState, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case ACTION_ACTION_START:
-      return (state = { ...state, loadingAction: true });
+      return {
+        ...state,
+        loadingAction: true,
+        error: null,
+      };
+
     case ACTION_LOAD_SUCCESS:
-      return (state = {
+      return {
+        ...state,
         loadingAction: false,
         error: null,
         actions: payload,
-      });
+      };
+
     case TODAYACTION_LOAD_SUCCESS:
-      return (state = {
+      return {
+        ...state,
         loadingAction: false,
         error: null,
         todayActions: payload,
         completedActionsOfToday: getCompletedActionsOfToday(payload),
-      });
+      };
+
     case ACTION_ADD_SUCCESS:
-      return (state = { ...state, loadingAction: false, error: null });
+      return {
+        ...state,
+        loadingAction: false,
+        error: null,
+      };
+
     case ACTION_DELETE_SUCCESS:
-      return (state = { ...state, loadingAction: false, error: null });
+      return {
+        ...state,
+        loadingAction: false,
+        error: null,
+      };
+
     case ACTION_EDIT_SUCCESS:
-      return (state = { ...state, loadingAction: false, error: null });
+      return {
+        ...state,
+        loadingAction: false,
+        error: null,
+      };
+
     case ACTION_ACTION_ERROR:
-      return (state = { ...state, loadingAction: false, error: payload });
+      return {
+        ...state,
+        loadingAction: false,
+        error: payload,
+      };
 
     default:
       return state;
@@ -50,14 +79,21 @@ export const ActionReducer = (state = initialState, action) => {
 };
 
 const getCompletedActionsOfToday = (actions) => {
-  return actions?.filter((action) => {
-    const {
-      completed: { status, completionDate },
-    } = action;
+  if (!actions || !Array.isArray(actions)) return 0;
+
+  return actions.filter((action) => {
+    const status = action?.completed?.status;
+    const completionDate = action?.completed?.completionDate;
+
+    if (!status || !completionDate) return false;
+
+    const d = parseISO(completionDate);
+    const now = new Date();
+
     return (
-      status &&
-      parseISO(completionDate).toLocaleDateString() ===
-        new Date().toLocaleDateString()
+      d.getFullYear() === now.getFullYear() &&
+      d.getMonth() === now.getMonth() &&
+      d.getDate() === now.getDate()
     );
   }).length;
 };
