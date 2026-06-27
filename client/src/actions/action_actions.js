@@ -51,10 +51,8 @@ export const editAction = (data) => {
     try {
       dispatch({ type: ACTION_ACTION_START });
       await axios.patch("/api/action/edit", data, configHeaders());
-      dispatch({ type: ACTION_EDIT_SUCCESS });
+      dispatch({ type: ACTION_EDIT_SUCCESS, payload: data });
       toastr.success("Success", "Action is updated");
-
-      return res.data;
     } catch (error) {
       dispatch({ type: ACTION_ACTION_ERROR, payload: error });
       toastr.error("Error", "ACTION is not updated");

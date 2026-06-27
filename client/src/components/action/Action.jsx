@@ -28,11 +28,7 @@ export default function Action({ data }) {
   const dispatch = useDispatch();
 
   // Safety check: Only treat as completed if status is true AND completionDate matches today
-  const isCompletedToday =
-    completed?.status &&
-    completed?.completionDate &&
-    format(new Date(completed.completionDate), "yyyy-MM-dd") ===
-      format(new Date(), "yyyy-MM-dd");
+  const isCompletedToday = completed?.status;
 
   const handleModalDelete = (e) => {
     e.stopPropagation();
@@ -49,7 +45,7 @@ export default function Action({ data }) {
     e.stopPropagation();
 
     try {
-      await dispatch(
+      dispatch(
         editAction({
           id: _id,
           completed: {
@@ -61,10 +57,10 @@ export default function Action({ data }) {
 
       // 🔴 force fresh fetch AFTER backend is guaranteed updated
       if (fieldId) {
-        await dispatch(loadActions(fieldId));
+        dispatch(loadActions(fieldId));
       }
 
-      await dispatch(loadTodayActions());
+      dispatch(loadTodayActions());
     } catch (err) {
       console.error(err);
     }

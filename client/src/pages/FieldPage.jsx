@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Flex,
@@ -36,10 +36,16 @@ export default function FieldPage() {
   const dispatch = useDispatch();
   const { quote, author, loadingQuote } = useSelector((state) => state.quote);
   const { loadingField, name } = useSelector((state) => state.field);
-  const { loadingAction, todayActions, completedActionsOfToday } = useSelector(
-    (state) => state.action,
-  );
+  const { loadingAction, todayActions } = useSelector((state) => state.action);
   const [openModalAdd, setOpenModalAdd] = useState(false);
+
+  const completedActionsOfToday = useMemo(() => {
+    if (!todayActions || !Array.isArray(todayActions)) return 0;
+
+    return todayActions.filter((action) => action?.completed?.status).length;
+  }, [todayActions]);
+
+  console.log({ todayActions, completedActionsOfToday });
 
   // Tracked days, hours, and minutes inside component state
   const [timeLeft, setTimeLeft] = useState({
