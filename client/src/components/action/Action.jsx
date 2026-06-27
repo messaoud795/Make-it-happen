@@ -13,54 +13,36 @@ import "./Action.css";
 import ModalDeleteAction from "./ModalDeleteAction";
 import ModalEditAction from "./ModalEditAction";
 import { format } from "date-fns";
-import {
-  editAction,
-  loadActions,
-  loadTodayActions,
-} from "../../actions/action_actions";
+import { editAction } from "../../actions/action_actions";
 import { useDispatch } from "react-redux";
 
-export default function Action({ data }) {
+export default function Action({ action }) {
   const { description, startDate, priority, type, completed, _id, fieldId } =
-    data;
+    action;
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const dispatch = useDispatch();
-
-  // Safety check: Only treat as completed if status is true AND completionDate matches today
-  const isCompletedToday = completed?.status;
+  const isCompletedToday = Boolean(completed?.status);
 
   const handleModalDelete = (e) => {
-    e.stopPropagation();
     setOpenModalDelete(!openModalDelete);
   };
 
   const handleModalEdit = (e) => {
-    e.stopPropagation();
     setOpenModalEdit(!openModalEdit);
   };
 
-  // Made this function ASYNC to wait for database updates
   const updateCompletedStatus = async (e) => {
-    e.stopPropagation();
-
     try {
       dispatch(
         editAction({
-          id: _id,
+          ...action,
           completed: {
             status: !isCompletedToday,
-            completionDate: new Date(),
+            completionDate: action.completed.completionDate,
           },
         }),
       );
-
-      // 🔴 force fresh fetch AFTER backend is guaranteed updated
-      if (fieldId) {
-        dispatch(loadActions(fieldId));
-      }
-
-      dispatch(loadTodayActions());
     } catch (err) {
       console.error(err);
     }
@@ -160,7 +142,7 @@ export default function Action({ data }) {
             <ModalEditAction
               openModalEdit={openModalEdit}
               handleModalEdit={handleModalEdit}
-              data={data}
+              data={action}
             />
 
             <IconButton
@@ -175,7 +157,7 @@ export default function Action({ data }) {
             <ModalDeleteAction
               openModalDelete={openModalDelete}
               handleModalDelete={handleModalDelete}
-              data={data}
+              data={action}
             />
           </HStack>
         </Flex>

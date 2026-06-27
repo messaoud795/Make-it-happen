@@ -42,7 +42,8 @@ export default function FieldPage() {
   const completedActionsOfToday = useMemo(() => {
     if (!todayActions || !Array.isArray(todayActions)) return 0;
 
-    return todayActions.filter((action) => action?.completed?.status).length;
+    return todayActions.filter((action) => Boolean(action?.completed?.status))
+      .length;
   }, [todayActions]);
 
   console.log({ todayActions, completedActionsOfToday });
@@ -294,7 +295,7 @@ export default function FieldPage() {
           ) : (
             <VStack spacing={4} align="stretch" w="100%">
               {todayActions?.map((action) => (
-                <Action key={action._id} data={action} />
+                <Action key={action._id} action={action} />
               ))}
             </VStack>
           )}
