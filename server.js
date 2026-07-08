@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "production") {
 //database connection
 connectDB();
 
-initCronJobs();
+initCronJobs(app);
 
 //handle chechkout completed
 app.post(

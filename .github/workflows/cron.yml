@@ -1,0 +1,21 @@
+name: Daily Habit Reset Cron
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: "0 0 * * *"
+  # Allows you to manually trigger the workflow from the GitHub Actions tab for testing
+  workflow_dispatch:
+
+jobs:
+  trigger-reset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake up Render and Trigger Habit Reset
+        run: |
+          curl -X POST "https://make-it-happen.onrender.com/api/cron/reset-habits" \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+          -H "Content-Length: 0" \
+          --fail \
+          --connect-timeout 60 \
+          --max-time 120

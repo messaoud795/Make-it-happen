@@ -46,8 +46,6 @@ export default function FieldPage() {
       .length;
   }, [todayActions]);
 
-  console.log({ todayActions, completedActionsOfToday });
-
   // Tracked days, hours, and minutes inside component state
   const [timeLeft, setTimeLeft] = useState({
     days: 365,
