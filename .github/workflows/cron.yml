@@ -14,7 +14,6 @@ jobs:
       - name: Wake up Render and Trigger Habit Reset
         run: |
           curl -X POST "https://make-it-happen.onrender.com/api/cron/reset-habits" \
-          -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
           -H "Content-Length: 0" \
           --fail \
           --connect-timeout 60 \
