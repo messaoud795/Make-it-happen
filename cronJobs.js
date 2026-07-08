@@ -3,15 +3,6 @@ const actionModel = require("./models/actionModel"); // ⚠️ Make sure this pa
 
 const initCronJobs = (app) => {
   app.post("/api/cron/reset-habits", async (req, res) => {
-    // Verify the request is coming from your GitHub Action
-    const authHeader = req.headers["authorization"];
-    if (
-      !authHeader ||
-      authHeader !== `Bearer ${process.env.CRON_SECRET_TOKEN}`
-    ) {
-      return res.status(401).json({ status: "Unauthorized" });
-    }
-
     try {
       const result = await actionModel.updateMany(
         {
