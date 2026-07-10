@@ -291,11 +291,11 @@ export default function FieldPage() {
               <Spinner size="xl" />
             </Flex>
           ) : (
-            <VStack spacing={4} align="stretch" w="100%">
+            <div spacing={4} align="stretch" w="100%">
               {todayActions?.map((action) => (
                 <Action key={action._id} action={action} />
               ))}
-            </VStack>
+            </div>
           )}
         </Box>
       </Flex>
