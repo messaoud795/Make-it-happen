@@ -32,7 +32,7 @@ import FunIcon from "../icons/FunIcon";
 import GrowthIcon from "../icons/GrowthIcon";
 import RelationsIcon from "../icons/RelationsIcon";
 
-export default function FieldPage() {
+function FieldPage() {
   const dispatch = useDispatch();
   const { quote, author, loadingQuote } = useSelector((state) => state.quote);
   const { loadingField, name } = useSelector((state) => state.field);
@@ -291,14 +291,16 @@ export default function FieldPage() {
               <Spinner size="xl" />
             </Flex>
           ) : (
-            <div spacing={4} align="stretch" w="100%">
+            <VStack spacing={4} align="stretch" w="100%">
               {todayActions?.map((action) => (
                 <Action key={action._id} action={action} />
               ))}
-            </div>
+            </VStack>
           )}
         </Box>
       </Flex>
     </Box>
   );
 }
+
+export default React.memo(FieldPage);

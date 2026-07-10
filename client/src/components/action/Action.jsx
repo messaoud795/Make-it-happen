@@ -16,7 +16,7 @@ import { format } from "date-fns";
 import { editAction } from "../../actions/action_actions";
 import { useDispatch } from "react-redux";
 
-export default function Action({ action }) {
+function Action({ action }) {
   const { description, startDate, priority, type, completed, _id, fieldId } =
     action;
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -215,3 +215,5 @@ export default function Action({ action }) {
     </Box>
   );
 }
+
+export default React.memo(Action);
