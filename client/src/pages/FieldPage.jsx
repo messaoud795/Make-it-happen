@@ -46,10 +46,10 @@ function FieldPage() {
       .length;
   }, [todayActions]);
 
-  // Tracked days, hours, and minutes inside component state
+  // Tracked days, hours, and minutes remaining until the 27th
   const [timeLeft, setTimeLeft] = useState({
-    days: 365,
-    hours: 24,
+    days: 0,
+    hours: 0,
     minutes: 0,
   });
 
@@ -58,22 +58,29 @@ function FieldPage() {
     dispatch(loadFields());
     dispatch(loadTodayActions());
 
-    const calculateCountdown = () => {
+    const calculateMonthlyCountdown = () => {
       const now = new Date();
       const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth();
 
-      let targetDate = new Date(currentYear, 7, 27, 23, 59, 59);
+      // Target: 27th of the current month at 23:59:59 (Month is 0-indexed)
+      let targetDate = new Date(currentYear, currentMonth, 26, 23, 59, 59);
 
+      // If today is past the 27th at 23:59:59, set target to the 27th of next month
       if (now > targetDate) {
-        targetDate = new Date(currentYear + 1, 7, 27, 23, 59, 59);
+        targetDate = new Date(currentYear, currentMonth + 1, 26, 23, 59, 59);
       }
 
       const diffTime = targetDate - now;
 
-      // Calculate total breakdown units cleanly
+      // Extract total breakdown components precisely from diffTime
       const daysRemaining = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const hoursRemaining = 23 - now.getHours();
-      const minutesRemaining = 59 - now.getMinutes();
+      const hoursRemaining = Math.floor(
+        (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const minutesRemaining = Math.floor(
+        (diffTime % (1000 * 60 * 60)) / (1000 * 60),
+      );
 
       setTimeLeft({
         days: daysRemaining,
@@ -82,9 +89,9 @@ function FieldPage() {
       });
     };
 
-    calculateCountdown();
-    // Run interval checks every 30 seconds to maintain exact minute precision
-    const timer = setInterval(calculateCountdown, 30000);
+    calculateMonthlyCountdown();
+    // Refresh calculations every 30 seconds
+    const timer = setInterval(calculateMonthlyCountdown, 30000);
     return () => clearInterval(timer);
   }, [dispatch]);
 
@@ -92,7 +99,6 @@ function FieldPage() {
     setOpenModalAdd(!openModalAdd);
   };
 
-  // Explicit typing stops TypeScript from recursively joining huge Chakra interface states
   const fieldsIcons = {
     CAREER: CareerIcon,
     FINANCE: FinanceIcon,
@@ -172,8 +178,8 @@ function FieldPage() {
                 fontWeight="extrabold"
                 whiteSpace="nowrap"
               >
-                {timeLeft.hours}h
-                {timeLeft.minutes?.toString().padStart(2, "0") || "00"}m
+                {timeLeft.hours}h {timeLeft.minutes.toString().padStart(2, "0")}
+                m
               </StatNumber>
             </Stat>
           </Box>
