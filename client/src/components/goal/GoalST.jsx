@@ -112,7 +112,11 @@ export default function GoalST({ data }) {
         {actions
           ?.filter((action) => action && action.parentId === data._id)
           .map((action) => (
-            <Action key={action._id || action.id} action={action} />
+            <>
+              {action && (
+                <Action key={action._id || action.id} action={action} />
+              )}
+            </>
           ))}
       </VStack>
     </Box>
