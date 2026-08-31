@@ -110,9 +110,9 @@ export default function GoalST({ data }) {
       {/* Target Actions Render Execution Layer */}
       <VStack spacing={2} pl={4} mt={2.5} align="stretch">
         {actions
-          ?.filter((action) => action.parentId === data._id)
+          ?.filter((action) => action && action.parentId === data._id)
           .map((action) => (
-            <Action key={action._id} data={{ ...action }} />
+            <Action key={action._id || action.id} action={action} />
           ))}
       </VStack>
     </Box>

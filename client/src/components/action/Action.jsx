@@ -16,12 +16,23 @@ import { format } from "date-fns";
 import { editAction } from "../../actions/action_actions";
 import { useDispatch } from "react-redux";
 
-function Action({ action }) {
-  const { description, startDate, priority, type, completed, _id, fieldId } =
-    action;
+function Action({ action = {} }) {
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const dispatch = useDispatch();
+
+  if (!action || typeof action !== "object") return null; // Guard clause
+
+  const {
+    description = "",
+    startDate,
+    priority = "low",
+    type,
+    completed = {},
+    _id,
+    fieldId,
+  } = action;
+
   const isCompletedToday = Boolean(completed?.status);
 
   const handleModalDelete = (e) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -19,48 +19,60 @@ import { loadFields } from "../actions/field_actions";
 import PlanIcon from "../icons/PlanIcon.jsx";
 import "./Goalspage.css";
 
-export default function GoalsPage(props) {
-  const [fieldName, setFieldName] = useState("");
-  const [listGoalLT, setListGoalLT] = useState([]);
-
-  const field = useSelector((state) => state.field);
-  const { goals, loadingGoal } = useSelector((state) => state.goal);
-  const fieldId = useParams().fieldId;
+export default function GoalsPage() {
+  const { fieldId } = useParams();
   const dispatch = useDispatch();
+
+  // Safe selectors with fallbacks to avoid undefined crashes
+  const fieldState = useSelector((state) => state.field || {});
+  const goalState = useSelector((state) => state.goal || state.goals || {});
+
+  const loadingGoal = goalState.loadingGoal;
+
+  // Extract goals safely whether payload is flat or nested
+  const rawGoals = goalState.goals || goalState.data || goalState;
+  const safeGoalsArray = useMemo(() => {
+    if (Array.isArray(rawGoals)) return rawGoals;
+    if (rawGoals && Array.isArray(rawGoals.goals)) return rawGoals.goals;
+    if (rawGoals && Array.isArray(rawGoals.data)) return rawGoals.data;
+    return [];
+  }, [rawGoals]);
+
+  // Derive long-term goals efficiently
+  const listGoalLT = useMemo(() => {
+    return safeGoalsArray.filter(
+      (goal) =>
+        goal?.category?.toLowerCase() === "long term" ||
+        goal?.type?.toLowerCase() === "long term",
+    );
+  }, [safeGoalsArray]);
+
+  // Safely derive current field name without triggering infinite re-renders
+  const fieldName = useMemo(() => {
+    const fieldsList = fieldState.name || fieldState.fields || [];
+    if (!Array.isArray(fieldsList) || !fieldId) return "";
+    const activeField = fieldsList.find(
+      (el) => el._id === fieldId || el.id === fieldId,
+    );
+    return activeField?.name ? activeField.name.toLowerCase() : "";
+  }, [fieldState, fieldId]);
 
   useEffect(() => {
     dispatch(loadFields());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (field?.name && fieldId) {
-      const activeField = field.name.find((el) => el._id === fieldId);
-      if (activeField) {
-        setFieldName(activeField.name.toLowerCase());
-      }
+    if (fieldId) {
+      dispatch(loadGoals(fieldId));
+      dispatch(loadActions(fieldId));
     }
-    dispatch(loadGoals(fieldId));
-    dispatch(loadActions(fieldId));
-  }, [dispatch, fieldId, field?.name]);
-
-  useEffect(() => {
-    if (goals) {
-      setListGoalLT(goals.filter((goal) => goal.category === "long term"));
-    }
-  }, [goals]);
+  }, [dispatch, fieldId]);
 
   return (
     <Box minH="100vh" bg="gray.50/50" py={8} className="GoalsPage">
-      {/* Responsive constraints applied below:
-        Occupies 70% width on large desktop viewports, 75% on medium scales, 
-        and snaps safely to full-width coverage on standard mobile displays.
-      */}
       <Container
         maxW={{ base: "100%", md: "75%", lg: "70%" }}
         mx="auto"
         px={{ base: 4, md: 0 }}
       >
-        {/* Transparent Dashboard Header Base Layout Wrapper */}
+        {/* Header Section */}
         <Flex
           bg="white"
           backdropFilter="blur(10px)"
@@ -74,7 +86,6 @@ export default function GoalsPage(props) {
           justify="space-between"
           className="GoalsPage__header"
         >
-          {/* Outer flex container maps standard central items line paths */}
           <Flex align="center" gap={4} className="GoalsPage__title">
             <Center
               p={3}
@@ -88,9 +99,6 @@ export default function GoalsPage(props) {
               <PlanIcon color="#3182CE" />
             </Center>
 
-            {/* Swapped text layout to a Flex container set to justify="center".
-              This forces the label text blocks to align completely center vertically with your icon box.
-            */}
             <Flex direction="column" justify="center" h="50px">
               <Text
                 fontSize="xs"
@@ -129,10 +137,10 @@ export default function GoalsPage(props) {
             <Center py={16}>
               <Spinner size="xl" color="blue.500" thickness="4px" />
             </Center>
-          ) : listGoalLT?.length > 0 ? (
+          ) : listGoalLT.length > 0 ? (
             <VStack spacing={6} align="stretch" w="100%">
               {listGoalLT.map((goal) => (
-                <GoalLT key={goal._id} data={{ ...goal, fieldId }} />
+                <GoalLT key={goal._id || goal.id} data={{ ...goal, fieldId }} />
               ))}
             </VStack>
           ) : (
