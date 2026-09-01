@@ -64,15 +64,22 @@ router.post("/add", auth, async (req, res) => {
 });
 
 router.patch("/edit", auth, (req, res) => {
+  const targetId = req.body._id || req.body.id;
+
+  if (!targetId) {
+    return res.status(400).send({ msg: "Action ID is required" });
+  }
+
   Action.findByIdAndUpdate(
-    req.body.id,
-    { ...req.body },
+    targetId,
+    { $set: req.body },
     { new: true, runValidators: true },
     (err, data) => {
-      if (err) res.status(500).send({ msg: "Server error" });
-      else {
-        res.status(200).send({ msg: "success " });
+      if (err) {
+        console.error("Database update error:", err);
+        return res.status(500).send({ msg: "Server error" });
       }
+      return res.status(200).send(data);
     },
   );
 });

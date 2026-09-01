@@ -56,17 +56,25 @@ export const ActionReducer = (state = initialState, action) => {
         error: null,
       };
 
-    case ACTION_EDIT_SUCCESS:
-      const updatedActions = state.todayActions.map((action) => {
-        if (action._id === payload._id) return payload;
-        else return action;
-      });
+    case ACTION_EDIT_SUCCESS: {
+      const targetId = payload._id || payload.id;
+
+      const updatedTodayActions = (state.todayActions || []).map((item) =>
+        item._id === targetId ? { ...item, ...payload } : item,
+      );
+
+      const updatedActions = (state.actions || []).map((item) =>
+        item._id === targetId ? { ...item, ...payload } : item,
+      );
+
       return {
         ...state,
-        todayActions: updatedActions,
+        todayActions: updatedTodayActions,
+        actions: updatedActions,
         loadingAction: false,
         error: null,
       };
+    }
 
     case ACTION_ACTION_ERROR:
       return {

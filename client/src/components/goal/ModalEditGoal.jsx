@@ -45,11 +45,8 @@ export default function ModalEditGoal({
   const submitForm = async (e) => {
     e.preventDefault();
 
-    // Context-dependent date range verification
-    if (
-      category === "long term" &&
-      startDate.getFullYear() - endDate.getFullYear() >= 0
-    ) {
+    // 1. Universal Validation: End date must be strictly after start date
+    if (endDate.getTime() <= startDate.getTime()) {
       toastr.error(
         "Error",
         "Please enter an end date superior to the start date",
@@ -57,15 +54,31 @@ export default function ModalEditGoal({
       return;
     }
 
+    // 2. Long-term Goal: Must span at least 1 calendar year apart
     if (
-      category === "mid term" &&
-      startDate.getMonth() - endDate.getMonth() >= 0
+      category === "long term" &&
+      endDate.getFullYear() <= startDate.getFullYear()
     ) {
       toastr.error(
         "Error",
-        "Please enter an end date superior to the start date",
+        "Long-term goals must have an end date in a future year.",
       );
       return;
+    }
+
+    // 3. Mid-term Goal: Must span across distinct months (accounting for cross-year intervals)
+    if (category === "mid term") {
+      const startMonthIndex =
+        startDate.getFullYear() * 12 + startDate.getMonth();
+      const endMonthIndex = endDate.getFullYear() * 12 + endDate.getMonth();
+
+      if (endMonthIndex <= startMonthIndex) {
+        toastr.error(
+          "Error",
+          "Mid-term goals must span across at least one month.",
+        );
+        return;
+      }
     }
 
     const data = {

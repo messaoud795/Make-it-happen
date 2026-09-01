@@ -50,12 +50,17 @@ export const editAction = (data) => {
   return async (dispatch) => {
     try {
       dispatch({ type: ACTION_ACTION_START });
-      await axios.patch("/api/action/edit", data, configHeaders());
-      dispatch({ type: ACTION_EDIT_SUCCESS, payload: data });
+
+      // Ensure backend returns the updated object
+      const res = await axios.patch("/api/action/edit", data, configHeaders());
+
+      const payloadData = res.data && res.data._id ? res.data : data;
+
+      dispatch({ type: ACTION_EDIT_SUCCESS, payload: payloadData });
       toastr.success("Success", "Action is updated");
     } catch (error) {
       dispatch({ type: ACTION_ACTION_ERROR, payload: error });
-      toastr.error("Error", "ACTION is not updated");
+      toastr.error("Error", "Action is not updated");
     }
   };
 };

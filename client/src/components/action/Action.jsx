@@ -43,19 +43,23 @@ function Action({ action = {} }) {
     setOpenModalEdit(!openModalEdit);
   };
 
-  const updateCompletedStatus = async (e) => {
+  const updateCompletedStatus = async () => {
+    const nextStatus = !isCompletedToday;
+
+    const updatedPayload = {
+      ...action,
+      id: _id, // Ensures compatibility if your API expects `id`
+      _id: _id,
+      completed: {
+        status: nextStatus,
+        completionDate: nextStatus ? new Date() : null,
+      },
+    };
+
     try {
-      dispatch(
-        editAction({
-          ...action,
-          completed: {
-            status: !isCompletedToday,
-            completionDate: action.completed.completionDate,
-          },
-        }),
-      );
+      await dispatch(editAction(updatedPayload));
     } catch (err) {
-      console.error(err);
+      console.error("Failed to toggle action status:", err);
     }
   };
 
@@ -69,9 +73,9 @@ function Action({ action = {} }) {
     const p = priority?.toLowerCase();
     if (p === "high")
       return {
-        border: "red.400",
-        bg: "red.50",
-        glow: "rgba(245, 101, 101, 0.15)",
+        border: "yellow.300",
+        bg: "yellow.300",
+        glow: "rgba(212, 211, 120, 0.15)",
       };
     if (p === "medium")
       return {
