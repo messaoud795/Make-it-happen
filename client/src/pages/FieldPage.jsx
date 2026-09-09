@@ -14,8 +14,16 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  Progress,
+  Badge,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import {
+  AddIcon,
+  CheckCircleIcon,
+  WarningIcon,
+  StarIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 import { loadFields } from "../actions/field_actions";
 import { loadQuote } from "../actions/loadQuote";
 import Field from "../components/field/Field";
@@ -45,6 +53,53 @@ function FieldPage() {
     return todayActions.filter((action) => Boolean(action?.completed?.status))
       .length;
   }, [todayActions]);
+
+  // Calculate Achievement Rate Percentage & Config
+  const totalTodayActions = todayActions?.length || 0;
+  const achievementRate = useMemo(() => {
+    if (totalTodayActions === 0) return 0;
+    return Math.round((completedActionsOfToday / totalTodayActions) * 100);
+  }, [completedActionsOfToday, totalTodayActions]);
+
+  // Dynamic Theme & Icon based on Achievement Rate
+  const rateConfig = useMemo(() => {
+    if (achievementRate >= 80) {
+      return {
+        colorScheme: "green",
+        bg: "green.50",
+        borderColor: "green.300",
+        textColor: "green.700",
+        icon: <CheckCircleIcon color="green.500" w={5} h={5} />,
+        label: "Excellent",
+      };
+    } else if (achievementRate >= 50) {
+      return {
+        colorScheme: "yellow",
+        bg: "yellow.50",
+        borderColor: "yellow.300",
+        textColor: "yellow.700",
+        icon: <StarIcon color="yellow.500" w={5} h={5} />,
+        label: "Good Progress",
+      };
+    } else if (achievementRate > 0) {
+      return {
+        colorScheme: "orange",
+        bg: "orange.50",
+        borderColor: "orange.300",
+        textColor: "orange.700",
+        icon: <TimeIcon color="orange.500" w={5} h={5} />,
+        label: "Getting Started",
+      };
+    }
+    return {
+      colorScheme: "gray",
+      bg: "gray.50",
+      borderColor: "gray.200",
+      textColor: "gray.600",
+      icon: <WarningIcon color="gray.400" w={5} h={5} />,
+      label: "Needs Focus",
+    };
+  }, [achievementRate]);
 
   // Tracked days, hours, and minutes remaining until the 27th
   const [timeLeft, setTimeLeft] = useState({
@@ -279,6 +334,60 @@ function FieldPage() {
 
         {/* Right Section: Actions Panel */}
         <Box w={{ base: "100%", lg: "40%" }} className="FieldPage__actions">
+          {/* Achievement Rate Card */}
+          <Box
+            p={4}
+            mb={5}
+            borderRadius="xl"
+            bg={rateConfig.bg}
+            border="1px solid"
+            borderColor={rateConfig.borderColor}
+            boxShadow="sm"
+          >
+            <Flex justify="space-between" align="center" mb={2}>
+              <HStack spacing={2}>
+                {rateConfig.icon}
+                <Text
+                  fontWeight="bold"
+                  fontSize="md"
+                  color={rateConfig.textColor}
+                >
+                  Achievement Rate
+                </Text>
+              </HStack>
+              <HStack spacing={2}>
+                <Badge
+                  colorScheme={rateConfig.colorScheme}
+                  borderRadius="full"
+                  px={2}
+                >
+                  {rateConfig.label}
+                </Badge>
+                <Text
+                  fontWeight="extrabold"
+                  fontSize="lg"
+                  color={rateConfig.textColor}
+                >
+                  {achievementRate}%
+                </Text>
+              </HStack>
+            </Flex>
+
+            {/* Smooth Progress Bar */}
+            <Progress
+              value={achievementRate}
+              colorScheme={rateConfig.colorScheme}
+              size="sm"
+              borderRadius="full"
+              hasStripe
+              isAnimated
+            />
+
+            <Text fontSize="xs" color="gray.500" mt={2} textAlign="right">
+              {completedActionsOfToday} of {totalTodayActions} actions completed
+            </Text>
+          </Box>
+
           <Heading
             as="h2"
             size="md"
@@ -288,8 +397,7 @@ function FieldPage() {
             borderBottom="2px solid"
             borderColor="gray.100"
           >
-            Today actions done: {completedActionsOfToday} /{" "}
-            {todayActions?.length || 0}
+            Today's Actions
           </Heading>
 
           {loadingAction ? (
