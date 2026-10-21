@@ -16,6 +16,10 @@ import {
   StatNumber,
   Progress,
   Badge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import {
   AddIcon,
@@ -24,8 +28,8 @@ import {
   StarIcon,
   TimeIcon,
 } from "@chakra-ui/icons";
+import confetti from "canvas-confetti";
 import { loadFields } from "../actions/field_actions";
-import { loadQuote } from "../actions/loadQuote";
 import Field from "../components/field/Field";
 import ModalAddField from "../components/field/ModalAddField";
 import { format } from "date-fns";
@@ -42,7 +46,6 @@ import RelationsIcon from "../icons/RelationsIcon";
 
 function FieldPage() {
   const dispatch = useDispatch();
-  const { quote, author, loadingQuote } = useSelector((state) => state.quote);
   const { loadingField, name } = useSelector((state) => state.field);
   const { loadingAction, todayActions } = useSelector((state) => state.action);
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -61,45 +64,101 @@ function FieldPage() {
     return Math.round((completedActionsOfToday / totalTodayActions) * 100);
   }, [completedActionsOfToday, totalTodayActions]);
 
-  // Dynamic Theme & Icon based on Achievement Rate
+  // Trigger Confetti Party Effect when 100% completion is reached
+  useEffect(() => {
+    if (achievementRate === 100 && totalTodayActions > 0) {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [achievementRate, totalTodayActions]);
+
+  // Dynamic Theme, Icon, and Motivational Message based on Achievement Rate
   const rateConfig = useMemo(() => {
-    if (achievementRate >= 80) {
+    if (achievementRate === 100 && totalTodayActions > 0) {
+      return {
+        colorScheme: "purple",
+        bg: "purple.50",
+        borderColor: "purple.300",
+        textColor: "purple.800",
+        icon: <CheckCircleIcon color="purple.500" w={5} h={5} />,
+        label: "Mastery!",
+        alertStatus: "success",
+        alertTitle: "🎉 Outstanding Job!",
+        alertMsg:
+          "Well done! You smashed all your goals today. Keep having fun and enjoying the journey!",
+      };
+    } else if (achievementRate >= 80) {
       return {
         colorScheme: "green",
         bg: "green.50",
         borderColor: "green.300",
-        textColor: "green.700",
+        textColor: "green.800",
         icon: <CheckCircleIcon color="green.500" w={5} h={5} />,
-        label: "Excellent",
+        label: "Almost There!",
+        alertStatus: "info",
+        alertTitle: "🔥 So Close! Push to the end!",
+        alertMsg:
+          "You're at 80%+! Give that final push to close out today's wins and enjoy every step!",
       };
     } else if (achievementRate >= 50) {
       return {
         colorScheme: "yellow",
         bg: "yellow.50",
         borderColor: "yellow.300",
-        textColor: "yellow.700",
+        textColor: "yellow.800",
         icon: <StarIcon color="yellow.500" w={5} h={5} />,
-        label: "Good Progress",
+        label: "Halfway There!",
+        alertStatus: "warning",
+        alertTitle: "🚀 Halfway done! Finish the rest!",
+        alertMsg:
+          "You crossed 50%! Keep up the great momentum to finish the rest, and always remember to enjoy the journey!",
       };
     } else if (achievementRate > 0) {
       return {
         colorScheme: "orange",
         bg: "orange.50",
         borderColor: "orange.300",
-        textColor: "orange.700",
+        textColor: "orange.800",
         icon: <TimeIcon color="orange.500" w={5} h={5} />,
         label: "Getting Started",
+        alertStatus: "info",
+        alertTitle: "⚡ Momentum Started!",
+        alertMsg:
+          "Great start! Keep building up your flow step by step and have fun along the way.",
+      };
+    } else if (totalTodayActions > 0) {
+      // Starting the day with 0% progress
+      return {
+        colorScheme: "blue",
+        bg: "blue.50",
+        borderColor: "blue.200",
+        textColor: "blue.700",
+        icon: <TimeIcon color="blue.400" w={5} h={5} />,
+        label: "Fresh Start",
+        alertStatus: "info",
+        alertTitle: "🚀 Ready to own your day?",
+        alertMsg:
+          "Every great journey begins with a single step. Pick your first action and let's have fun making progress today!",
       };
     }
+
+    // Default state when no actions are scheduled yet
     return {
       colorScheme: "gray",
       bg: "gray.50",
       borderColor: "gray.200",
       textColor: "gray.600",
       icon: <WarningIcon color="gray.400" w={5} h={5} />,
-      label: "Needs Focus",
+      label: "No Actions",
+      alertStatus: "info",
+      alertTitle: "🌟 A clean slate ahead!",
+      alertMsg:
+        "You have no actions set for today. Add a few goals to get started and enjoy the journey!",
     };
-  }, [achievementRate]);
+  }, [achievementRate, totalTodayActions]);
 
   // Tracked days, hours, and minutes remaining until the 27th
   const [timeLeft, setTimeLeft] = useState({
@@ -109,7 +168,6 @@ function FieldPage() {
   });
 
   useEffect(() => {
-    dispatch(loadQuote());
     dispatch(loadFields());
     dispatch(loadTodayActions());
 
@@ -118,17 +176,15 @@ function FieldPage() {
       const currentYear = now.getFullYear();
       const currentMonth = now.getMonth();
 
-      // Target: 27th of the current month at 23:59:59 (Month is 0-indexed)
+      // Target: 27th of the current month at 23:59:59
       let targetDate = new Date(currentYear, currentMonth, 26, 23, 59, 59);
 
-      // If today is past the 27th at 23:59:59, set target to the 27th of next month
       if (now > targetDate) {
         targetDate = new Date(currentYear, currentMonth + 1, 26, 23, 59, 59);
       }
 
       const diffTime = targetDate - now;
 
-      // Extract total breakdown components precisely from diffTime
       const daysRemaining = Math.floor(diffTime / (1000 * 60 * 60 * 24));
       const hoursRemaining = Math.floor(
         (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
@@ -145,7 +201,6 @@ function FieldPage() {
     };
 
     calculateMonthlyCountdown();
-    // Refresh calculations every 30 seconds
     const timer = setInterval(calculateMonthlyCountdown, 30000);
     return () => clearInterval(timer);
   }, [dispatch]);
@@ -241,46 +296,25 @@ function FieldPage() {
         </HStack>
       </Flex>
 
-      {/* Centered, Larger Inspirational Quote */}
-      <Box
-        p={5}
-        bg="blue.50"
+      {/* Dynamic Encouragement & Progress Banner at Top */}
+      <Alert
+        status={rateConfig.alertStatus}
+        variant="solid"
         borderRadius="xl"
-        borderLeft="5px solid"
-        borderColor="blue.400"
         mb={8}
-        w="100%"
+        p={5}
+        boxShadow="md"
       >
-        {loadingQuote ? (
-          <Flex align="center" justify="center" gap={2} py={2}>
-            <Spinner size="sm" color="blue.500" />
-            <Text fontSize="md" color="gray.500" fontStyle="italic">
-              Fetching your fresh daily inspiration...
-            </Text>
-          </Flex>
-        ) : (
-          <VStack spacing={2} textAlign="center" justify="center" w="100%">
-            <Text
-              fontStyle="italic"
-              fontSize="lg"
-              fontWeight="medium"
-              color="gray.800"
-              maxW="4xl"
-            >
-              "{quote || "Make it happen today. Consistency yields progress."}"
-            </Text>
-            <Text
-              fontWeight="bold"
-              color="gray.500"
-              fontSize="xs"
-              textTransform="uppercase"
-              letterSpacing="wider"
-            >
-              — {author || "Unknown Author"}
-            </Text>
-          </VStack>
-        )}
-      </Box>
+        <AlertIcon w={6} h={6} />
+        <Box flex="1" ml={2}>
+          <AlertTitle fontSize="lg" fontWeight="extrabold">
+            {rateConfig.alertTitle}
+          </AlertTitle>
+          <AlertDescription fontSize="md" mt={1} display="block">
+            {rateConfig.alertMsg}
+          </AlertDescription>
+        </Box>
+      </Alert>
 
       {/* Main Side-by-Side Flex Layout */}
       <Flex
